@@ -82,6 +82,9 @@ void Curve::custom_draw_editor()
                 points[i].y = py;
 
                 points[i] = glm::clamp(points[i], 0.0f, 1.0f);
+
+                points[0].x = 0.0f;
+                points[points.size() - 1].x = 1.0f;
             }
         }
 
