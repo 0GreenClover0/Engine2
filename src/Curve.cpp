@@ -122,22 +122,17 @@ void Curve::custom_draw_editor()
             u32 point_after = get_point_index_after(new_point_position.x);
 
             points.insert(points.begin() + point_after, new_point_position);
-            generate_smooth_points(m_smooth_precision);
-        }
-
-        if (is_smooth)
-        {
-            generate_smooth_points(m_smooth_precision);
         }
     }
 
     ImPlot::EndPlot();
 
     ImGui::Checkbox("Smooth", &is_smooth);
+    ImGui::SameLine();
 
-    if (ImGui::InputInt("Smoothing precision", &m_smooth_precision))
+    ImGui::InputInt("Smooth precision", &m_smooth_precision);
+
     {
-        generate_smooth_points(m_smooth_precision);
     }
 
     if (ImGui::CollapsingHeader("Points"))
@@ -147,23 +142,18 @@ void Curve::custom_draw_editor()
             if (points.empty())
             {
                 points.emplace_back(0.1f, 0.5f);
-                generate_smooth_points(m_smooth_precision);
             }
             else
             {
                 points.emplace_back(points.back().x + 0.1f, points.back().y);
 
                 points.back().x = glm::clamp(points.back().x, 0.0f, 1.0f);
-                generate_smooth_points(m_smooth_precision);
             }
         }
 
         for (u32 i = 0; i < points.size(); i++)
         {
-            if (ImGuiEx::InputFloat2(("Position##" + std::to_string(i)).c_str(), glm::value_ptr(points[i])))
-            {
-                generate_smooth_points(m_smooth_precision);
-            }
+            ImGuiEx::InputFloat2(("Position##" + std::to_string(i)).c_str(), glm::value_ptr(points[i]));
 
             ImGui::SameLine();
 
@@ -171,10 +161,14 @@ void Curve::custom_draw_editor()
             if (ImGui::Button(("Remove point##" + std::to_string(i)).c_str()))
             {
                 points.erase(points.begin() + i);
-                generate_smooth_points(m_smooth_precision);
             }
             ImGui::EndDisabled();
         }
+    }
+
+    if (is_smooth)
+    {
+        generate_smooth_points(m_smooth_precision);
     }
 }
 #endif
