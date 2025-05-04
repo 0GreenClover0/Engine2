@@ -13,6 +13,9 @@ public:
 
     explicit Curve(AK::Badge<Curve>);
 
+    virtual void awake() override;
+    virtual void update() override;
+
 #if EDITOR
     virtual void draw_editor() override;
 #endif
@@ -36,10 +39,15 @@ public:
     CUSTOM_EDITOR
     bool is_smooth = false;
 
+    CUSTOM_EDITOR
+    float playback_speed = 0.01f;
+
 protected:
     explicit Curve();
 
 private:
     std::vector<glm::vec2> m_smooth_points = {};
     i32 m_smooth_precision = 6;
+    float m_playback_position = 0.0f;
+    bool m_is_playing = false;
 };
