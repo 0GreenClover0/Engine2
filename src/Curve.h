@@ -3,6 +3,7 @@
 #include <glm/glm.hpp>
 
 #include "AK/Badge.h"
+#include "AK/Types.h"
 #include "Component.h"
 
 class Curve : public Component
@@ -26,10 +27,17 @@ public:
     int get_point_index_before(float x) const;
     int get_point_index_after(float x) const;
     float length() const;
+    glm::vec2 catmull_rom(glm::vec2 const& p0, glm::vec2 const& p1, glm::vec2 const& p2, glm::vec2 const& p3, float t);
+    void generate_smooth_points(u32 segments_per_curve);
 
     CUSTOM_EDITOR
     std::vector<glm::vec2> points = {};
 
 protected:
     explicit Curve();
+
+private:
+    std::vector<glm::vec2> m_smooth_points = {};
+    i32 m_smooth_precision = 6;
+    bool m_is_smooth = false;
 };

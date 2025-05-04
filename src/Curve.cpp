@@ -54,7 +54,21 @@ void Curve::custom_draw_editor()
             ys.push_back(p.y);
         }
 
-        ImPlot::PlotLine("##Line", xs.data(), ys.data(), points.size());
+        if (m_is_smooth)
+        {
+            std::vector<float> xss, yss;
+            for (auto const& p : m_smooth_points)
+            {
+                xss.push_back(p.x);
+                yss.push_back(p.y);
+            }
+
+            ImPlot::PlotLine("##Smooth Line", xss.data(), yss.data(), m_smooth_points.size());
+        }
+        else
+        {
+            ImPlot::PlotLine("##Line", xs.data(), ys.data(), points.size());
+        }
 
         for (u32 i = 0; i < points.size(); i++)
         {
@@ -91,6 +105,7 @@ void Curve::custom_draw_editor()
             if ((i != 0 && i != points.size() - 1) && is_clicked && ImGui::IsKeyDown(ImGuiKey_LeftCtrl))
             {
                 points.erase(points.begin() + i);
+                generate_smooth_points(m_smooth_precision);
             }
         }
 
@@ -102,22 +117,37 @@ void Curve::custom_draw_editor()
             u32 point_after = get_point_index_after(new_point_position.x);
 
             points.insert(points.begin() + point_after, new_point_position);
+            generate_smooth_points(m_smooth_precision);
+        }
+
+        if (m_is_smooth)
+        {
+            generate_smooth_points(m_smooth_precision);
         }
     }
 
     ImPlot::EndPlot();
+
+    ImGui::Checkbox("Smooth", &m_is_smooth);
+
+    if (ImGui::InputInt("Smoothing precision", &m_smooth_precision))
+    {
+        generate_smooth_points(m_smooth_precision);
+    }
 
     if (ImGui::Button("Add point"))
     {
         if (points.size() == 0)
         {
             points.push_back({0.1f, 0.5f});
+            generate_smooth_points(m_smooth_precision);
         }
         else
         {
             points.push_back({points.back().x + 0.1f, points.back().y});
 
             points.back().x = glm::clamp(points.back().x, 0.0f, 1.0f);
+            generate_smooth_points(m_smooth_precision);
         }
     }
 
@@ -130,6 +160,7 @@ void Curve::custom_draw_editor()
         if (ImGui::Button(("Remove point##" + std::to_string(i)).c_str()))
         {
             points.erase(points.begin() + i);
+            generate_smooth_points(m_smooth_precision);
         }
         ImGui::EndDisabled();
     }
@@ -247,4 +278,43 @@ int Curve::get_point_index_after(float x) const
     }
 
     return index;
+}
+
+glm::vec2 Curve::catmull_rom(glm::vec2 const& p0, glm::vec2 const& p1, glm::vec2 const& p2, glm::vec2 const& p3, float t)
+{
+    float t2 = t * t;
+    float t3 = t2 * t;
+
+    return 0.5f * (2.0f * p1 + (p2 - p0) * t + (2.0f * p0 - 5.0f * p1 + 4.0f * p2 - p3) * t2 + (-p0 + 3.0f * p1 - 3.0f * p2 + p3) * t3);
+}
+
+void Curve::generate_smooth_points(u32 segments_per_curve)
+{
+    m_smooth_points.clear();
+
+    if (points.size() < 2)
+    {
+        return;
+    }
+
+    std::vector<glm::vec2> points_with_doubled_edges;
+    points_with_doubled_edges.push_back(points.front());
+    points_with_doubled_edges.insert(points_with_doubled_edges.end(), points.begin(), points.end());
+    points_with_doubled_edges.push_back(points.back());
+
+    for (u32 i = 0; i < points_with_doubled_edges.size() - 3; i++)
+    {
+        glm::vec2 p0 = points_with_doubled_edges[i];
+        glm::vec2 p1 = points_with_doubled_edges[i + 1];
+        glm::vec2 p2 = points_with_doubled_edges[i + 2];
+        glm::vec2 p3 = points_with_doubled_edges[i + 3];
+
+        for (int j = 0; j < segments_per_curve; j++)
+        {
+            float t = static_cast<float>(j) / segments_per_curve;
+            m_smooth_points.push_back(catmull_rom(p0, p1, p2, p3, t));
+        }
+    }
+
+    m_smooth_points.push_back(points.back());
 }
