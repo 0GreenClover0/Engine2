@@ -33,11 +33,13 @@ public:
     CUSTOM_EDITOR
     std::vector<glm::vec2> points = {};
 
+    CUSTOM_EDITOR
+    bool is_smooth = false;
+
 protected:
     explicit Curve();
 
 private:
     std::vector<glm::vec2> m_smooth_points = {};
     i32 m_smooth_precision = 6;
-    bool m_is_smooth = false;
 };

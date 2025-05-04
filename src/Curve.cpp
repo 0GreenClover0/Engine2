@@ -59,7 +59,7 @@ void Curve::custom_draw_editor()
             ys.push_back(p.y);
         }
 
-        if (m_is_smooth)
+        if (is_smooth)
         {
             std::vector<float> xss, yss;
             for (auto const& p : m_smooth_points)
@@ -125,7 +125,7 @@ void Curve::custom_draw_editor()
             generate_smooth_points(m_smooth_precision);
         }
 
-        if (m_is_smooth)
+        if (is_smooth)
         {
             generate_smooth_points(m_smooth_precision);
         }
@@ -133,7 +133,7 @@ void Curve::custom_draw_editor()
 
     ImPlot::EndPlot();
 
-    ImGui::Checkbox("Smooth", &m_is_smooth);
+    ImGui::Checkbox("Smooth", &is_smooth);
 
     if (ImGui::InputInt("Smoothing precision", &m_smooth_precision))
     {
@@ -191,7 +191,7 @@ glm::vec2 Curve::get_point_at(float x) const
 {
     std::vector<glm::vec2> operational_set = points;
 
-    if (m_is_smooth)
+    if (is_smooth)
     {
         operational_set = m_smooth_points;
     }
@@ -240,7 +240,7 @@ float Curve::get_y_at(float x) const
     std::vector<glm::vec2> operational_set;
 
     // FIXME: Avoid a vector copy.
-    if (m_is_smooth)
+    if (is_smooth)
     {
         operational_set = m_smooth_points;
     }
