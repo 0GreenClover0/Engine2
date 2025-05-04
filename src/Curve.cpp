@@ -29,6 +29,25 @@ Curve::Curve(AK::Badge<Curve>)
 
 Curve::Curve() = default;
 
+void Curve::awake()
+{
+    set_can_tick(true);
+}
+
+void Curve::update()
+{
+    if (m_is_playing)
+    {
+        m_playback_position += playback_speed;
+
+        if (m_playback_position > 1.0f)
+        {
+            m_playback_position = 0.0f;
+            m_is_playing = false;
+        }
+    }
+}
+
 #if EDITOR
 void Curve::draw_editor()
 {
@@ -123,6 +142,11 @@ void Curve::custom_draw_editor()
 
             points.insert(points.begin() + point_after, new_point_position);
         }
+
+        std::vector<float> ppxs, ppys;
+        ppxs.push_back(m_playback_position);
+        ppys.push_back(get_y_at(m_playback_position));
+        ImPlot::PlotScatter("##Playback Point", ppxs.data(), ppys.data(), 1);
     }
 
     ImPlot::EndPlot();
@@ -132,8 +156,13 @@ void Curve::custom_draw_editor()
 
     ImGui::InputInt("Smooth precision", &m_smooth_precision);
 
+    if (ImGui::Button("Play"))
     {
+        m_playback_position = 0.0f;
+        m_is_playing = true;
     }
+    ImGui::SameLine();
+    ImGuiEx::InputFloat("Playback speed", &playback_speed);
 
     if (ImGui::CollapsingHeader("Points"))
     {
