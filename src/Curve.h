@@ -20,6 +20,13 @@ enum class LinkToArgumentTypes
     Z
 };
 
+enum class EaseTypes
+{
+    Ease,
+    EaseInOut,
+    EaseInMiddleOut
+};
+
 class Curve : public Component
 {
 public:
@@ -41,6 +48,7 @@ public:
 #if EDITOR
     std::string link_type_to_string(LinkToTypes const type);
     std::string link_type_to_argument_string(LinkToArgumentTypes const type);
+    std::string ease_type_to_string(EaseTypes const type);
 #endif
 
     glm::vec2 get_point_at(float x) const;
@@ -53,6 +61,9 @@ public:
     void generate_smooth_points(u32 segments_per_curve);
     void update_link_value();
 
+    void play();
+    void reset();
+
     CUSTOM_EDITOR
     std::vector<glm::vec2> points = {};
 
@@ -64,6 +75,16 @@ public:
     CUSTOM_EDITOR
     glm::vec2 easing_from_to = {0.0f, 1.0f};
 
+    CUSTOM_EDITOR
+    EaseTypes easing_type = EaseTypes::Ease;
+
+    CUSTOM_EDITOR
+    double in_out_line = 0.5;
+    CUSTOM_EDITOR
+    double in_middle_line = 0.25;
+    CUSTOM_EDITOR
+    double middle_out_line = 0.75;
+
 protected:
     explicit Curve();
 
@@ -74,4 +95,6 @@ private:
     bool m_is_playing = false;
     LinkToTypes m_link_to = LinkToTypes::Position;
     LinkToArgumentTypes m_link_to_argument = LinkToArgumentTypes::X;
+    bool m_is_stuck_in_middle = false;
+    bool m_is_allowed_to_leave_middle = false;
 };
