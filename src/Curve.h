@@ -62,9 +62,7 @@ public:
     CUSTOM_EDITOR
     float playback_speed = 0.01f;
     CUSTOM_EDITOR
-    float easing_from = 0.0f;
-    CUSTOM_EDITOR
-    float easing_to = 1.0f;
+    glm::vec2 easing_from_to = {0.0f, 1.0f};
 
 protected:
     explicit Curve();
