@@ -6,6 +6,20 @@
 #include "AK/Types.h"
 #include "Component.h"
 
+enum class LinkToTypes
+{
+    Position,
+    Rotation,
+    Scale
+};
+
+enum class LinkToArgumentTypes
+{
+    X,
+    Y,
+    Z
+};
+
 class Curve : public Component
 {
 public:
@@ -24,6 +38,11 @@ public:
     virtual void custom_draw_editor() override;
 #endif
 
+#if EDITOR
+    std::string link_type_to_string(LinkToTypes const type);
+    std::string link_type_to_argument_string(LinkToArgumentTypes const type);
+#endif
+
     glm::vec2 get_point_at(float x) const;
     float get_y_at(float x) const;
     void add_points(std::initializer_list<glm::vec2> new_points);
@@ -32,6 +51,7 @@ public:
     float length() const;
     glm::vec2 catmull_rom(glm::vec2 const& p0, glm::vec2 const& p1, glm::vec2 const& p2, glm::vec2 const& p3, float t);
     void generate_smooth_points(u32 segments_per_curve);
+    void update_link_value();
 
     CUSTOM_EDITOR
     std::vector<glm::vec2> points = {};
@@ -41,6 +61,10 @@ public:
 
     CUSTOM_EDITOR
     float playback_speed = 0.01f;
+    CUSTOM_EDITOR
+    float easing_from = 0.0f;
+    CUSTOM_EDITOR
+    float easing_to = 1.0f;
 
 protected:
     explicit Curve();
@@ -50,4 +74,6 @@ private:
     i32 m_smooth_precision = 6;
     float m_playback_position = 0.0f;
     bool m_is_playing = false;
+    LinkToTypes m_link_to = LinkToTypes::Position;
+    LinkToArgumentTypes m_link_to_argument = LinkToArgumentTypes::X;
 };
