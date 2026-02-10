@@ -8,7 +8,6 @@ active_choice = 0
 scene_serializer_lines = ""
 
 def find_serializable_variables(header_file_path, all_public):
-    
     in_public_section = False
 
     non_serializable = False
@@ -211,8 +210,7 @@ def create_header_code(Component):
     return header_code
 
 def create_serialization_code(file, Component, serializable_vars, indentation = 0):
-
-    name, parent, is_parent, is_abstract = file
+    name, parent, is_parent, is_abstract, file_name = file
 
     component = Component.lower()
 
@@ -276,7 +274,6 @@ def create_serialization_code(file, Component, serializable_vars, indentation = 
     return serialization_code
 
 def create_deserialization_code(Component, serializable_vars):
-
     deserialization_code = [
         '    if (component_name == "' + Component + 'Component")',
         '    {',
@@ -315,7 +312,6 @@ def create_deserialization_code(Component, serializable_vars):
     return deserialization_code
 
 def pick_variables(serializable_vars):
-    
     menu = serializable_vars
     active_choice = 0
 
@@ -346,8 +342,7 @@ def pick_variables(serializable_vars):
 
     return serializable_vars
 
-def scan_all_files(inherits_from = 'Component'):
-
+def scan_files(inherits_from = 'Component', allow_non_serialized = False):
     header_folder_path = args.engine_dir + '/src'
     files_to_serialize = []
 
@@ -365,39 +360,201 @@ def scan_all_files(inherits_from = 'Component'):
                                 # Class is not serialized, abort reading this file
                                 break
 
-                        if 'NON_SERIALIZED' in line:
+                        if not allow_non_serialized and 'NON_SERIALIZED' in line:
                             potentially_non_serialized_class = True
                             continue
 
                         if ': public ' + inherits_from in line and is_checked == False:
-                            files_to_serialize.append((os.path.join(root, file), inherits_from, False, is_abstract))
+                            files_to_serialize.append((os.path.join(root, file), inherits_from, False, is_abstract, file))
                             is_checked = True
 
                         if ' create()' in line and is_checked == True:
                             is_abstract = False
-                            _name, _parent, _is_parent, _is_abstract = files_to_serialize[-1]
-                            files_to_serialize[-1] = (_name, _parent, _is_parent, is_abstract)
+                            _name, _parent, _is_parent, _is_abstract, _file = files_to_serialize[-1]
+                            files_to_serialize[-1] = (_name, _parent, _is_parent, is_abstract, _file)
                             break;
-
     
     for i in range(len(files_to_serialize)):
         file = files_to_serialize[i]
-        name, parent, is_parent, is_abstract = file
-        kids = scan_all_files(os.path.basename(name.replace("\\", "/"))[:-2])
+        name, parent, is_parent, is_abstract, file_name = file
+        kids = scan_files(os.path.basename(name.replace("\\", "/"))[:-2], allow_non_serialized)
         if kids != []:
             is_parent = True
-            file = (name, parent, is_parent, is_abstract)
+            file = (name, parent, is_parent, is_abstract, file_name)
             files_to_serialize[i] = file
         files_to_serialize += kids
 
     return files_to_serialize
 
-def clean_up(files_to_serilize, Component, is_parent):
+def add_editor_code(files_to_serialize):
+    return
+    # Add draw_editor declarations to all components and wrap them in #if EDITOR.
+    draw_editor_declaration = "virtual void draw_editor() override;"
+    for file in files_to_serialize:
+        file_path = file[0]
+        lines_modified = False
 
+        with open(file_path, 'r') as f:
+            lines = f.readlines()
+
+        # Flags to track state
+        already_present = False
+        insert_index = None
+        in_class = False
+
+        # First, check if the declaration is already present
+        for i, line in enumerate(lines):
+            if draw_editor_declaration in line:
+                already_present = True
+
+                # Check if surrounded by #if/#endif
+                before = lines[i - 1].strip() if i > 0 else ""
+                after = lines[i + 1].strip() if i + 1 < len(lines) else ""
+
+                # Insert #if/#endif around it
+
+                if before != "#if EDITOR":
+                    lines.insert(i, "#if EDITOR\n")
+                    lines_modified = True
+
+                if after != "#endif":
+                    lines.insert(i + 1, "#endif\n")
+                    lines_modified = True
+                
+                break
+
+        if already_present and not lines_modified:
+            continue
+
+        # If not already present, find where to insert it
+        if not already_present:
+            for i, line in enumerate(lines):
+                stripped = line.strip()
+                if stripped.startswith("class "):
+                    in_class = True
+                    continue
+                if in_class:
+                    if "public:" in line:
+                        insert_index = i + 1
+                        break
+
+            # Insert the declaration if we found a place
+            if insert_index is not None:
+                lines.insert(insert_index, "#if EDITOR\n")
+                lines.insert(insert_index + 1, "    " + draw_editor_declaration + "\n")
+                lines.insert(insert_index + 2, "#endif\n\n")
+                lines_modified = True
+
+        if lines_modified:
+            with open(file_path, 'w') as f:
+                f.writelines(lines)
+
+    draw_editor_definition = """
+#if EDITOR
+void {classname}::draw_editor()
+{{
+{code}}}
+#endif
+"""
+
+    for file in files_to_serialize:
+        header_path = file[0]
+        file_name = file[4]
+        cpp_path = header_path[:-2] + ".cpp"
+
+        # Infer class name from header file name
+        class_name = file_name.strip(".h")
+
+        if not os.path.isfile(cpp_path):
+            print(f"Could not find cpp file for {header_path}, searched for {cpp_path}")
+            continue
+
+        # Check if the draw_editor definition is already present
+        already_present = False
+
+        with open(cpp_path, 'r') as f:
+            lines = f.readlines()
+
+        draw_editor_impl = f"void {class_name}::draw_editor()"
+
+        brace_count = 0
+        current_impl = ""
+        new_impl = ""
+        code = ""
+        start_index = None
+        end_index = None
+        for i, line in enumerate(lines):
+            if already_present:
+                brace_count += line.count("{")
+                brace_count -= line.count("}")
+
+                current_impl += line
+
+                # Found the end of the function
+                if brace_count == 0:
+                    # Check if ends with #endif
+                    after = lines[i + 1].strip() if i + 1 < len(lines) else ""
+                    end_index = i + 1 if i + 1 < len(lines) and lines[i + 1].strip() == "#endif" else i
+
+                    current_impl += after + "\n"
+
+                    break
+
+            if not already_present and draw_editor_impl in line:
+                already_present = True
+                start_index = i - 1 if i > 0 and lines[i - 1].strip() == "#if EDITOR" else i
+
+                # Check if starts with #if EDITOR
+                before = lines[i - 1].strip() if i > 0 else ""
+
+                current_impl += before + "\n" + line
+
+                new_impl += "#if EDITOR\n" + line + "{\n"
+
+        serializable_vars = find_serializable_variables(header_path, False)
+
+        for var in serializable_vars:
+            code += add_variable_editor_code(var)
+
+        if not already_present:
+            # Append the function to the cpp file
+            with open(cpp_path, 'a') as f:
+                f.write(draw_editor_definition.format(classname = class_name, code = code))
+        else:
+            new_impl += code + "}\n" + "#endif\n"
+
+            if new_impl != current_impl:
+                assert start_index is not None and end_index is not None
+                # Replace existing function
+                print(f"Editing existing draw_editor method in: {cpp_path}")
+                lines[start_index:end_index + 1] = new_impl
+
+                with open(cpp_path, 'w') as f:
+                    f.writelines(lines)
+
+
+def get_last_identifier(s):
+    # Remove everything after and including the first '<'
+    s = s.split('<', 1)[0]
+    # Split by '::' and take the last part
+    return s.split('::')[-1]
+
+def snake_to_pascal_with_spaces(s):
+    words = s.split('_')
+    capitalized_words = [word.capitalize() for word in words]
+    return ' '.join(capitalized_words)
+
+def add_variable_editor_code(var):
+    type_name = get_last_identifier(var[0])
+    variable_name = var[1]
+    variable_name_formatted = snake_to_pascal_with_spaces(variable_name)
+    return "    " + type_name + f"_draw_editor(\"{variable_name_formatted}: \", {variable_name});\n"
+
+def clean_up(files_to_serilize, Component, is_parent):
     if args.pick_files:
         component = Component.lower()
         for file in files_to_serilize:
-            new_name, new_parent, new_is_parent, new_is_abstract = file
+            new_name, new_parent, new_is_parent, new_is_abstract, file_name = file
             new_Component = os.path.basename(new_name)[:-2]
             if new_parent == Component:
                 clean_up(files_to_serilize, new_Component, new_is_parent)
@@ -409,8 +566,7 @@ def clean_up(files_to_serilize, Component, is_parent):
         remove_lines_between('if (component_name == "' + Component + 'Component")', 'else')
 
 def add_serialization(file, pick_vars, pick_files, indentation = 0):
-
-    name, parent, is_parent, is_abstract = file
+    name, parent, is_parent, is_abstract, file_name = file
     name = name.replace("\\", "/")
 
     if pick_files:
@@ -460,7 +616,7 @@ def add_serialization(file, pick_vars, pick_files, indentation = 0):
     components_to_remove = []
 
     for file in files_to_serialize:
-        new_name, new_parent, new_is_parent, new_is_abstract = file
+        new_name, new_parent, new_is_parent, new_is_abstract, new_file_name = file
         if new_parent == Component:
             components_to_remove.append(new_name)
             add_serialization(file, pick_vars, pick_files, indentation + 1)
@@ -474,7 +630,7 @@ def add_serialization(file, pick_vars, pick_files, indentation = 0):
                 index += 1
 
 def add_to_component_list(file):
-    name, parent, is_parent, is_abstract = file
+    name, parent, is_parent, is_abstract, file_name = file
     name = name.replace("\\", "/")
     Component = os.path.basename(name)[:-2]
     readable = re.sub(r'(?<=[a-z])(?=[A-Z])', ' ', Component)
@@ -501,8 +657,11 @@ args = parser.parse_args()
 with open(args.engine_dir + '/src/SceneSerializer.cpp', 'r') as file:
     scene_serializer_lines = file.readlines()
 
-files_to_serialize = scan_all_files()
-sorted_files = sorted(files_to_serialize, key=lambda x: x[1] != "Component")
+files_to_serialize = scan_files()
+all_components = scan_files(allow_non_serialized = True)
+
+# add_editor_code(all_components)
+
 for i in range(len(files_to_serialize)):
     print(files_to_serialize[i])
 
