@@ -3,6 +3,7 @@
 #include "AK/Types.h"
 #include "EngineDefines.h"
 #include "MainScene.h"
+#include "glm/gtc/type_ptr.hpp"
 
 #include <memory>
 #include <string>

@@ -11,7 +11,7 @@
 #include "RendererDX11.h"
 #include "ResourceManager.h"
 
-#include <glm/gtc/type_ptr.inl>
+#include <glm/gtc/type_ptr.hpp>
 
 #if EDITOR
 #include "imgui_stdlib.h"
