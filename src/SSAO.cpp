@@ -3,7 +3,7 @@
 #include <random>
 
 #include <glm/geometric.hpp>
-#include <glm/gtc/type_ptr.inl>
+#include <glm/gtc/type_ptr.hpp>
 
 #include "AK/Badge.h"
 #include "RendererDX11.h"

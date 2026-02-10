@@ -13,7 +13,7 @@
 #include "imgui_stdlib.h"
 #endif
 
-#include <glm/gtc/type_ptr.inl>
+#include <glm/gtc/type_ptr.hpp>
 
 std::shared_ptr<ScreenText> ScreenText::create()
 {

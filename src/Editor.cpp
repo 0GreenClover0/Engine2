@@ -11,7 +11,7 @@
 #endif
 
 #include <filesystem>
-#include <glm/gtc/type_ptr.inl>
+#include <glm/gtc/type_ptr.hpp>
 #include <glm/gtx/string_cast.hpp>
 
 #include "AK/ScopeGuard.h"
