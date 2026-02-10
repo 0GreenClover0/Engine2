@@ -1,6 +1,6 @@
 #include "BlurPassContainer.h"
 
-#include <glm/gtc/type_ptr.inl>
+#include <glm/gtc/type_ptr.hpp>
 
 #include "RendererDX11.h"
 #include "ResourceManager.h"

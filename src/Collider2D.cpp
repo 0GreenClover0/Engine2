@@ -12,7 +12,7 @@
 #include "imgui_extensions.h"
 #endif
 
-#include <glm/gtc/type_ptr.inl>
+#include <glm/gtc/type_ptr.hpp>
 #include <glm/gtx/quaternion.hpp>
 
 std::shared_ptr<Collider2D> Collider2D::create()

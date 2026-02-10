@@ -8,7 +8,7 @@
 #include "ResourceManager.h"
 
 #include <glm/gtc/random.hpp>
-#include <glm/gtc/type_ptr.inl>
+#include <glm/gtc/type_ptr.hpp>
 
 #if EDITOR
 #include "imgui_extensions.h"
