@@ -103,6 +103,12 @@ void Component::draw_editor()
 #endif
 }
 
+void Component::custom_draw_editor()
+{
+#if EDITOR
+#endif
+}
+
 void Component::set_can_tick(bool const value)
 {
     if (m_can_tick != value)
