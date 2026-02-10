@@ -390,6 +390,7 @@ def add_editor_code(files_to_serialize):
     return
     # Add draw_editor declarations to all components and wrap them in #if EDITOR.
     draw_editor_declaration = "virtual void draw_editor() override;"
+    custom_draw_editor_declaration = "virtual void custom_draw_editor() override;"
     for file in files_to_serialize:
         file_path = file[0]
         lines_modified = False
@@ -402,31 +403,58 @@ def add_editor_code(files_to_serialize):
         insert_index = None
         in_class = False
 
-        # First, check if the declaration is already present
+        custom_present = False
+
+        # First, check if the declaration is already present.
         for i, line in enumerate(lines):
-            if draw_editor_declaration in line:
+            if custom_present and already_present:
+                break
+
+            # Check if the line contains a draw_editor() declaration.
+            if not already_present and draw_editor_declaration in line:
                 already_present = True
 
-                # Check if surrounded by #if/#endif
+                # Check if surrounded by #if/#endif.
                 before = lines[i - 1].strip() if i > 0 else ""
                 after = lines[i + 1].strip() if i + 1 < len(lines) else ""
 
-                # Insert #if/#endif around it
-
+                # Insert #if/#endif around it.
+                increment = 1
                 if before != "#if EDITOR":
                     lines.insert(i, "#if EDITOR\n")
                     lines_modified = True
+                    increment += 1
 
                 if after != "#endif":
-                    lines.insert(i + 1, "#endif\n")
+                    lines.insert(i + increment, "#endif\n")
                     lines_modified = True
-                
-                break
 
+            # Check if the line contains a custom_draw_editor() declaration.
+            if not custom_present and custom_draw_editor_declaration in line:
+                custom_present = True
+
+                # Check if surrounded by #if/#endif.
+                before = lines[i - 1].strip() if i > 0 else ""
+                after = lines[i + 1].strip() if i + 1 < len(lines) else ""
+
+                # Insert #if/#endif around it.
+
+                increment = 1
+                if before != "#if EDITOR":
+                    lines.insert(i, "#if EDITOR\n")
+                    increment += 1
+                    lines_modified = True
+
+                if after != "#endif":
+                    lines.insert(i + increment, "#endif\n")
+                    lines_modified = True
+
+        # If draw_editor() is present and custom_draw_editor() is left unmofidied or it doesn't exist, skip this file.
         if already_present and not lines_modified:
             continue
 
-        # If not already present, find where to insert it
+        # If not already present, find where to insert it.
+        # We try to insert it directly after the first "public:" statement.
         if not already_present:
             for i, line in enumerate(lines):
                 stripped = line.strip()
@@ -438,7 +466,7 @@ def add_editor_code(files_to_serialize):
                         insert_index = i + 1
                         break
 
-            # Insert the declaration if we found a place
+            # Insert the declaration if we found a place.
             if insert_index is not None:
                 lines.insert(insert_index, "#if EDITOR\n")
                 lines.insert(insert_index + 1, "    " + draw_editor_declaration + "\n")
@@ -449,40 +477,40 @@ def add_editor_code(files_to_serialize):
             with open(file_path, 'w') as f:
                 f.writelines(lines)
 
-    draw_editor_definition = """
-#if EDITOR
-void {classname}::draw_editor()
-{{
-{code}}}
-#endif
-"""
-
     for file in files_to_serialize:
         header_path = file[0]
         file_name = file[4]
         cpp_path = header_path[:-2] + ".cpp"
 
-        # Infer class name from header file name
+        # Infer class name from header file name.
         class_name = file_name.strip(".h")
 
         if not os.path.isfile(cpp_path):
             print(f"Could not find cpp file for {header_path}, searched for {cpp_path}")
             continue
 
-        # Check if the draw_editor definition is already present
+        # Check if the draw_editor() definition is already present.
         already_present = False
 
         with open(cpp_path, 'r') as f:
             lines = f.readlines()
 
         draw_editor_impl = f"void {class_name}::draw_editor()"
+        custom_draw_editor_impl = f"void {class_name}::custom_draw_editor()"
 
         brace_count = 0
-        current_impl = ""
         new_impl = ""
-        code = ""
+        current_impl = ""
         start_index = None
         end_index = None
+        end_index_set = False
+
+        custom_present = False
+        custom_brace_count = 0
+        custom_height = 0
+        custom_needs_if_directive = False
+        custom_needs_endif_directive = False
+
         for i, line in enumerate(lines):
             if already_present:
                 brace_count += line.count("{")
@@ -490,65 +518,166 @@ void {classname}::draw_editor()
 
                 current_impl += line
 
-                # Found the end of the function
-                if brace_count == 0:
-                    # Check if ends with #endif
+                # Found the end of the function.
+                if brace_count == 0 and not end_index_set:
+                    end_index_set = True
+
+                    # Check if ends with #endif.
                     after = lines[i + 1].strip() if i + 1 < len(lines) else ""
                     end_index = i + 1 if i + 1 < len(lines) and lines[i + 1].strip() == "#endif" else i
 
                     current_impl += after + "\n"
 
-                    break
+                    # If custom is found as well, no more things to find, break.
+                    if custom_present:
+                        break
 
             if not already_present and draw_editor_impl in line:
                 already_present = True
                 start_index = i - 1 if i > 0 and lines[i - 1].strip() == "#if EDITOR" else i
 
-                # Check if starts with #if EDITOR
+                # Check if starts with #if EDITOR.
                 before = lines[i - 1].strip() if i > 0 else ""
 
                 current_impl += before + "\n" + line
 
-                new_impl += "#if EDITOR\n" + line + "{\n"
+                if before == "#if EDITOR":
+                    new_impl += "\n" if i > 1 and lines[i - 2] != "\n" else ""
+                else:
+                    new_impl += "\n" if i > 0 and lines[i - 1] != "\n" else ""
+
+            if custom_present:
+                custom_height += 1
+                custom_brace_count += line.count("{")
+                custom_brace_count -= line.count("}")
+
+                # Found the end of the function.
+                if custom_brace_count == 0:
+                    # Check if it ends with #endif.
+                    after = lines[i + 1].strip() if i + 1 < len(lines) else ""
+
+                    if after != "#endif":
+                        custom_needs_endif_directive = True
+
+                    if already_present and custom_present:
+                        break
+
+            if not custom_present and custom_draw_editor_impl in line:
+                custom_present = True
+
+                # Check if starts with #if EDITOR.
+                before = lines[i - 1].strip() if i > 0 else ""
+                if before != "#if EDITOR":
+                    custom_needs_if_directive = True
+
+        new_impl += "#if EDITOR\n" + draw_editor_impl + "\n" + "{\n"
+        new_impl += "    Component::draw_editor();\n\n"
+
+        if custom_present:
+            new_impl += "    custom_draw_editor();\n"
+
+        # Disable for now.
+        continue
 
         serializable_vars = find_serializable_variables(header_path, False)
 
+        code = ""
         for var in serializable_vars:
             code += add_variable_editor_code(var)
 
-        if not already_present:
-            # Append the function to the cpp file
-            with open(cpp_path, 'a') as f:
-                f.write(draw_editor_definition.format(classname = class_name, code = code))
-        else:
-            new_impl += code + "}\n" + "#endif\n"
+        new_impl += code + "}\n" + "#endif\n"
 
+        if not already_present:
+            lines += "\n"
+            lines += new_impl
+        else:
             if new_impl != current_impl:
                 assert start_index is not None and end_index is not None
-                # Replace existing function
-                print(f"Editing existing draw_editor method in: {cpp_path}")
-                lines[start_index:end_index + 1] = new_impl
 
-                with open(cpp_path, 'w') as f:
-                    f.writelines(lines)
+                # Replace existing function.
+                lines[start_index:end_index + 1] = new_impl.splitlines(keepends=True)
 
+        if custom_needs_if_directive or custom_needs_endif_directive:
+            for i, line in enumerate(lines):
+                if custom_draw_editor_impl in line:
+                    increment = 1
+                    if custom_needs_if_directive:
+                        lines.insert(i, "#if EDITOR\n")
+                        increment += 1
 
-def get_last_identifier(s):
-    # Remove everything after and including the first '<'
+                    if custom_needs_endif_directive:
+                        lines.insert(i + custom_height + increment, "#endif\n")
+
+                    break
+        
+        with open(cpp_path, 'w') as f:
+            f.writelines(lines)
+
+# Outer identifier is the very first "raw" type of a variable.
+# Ex. in std::vector<i32> it is a vector.
+def get_outer_identifier(s):
+    # Remove everything after and including the first '<'.
     s = s.split('<', 1)[0]
-    # Split by '::' and take the last part
+
+    # Split by '::' and take the last part.
     return s.split('::')[-1]
+
+# Inner identifier is the very first "inner" type of a variable.
+# Ex. in std::vector<i32> it is an i32, but in std::vector<std::vector<i32>> it is a std::vector<i32>.
+def get_inner_identifier(s):
+    if '<' not in s:
+        return None
+
+    return s[s.find('<') + 1 : s.rfind('>')]
 
 def snake_to_pascal_with_spaces(s):
     words = s.split('_')
     capitalized_words = [word.capitalize() for word in words]
     return ' '.join(capitalized_words)
 
+def generate_editor_code(type_str, var_expr, label, indent=4):
+    indent_str = " " * indent
+    outer = get_outer_identifier(type_str)
+
+    # Non-vector → simple editor call
+    if outer != "vector":
+        return (
+            f'{indent_str}{outer}_draw_editor("{label}: ", {var_expr});\n'
+        )
+
+    # Vector case
+    inner_type = get_inner_identifier(type_str)
+    index_var = f"i"
+
+    code = (
+        f'{indent_str}for (i64 {index_var} = 0; '
+        f'{index_var} < {var_expr}.size(); ++{index_var})\n'
+        f'{indent_str}{{\n'
+    )
+
+    # Recurse for the inner type
+    code += generate_editor_code(
+        inner_type,
+        f"{var_expr}[{index_var}]",
+        f"{label}",
+        indent + 4
+    )
+
+    code += f"{indent_str}}}\n"
+    return code
+
 def add_variable_editor_code(var):
-    type_name = get_last_identifier(var[0])
+    type_str = var[0]
     variable_name = var[1]
-    variable_name_formatted = snake_to_pascal_with_spaces(variable_name)
-    return "    " + type_name + f"_draw_editor(\"{variable_name_formatted}: \", {variable_name});\n"
+
+    label = snake_to_pascal_with_spaces(variable_name)
+
+    return generate_editor_code(
+        type_str,
+        variable_name,
+        label,
+        indent=4
+    )
 
 def clean_up(files_to_serilize, Component, is_parent):
     if args.pick_files:
@@ -660,7 +789,7 @@ with open(args.engine_dir + '/src/SceneSerializer.cpp', 'r') as file:
 files_to_serialize = scan_files()
 all_components = scan_files(allow_non_serialized = True)
 
-# add_editor_code(all_components)
+add_editor_code(all_components)
 
 for i in range(len(files_to_serialize)):
     print(files_to_serialize[i])

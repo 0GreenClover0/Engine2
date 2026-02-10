@@ -37,6 +37,7 @@ public:
     void destroy_immediate();
 
     virtual void draw_editor();
+    virtual void custom_draw_editor();
 
     std::shared_ptr<Entity> entity;
 
