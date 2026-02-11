@@ -44,6 +44,10 @@ public:
     virtual void draw_editor() override;
 #endif
 
+#if EDITOR
+    virtual void custom_draw_editor() override;
+#endif
+
     virtual void initialize() override;
     virtual void uninitialize() override;
 
@@ -87,20 +91,29 @@ public:
 
     void update_center_and_corners();
 
+    CUSTOM_EDITOR
     glm::vec2 offset = {};
 
+    CUSTOM_EDITOR
     bool is_trigger = false;
+    CUSTOM_EDITOR
     bool is_static = false;
 
+    CUSTOM_EDITOR
     ColliderType2D collider_type = ColliderType2D::Circle;
 
+    CUSTOM_EDITOR
     float width = 1.0f; // For rectangle
+    CUSTOM_EDITOR
     float height = 1.0f; // For rectangle
 
+    CUSTOM_EDITOR
     float radius = 1.0f; // For circle
 
     // FIXME: This should belong to some kind of Rigidbody component.
+    CUSTOM_EDITOR
     float drag = 0.01f;
+    CUSTOM_EDITOR
     glm::vec2 velocity = {};
 
 private:

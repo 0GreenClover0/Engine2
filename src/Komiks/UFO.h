@@ -28,6 +28,10 @@ public:
     virtual void draw_editor() override;
 #endif
 
+#if EDITOR
+    virtual void custom_draw_editor() override;
+#endif
+
     void choose_position();
 
     std::weak_ptr<FieldGrid> field_grid = {};

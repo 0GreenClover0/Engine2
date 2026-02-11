@@ -22,13 +22,11 @@ public:
 
     glm::vec2 get_speed() const;
 
+    std::weak_ptr<Truther> player = {};
+
     float maximum_speed = 2.0f;
     float acceleration = 0.2f;
     float deceleration = 0.1f;
-
-    bool is_active = false;
-
-    std::weak_ptr<Truther> player = {};
 
     NON_SERIALIZED
     float light_range = 0.69f * 3.0f;
@@ -36,17 +34,21 @@ public:
     NON_SERIALIZED
     float direction = 1.0f;
 
+    NON_SERIALIZED
+    bool is_active = false;
+
 private:
     void handle_input();
 
     void find_new_target();
 
     static std::shared_ptr<Sound> m_jeep_sound;
-    bool m_sound_was_spawned = false;
+
     glm::vec2 m_speed = glm::vec2(0.0f, 0.0f);
     glm::vec2 m_target;
     float m_point_on_path = 0.0f;
     float m_player_stun_range = 0.18f;
     float m_invincibility_timer = 0.0f;
+    bool m_sound_was_spawned = false;
     bool m_targeting_player = false;
 };

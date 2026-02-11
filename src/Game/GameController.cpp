@@ -16,7 +16,10 @@
 
 #if EDITOR
 #include <imgui.h>
-#include <imgui_extensions.h>
+#endif
+
+#if EDITOR
+#include "imgui_extensions.h"
 #endif
 
 std::shared_ptr<GameController> GameController::create()
@@ -151,12 +154,18 @@ void GameController::draw_editor()
 {
     Component::draw_editor();
 
+    custom_draw_editor();
+    weak_ptr_draw_editor("Dialog Manager: ", dialog_manager);
+}
+#endif
+
+#if EDITOR
+void GameController::custom_draw_editor()
+{
     if (ImGui::Button("Move"))
     {
         move_to_next_scene();
     }
-
-    ImGuiEx::draw_ptr("Dialog manager", dialog_manager);
 }
 #endif
 

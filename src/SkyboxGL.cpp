@@ -4,6 +4,10 @@
 
 #include "Globals.h"
 
+#if EDITOR
+#include "imgui_extensions.h"
+#endif
+
 SkyboxGL::SkyboxGL(AK::Badge<SkyboxFactory>, std::shared_ptr<Material> const& material, std::vector<std::string> const& face_paths)
     : Skybox(material, face_paths)
 {
@@ -75,3 +79,11 @@ void SkyboxGL::create_cube()
     glBindVertexArray(0);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
+
+#if EDITOR
+void SkyboxGL::draw_editor()
+{
+    Skybox::draw_editor();
+
+}
+#endif

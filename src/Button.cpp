@@ -14,6 +14,10 @@
 #include "imgui_stdlib.h"
 #endif
 
+#if EDITOR
+#include "imgui_extensions.h"
+#endif
+
 std::shared_ptr<Button> Button::create()
 {
     auto const ui_shader = ResourceManager::get_instance().load_shader("./res/shaders/ui.hlsl", "./res/shaders/ui.hlsl");
@@ -61,18 +65,15 @@ void Button::draw_editor()
 {
     Drawable::draw_editor();
 
-    ImGui::InputText("Default Image Path", &path_default);
+    custom_draw_editor();
+    string_draw_editor("Path Hovered: ", path_hovered);
+    string_draw_editor("Path Pressed: ", path_pressed);
+}
+#endif
 
-    // Just for instant feedback in editor mode. Hover and click don't work in editor anyway.
-    if (ImGui::IsItemDeactivatedAfterEdit())
-    {
-        m_path = path_default;
-        reprepare();
-    }
-
-    ImGui::InputText("Hovered Image Path", &path_hovered);
-    ImGui::InputText("Pressed Image Path", &path_pressed);
-
+#if EDITOR
+void Button::custom_draw_editor()
+{
     ImGui::Separator();
 
     ImGui::Text("Size Calculator");
@@ -119,6 +120,15 @@ void Button::draw_editor()
     {
         glm::vec3 const scale = entity->transform->get_local_scale();
         entity->transform->set_local_scale({scale.x * img_scale, scale.y * img_scale, 1.0f});
+    }
+
+    string_draw_editor("Path Default: ", path_default);
+
+    // Just for instant feedback in editor mode. Hover and click don't work in editor anyway.
+    if (ImGui::IsItemDeactivatedAfterEdit())
+    {
+        m_path = path_default;
+        reprepare();
     }
 }
 #endif
@@ -183,7 +193,7 @@ bool Button::is_hovered() const
     glm::vec2 mouse_pos_screen_space = {};
     glm::vec2 mouse_pos_pixels = {};
 
-    std::array const corners = {top_left_corner, top_right_corner, bottom_left_corner, bottom_right_corner};
+    std::array const corners = {m_top_left_corner, m_top_right_corner, m_bottom_left_corner, m_bottom_right_corner};
 
     mouse_pos_screen_space = Input::input->get_mouse_position();
     mouse_pos_pixels = {AK::Math::map_range_clamped(-1.0f, 1.0f, 0.0f, screen_size.x, mouse_pos_screen_space.x),
@@ -221,26 +231,26 @@ void Button::calculate_corners_position()
     glm::vec2 const world_top_left = {-1.0f * entity->transform->get_scale().x + entity->transform->get_position().x,
                                       -1.0f * entity->transform->get_scale().y - entity->transform->get_position().y};
 
-    top_left_corner = {AK::Math::map_range_clamped(-1.0f, 1.0f, 0.0f, screen_size.x, world_top_left.x),
-                       AK::Math::map_range_clamped(-1.0f, 1.0f, 0.0f, screen_size.y, world_top_left.y)};
+    m_top_left_corner = {AK::Math::map_range_clamped(-1.0f, 1.0f, 0.0f, screen_size.x, world_top_left.x),
+                         AK::Math::map_range_clamped(-1.0f, 1.0f, 0.0f, screen_size.y, world_top_left.y)};
 
     glm::vec2 const world_top_right = {1.0f * entity->transform->get_scale().x + entity->transform->get_position().x,
                                        -1.0f * entity->transform->get_scale().y - entity->transform->get_position().y};
 
-    top_right_corner = {AK::Math::map_range_clamped(-1.0f, 1.0f, 0.0f, screen_size.x, world_top_right.x),
-                        AK::Math::map_range_clamped(-1.0f, 1.0f, 0.0f, screen_size.y, world_top_right.y)};
+    m_top_right_corner = {AK::Math::map_range_clamped(-1.0f, 1.0f, 0.0f, screen_size.x, world_top_right.x),
+                          AK::Math::map_range_clamped(-1.0f, 1.0f, 0.0f, screen_size.y, world_top_right.y)};
 
     glm::vec2 const world_bottom_left = {-1.0f * entity->transform->get_scale().x + entity->transform->get_position().x,
                                          1.0f * entity->transform->get_scale().y - entity->transform->get_position().y};
 
-    bottom_left_corner = {AK::Math::map_range_clamped(-1.0f, 1.0f, 0.0f, screen_size.x, world_bottom_left.x),
-                          AK::Math::map_range_clamped(-1.0f, 1.0f, 0.0f, screen_size.y, world_bottom_left.y)};
+    m_bottom_left_corner = {AK::Math::map_range_clamped(-1.0f, 1.0f, 0.0f, screen_size.x, world_bottom_left.x),
+                            AK::Math::map_range_clamped(-1.0f, 1.0f, 0.0f, screen_size.y, world_bottom_left.y)};
 
     glm::vec2 const world_bottom_right = {1.0f * entity->transform->get_scale().x + entity->transform->get_position().x,
                                           1.0f * entity->transform->get_scale().y - entity->transform->get_position().y};
 
-    bottom_right_corner = {AK::Math::map_range_clamped(-1.0f, 1.0f, 0.0f, screen_size.x, world_bottom_right.x),
-                           AK::Math::map_range_clamped(-1.0f, 1.0f, 0.0f, screen_size.y, world_bottom_right.y)};
+    m_bottom_right_corner = {AK::Math::map_range_clamped(-1.0f, 1.0f, 0.0f, screen_size.x, world_bottom_right.x),
+                             AK::Math::map_range_clamped(-1.0f, 1.0f, 0.0f, screen_size.y, world_bottom_right.y)};
 }
 
 void Button::prepare()

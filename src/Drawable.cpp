@@ -3,6 +3,10 @@
 #include "Entity.h"
 #include "Renderer.h"
 
+#if EDITOR
+#include "imgui_extensions.h"
+#endif
+
 Drawable::Drawable(std::shared_ptr<Material> const& material) : material(material)
 {
 }
@@ -88,3 +92,11 @@ void Drawable::on_disabled()
 void Drawable::draw_instanced(i32 const size)
 {
 }
+
+#if EDITOR
+void Drawable::draw_editor()
+{
+    Component::draw_editor();
+
+}
+#endif

@@ -6,6 +6,10 @@
 
 #include <GLFW/glfw3.h>
 
+#if EDITOR
+#include "imgui_extensions.h"
+#endif
+
 std::shared_ptr<ExampleDynamicText> ExampleDynamicText::create()
 {
     return std::make_shared<ExampleDynamicText>();
@@ -31,3 +35,11 @@ void ExampleDynamicText::update()
     // But you still need to update it in terms of Direct3D state. This call does that.
     m_foo->set_text(m_example);
 }
+
+#if EDITOR
+void ExampleDynamicText::draw_editor()
+{
+    Component::draw_editor();
+
+}
+#endif

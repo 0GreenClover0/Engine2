@@ -17,9 +17,14 @@ public:
     virtual void draw_editor() override;
 #endif
 
+#if EDITOR
+    virtual void custom_draw_editor() override;
+#endif
+
     void prepare();
     virtual void reprepare() override;
 
+    CUSTOM_EDITOR
     std::string background_path = "./res/textures/white.jpg";
 
 private:

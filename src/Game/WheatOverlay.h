@@ -11,12 +11,13 @@ public:
     static std::shared_ptr<WheatOverlay> create();
 
     explicit WheatOverlay(AK::Badge<WheatOverlay>);
-#if EDITOR
-    virtual void draw_editor() override;
-#endif
 
     virtual void awake() override;
     virtual void update() override;
+
+#if EDITOR
+    virtual void draw_editor() override;
+#endif
 
     void set_overlay_alpha(float alpha);
 

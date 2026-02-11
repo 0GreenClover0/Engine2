@@ -6,6 +6,10 @@
 class NowPromptTrigger : public Component
 {
 public:
+#if EDITOR
+    virtual void draw_editor() override;
+#endif
+
     static std::shared_ptr<NowPromptTrigger> create();
     explicit NowPromptTrigger(AK::Badge<NowPromptTrigger>);
 

@@ -8,9 +8,12 @@
 #include <iostream>
 
 #if EDITOR
-#include "imgui_extensions.h"
 #include <imgui.h>
 #include <implot.h>
+#endif
+
+#if EDITOR
+#include "imgui_extensions.h"
 #endif
 
 std::shared_ptr<Curve> Curve::create()
@@ -29,6 +32,13 @@ void Curve::draw_editor()
 {
     Component::draw_editor();
 
+    custom_draw_editor();
+}
+#endif
+
+#if EDITOR
+void Curve::custom_draw_editor()
+{
     if (ImPlot::BeginPlot("Path visualised"))
     {
         ImPlot::PushStyleVar(ImPlotStyleVar_LineWeight, 2.0f);

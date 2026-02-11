@@ -12,6 +12,10 @@ class CowManager;
 class Cow final : public Component
 {
 public:
+#if EDITOR
+    virtual void draw_editor() override;
+#endif
+
     static std::shared_ptr<Cow> create();
 
     explicit Cow(AK::Badge<Cow>);
@@ -24,7 +28,10 @@ public:
 
     void play_sound_per_chance(float const chance) const;
 
+    NON_SERIALIZED
     std::weak_ptr<CowManager> cow_manager = {};
+
+    NON_SERIALIZED
     bool is_sucked = false;
 
 private:

@@ -22,11 +22,16 @@ public:
     virtual void draw_editor() override;
 #endif
 
+#if EDITOR
+    virtual void custom_draw_editor() override;
+#endif
+
     virtual void reprepare() override;
     void prepare();
 
     void set_alpha(float alpha);
 
+    CUSTOM_EDITOR
     std::string path = "./res/textures/particle.png";
 
 private:

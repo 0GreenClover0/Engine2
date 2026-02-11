@@ -8,7 +8,10 @@
 
 #if EDITOR
 #include <imgui.h>
-#include <imgui_extensions.h>
+#endif
+
+#if EDITOR
+#include "imgui_extensions.h"
 #endif
 
 Floater::Floater(AK::Badge<Floater>)
@@ -39,14 +42,12 @@ void Floater::draw_editor()
 {
     Component::draw_editor();
 
-    ImGui::InputFloat("Sink", &sink);
-    ImGui::Text("Forward floaters");
-    ImGui::InputFloat("Forward rotation strength", &forward_rotation_strength);
-    ImGui::InputFloat("Forward floaters offset", &forward_floaters_offest);
-    ImGui::Text("Side floaters");
-    ImGui::InputFloat("Side rotation strength", &side_roation_strength);
-    ImGui::InputFloat("Side floaters offset", &side_floaters_offset);
-    ImGuiEx::draw_ptr("Water", water);
+    float_draw_editor("Sink: ", sink);
+    float_draw_editor("Side Floaters Offset: ", side_floaters_offset);
+    float_draw_editor("Side Roation Strength: ", side_roation_strength);
+    float_draw_editor("Forward Rotation Strength: ", forward_rotation_strength);
+    float_draw_editor("Forward Floaters Offest: ", forward_floaters_offest);
+    weak_ptr_draw_editor("Water: ", water);
 }
 #endif
 

@@ -19,6 +19,7 @@ struct SpawnEvent
     SpawnType spawn_type = SpawnType::Sequence;
 };
 
+CUSTOM_EDITOR_ONLY
 class ShipSpawner final : public Component
 {
 
@@ -30,8 +31,13 @@ public:
 
     virtual void awake() override;
     virtual void update() override;
+
 #if EDITOR
     virtual void draw_editor() override;
+#endif
+
+#if EDITOR
+    virtual void custom_draw_editor() override;
 #endif
 
     std::optional<glm::vec2> find_nearest_non_pirate_ship(std::shared_ptr<Ship> const& center_ship) const;

@@ -9,9 +9,8 @@
 #include "ParticleSystem.h"
 #include "Wheat.h"
 
-#include "glm/gtx/easing.hpp"
-
 #include <glm/gtc/random.hpp>
+#include <glm/gtx/easing.hpp>
 
 #if EDITOR
 #include "imgui_extensions.h"
@@ -136,6 +135,18 @@ void UFO::draw_editor()
 {
     Component::draw_editor();
 
+    custom_draw_editor();
+    weak_ptr_draw_editor("Field Grid: ", field_grid);
+    weak_ptr_draw_editor("Truther: ", truther);
+    weak_ptr_draw_editor("Attract Bean: ", attract_bean);
+    weak_ptr_draw_editor("Cow Manager: ", cow_manager);
+    weak_ptr_draw_editor("Particles: ", particles);
+}
+#endif
+
+#if EDITOR
+void UFO::custom_draw_editor()
+{
     if (ImGui::Button("Spawn"))
     {
         choose_position();
@@ -143,12 +154,6 @@ void UFO::draw_editor()
         m_move_timer = 0.0f;
         m_is_active = true;
     }
-
-    ImGuiEx::draw_ptr("Field Grid", field_grid);
-    ImGuiEx::draw_ptr("Truther", truther);
-    ImGuiEx::draw_ptr("Attract Bean", attract_bean);
-    ImGuiEx::draw_ptr("Cow Manager", cow_manager);
-    ImGuiEx::draw_ptr("Particles", particles);
 }
 #endif
 

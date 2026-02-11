@@ -19,8 +19,13 @@ public:
     static std::shared_ptr<Factory> create();
 
     explicit Factory(AK::Badge<Factory>);
+
 #if EDITOR
     virtual void draw_editor() override;
+#endif
+
+#if EDITOR
+    virtual void custom_draw_editor() override;
 #endif
 
     virtual void awake() override;
@@ -36,10 +41,12 @@ public:
 
     i32 get_max_flash_count() const;
 
+    CUSTOM_EDITOR
     FactoryType type = FactoryType::Generator;
 
+    // FIXME: This might not be used anymore.
+    CUSTOM_EDITOR
     std::vector<std::weak_ptr<PointLight>> lights = {};
-    std::weak_ptr<PointLight> factory_light = {};
 
 private:
     std::weak_ptr<Model> model = {};

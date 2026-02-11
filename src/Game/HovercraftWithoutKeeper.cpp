@@ -9,6 +9,10 @@
 #include <glm/common.hpp>
 #include <glm/ext/quaternion_geometric.hpp>
 
+#if EDITOR
+#include "imgui_extensions.h"
+#endif
+
 std::shared_ptr<HovercraftWithoutKeeper> HovercraftWithoutKeeper::create()
 {
     return std::make_shared<HovercraftWithoutKeeper>(AK::Badge<HovercraftWithoutKeeper> {});
@@ -61,3 +65,11 @@ void HovercraftWithoutKeeper::update()
 
     entity->transform->set_local_position(entity->transform->get_local_position() + speed_vector);
 }
+
+#if EDITOR
+void HovercraftWithoutKeeper::draw_editor()
+{
+    Component::draw_editor();
+
+}
+#endif

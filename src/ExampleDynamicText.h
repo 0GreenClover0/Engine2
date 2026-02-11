@@ -7,6 +7,10 @@
 class ExampleDynamicText final : public Component
 {
 public:
+#if EDITOR
+    virtual void draw_editor() override;
+#endif
+
     static std::shared_ptr<ExampleDynamicText> create();
 
     virtual void awake() override;

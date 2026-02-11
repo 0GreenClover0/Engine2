@@ -9,8 +9,11 @@
 #include "SceneSerializer.h"
 
 #if EDITOR
-#include "imgui_extensions.h"
 #include "imgui_stdlib.h"
+#endif
+
+#if EDITOR
+#include "imgui_extensions.h"
 #endif
 
 std::shared_ptr<CustomerManager> CustomerManager::create()
@@ -93,6 +96,15 @@ void CustomerManager::draw_editor()
 {
     Component::draw_editor();
 
+    custom_draw_editor();
+    weak_ptr_draw_editor("Destination Curve: ", destination_curve);
+    string_draw_editor("Customer Prefab: ", customer_prefab);
+}
+#endif
+
+#if EDITOR
+void CustomerManager::custom_draw_editor()
+{
     for (size_t i = 0; i < destinations_after_feeding.size(); i++)
     {
         ImGuiEx::draw_ptr("Destination After Feeding", destinations_after_feeding[i]);
@@ -102,9 +114,6 @@ void CustomerManager::draw_editor()
     {
         destinations_after_feeding.emplace_back(std::weak_ptr<Entity> {});
     }
-
-    ImGuiEx::draw_ptr("Destination Curve", destination_curve);
-    ImGui::InputText("Customer Prefab", &customer_prefab);
 }
 #endif
 

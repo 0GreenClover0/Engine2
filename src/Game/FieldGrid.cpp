@@ -4,10 +4,13 @@
 #include "Collider2D.h"
 #include "FieldCell.h"
 #include "glm/ext/quaternion_exponential.hpp"
-#include "imgui_extensions.h"
 
 #include <algorithm>
 #include <glm/gtc/random.hpp>
+
+#if EDITOR
+#include "imgui_extensions.h"
+#endif
 
 std::shared_ptr<FieldGrid> FieldGrid::create()
 {
@@ -27,6 +30,15 @@ void FieldGrid::initialize()
 
 #if EDITOR
 void FieldGrid::draw_editor()
+{
+    Component::draw_editor();
+
+    custom_draw_editor();
+}
+#endif
+
+#if EDITOR
+void FieldGrid::custom_draw_editor()
 {
     Component::draw_editor();
     ImGui::SliderInt("Rows", &rows_number, 1, 99);

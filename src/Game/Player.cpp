@@ -11,8 +11,11 @@
 #include <GLFW/glfw3.h>
 
 #if EDITOR
-#include "imgui_extensions.h"
 #include <imgui.h>
+#endif
+
+#if EDITOR
+#include "imgui_extensions.h"
 #endif
 
 std::shared_ptr<Player> Player::create()
@@ -154,11 +157,17 @@ void Player::draw_editor()
 {
     Component::draw_editor();
 
-    ImGuiEx::draw_ptr("Packages UI Text", packages_text);
-    ImGuiEx::draw_ptr("Flashes UI Text", flashes_text);
-    ImGuiEx::draw_ptr("Level UI Text", level_text);
-    ImGuiEx::draw_ptr("Clock UI Text", clock_text);
+    custom_draw_editor();
+    weak_ptr_draw_editor("Packages Text: ", packages_text);
+    weak_ptr_draw_editor("Flashes Text: ", flashes_text);
+    weak_ptr_draw_editor("Level Text: ", level_text);
+    weak_ptr_draw_editor("Clock Text: ", clock_text);
+}
+#endif
 
+#if EDITOR
+void Player::custom_draw_editor()
+{
     if (Engine::is_game_running())
     {
 

@@ -10,6 +10,10 @@
 #include <imgui.h>
 #endif
 
+#if EDITOR
+#include "imgui_extensions.h"
+#endif
+
 std::shared_ptr<SpotLight> SpotLight::create()
 {
     auto spot_light = std::make_shared<SpotLight>(AK::Badge<SpotLight> {});
@@ -21,6 +25,14 @@ std::shared_ptr<SpotLight> SpotLight::create()
 void SpotLight::draw_editor()
 {
     Light::draw_editor();
+
+    custom_draw_editor();
+}
+#endif
+
+#if EDITOR
+void SpotLight::custom_draw_editor()
+{
     ImGui::Text("Attenuation:");
     ImGui::SliderFloat("Linear", &linear, 0.0f, 1.0f);
     ImGui::SliderFloat("Quadratic", &quadratic, 0.0f, 1.0f);

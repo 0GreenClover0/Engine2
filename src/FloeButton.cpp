@@ -10,6 +10,10 @@
 #include "ResourceManager.h"
 #include "SceneSerializer.h"
 
+#if EDITOR
+#include "imgui_extensions.h"
+#endif
+
 bool FloeButton::are_credits_open = false;
 
 std::shared_ptr<FloeButton> FloeButton::create()
@@ -100,6 +104,13 @@ void FloeButton::draw_editor()
 {
     Component::draw_editor();
 
+    custom_draw_editor();
+}
+#endif
+
+#if EDITOR
+void FloeButton::custom_draw_editor()
+{
     ImGui::Spacing();
     ImGui::Separator();
     ImGui::Spacing();

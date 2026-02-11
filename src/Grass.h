@@ -7,6 +7,10 @@ NON_SERIALIZED
 class Grass final : public Model
 {
 public:
+#if EDITOR
+    virtual void draw_editor() override;
+#endif
+
     static std::shared_ptr<Grass> create();
     static std::shared_ptr<Grass> create(std::shared_ptr<Material> const& material);
     static std::shared_ptr<Grass> create(std::shared_ptr<Material> const& material, std::string const& diffuse_texture_path = "");

@@ -24,9 +24,9 @@ public:
     virtual void draw_editor() override;
 #endif
 
-    std::weak_ptr<Jeep> jeep = {};
-
     void set_destination(glm::vec2 destination);
+
+    std::weak_ptr<Jeep> jeep = {};
 
 private:
     std::weak_ptr<SpotLight> m_spotlight = {};

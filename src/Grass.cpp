@@ -5,6 +5,10 @@
 #include "ResourceManager.h"
 #include "TextureLoader.h"
 
+#if EDITOR
+#include "imgui_extensions.h"
+#endif
+
 std::shared_ptr<Grass> Grass::create()
 {
     auto grass = std::make_shared<Grass>(AK::Badge<Grass> {}, default_material);
@@ -80,3 +84,11 @@ std::shared_ptr<Mesh> Grass::create_blade() const
     return ResourceManager::get_instance().load_mesh(m_meshes.size(), m_diffuse_texture_path, vertices, indices, textures, m_draw_type,
                                                      material);
 }
+
+#if EDITOR
+void Grass::draw_editor()
+{
+    Model::draw_editor();
+
+}
+#endif

@@ -7,6 +7,10 @@
 #include "MeshFactory.h"
 #include "ResourceManager.h"
 
+#if EDITOR
+#include "imgui_extensions.h"
+#endif
+
 std::shared_ptr<Cube> Cube::create()
 {
     auto cube = std::make_shared<Cube>(AK::Badge<Cube> {}, default_material);
@@ -109,3 +113,13 @@ std::shared_ptr<Mesh> Cube::create_cube() const
 
     return ResourceManager::get_instance().load_mesh(m_meshes.size(), stream.str(), vertices, indices, textures, m_draw_type, material);
 }
+
+#if EDITOR
+void Cube::draw_editor()
+{
+    Model::draw_editor();
+
+    string_draw_editor("Diffuse Texture Path: ", diffuse_texture_path);
+    string_draw_editor("Specular Texture Path: ", specular_texture_path);
+}
+#endif

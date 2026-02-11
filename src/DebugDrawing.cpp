@@ -9,6 +9,10 @@
 #include "ResourceManager.h"
 #include "Sphere.h"
 
+#if EDITOR
+#include "imgui_extensions.h"
+#endif
+
 DebugDrawing::DebugDrawing(AK::Badge<DebugDrawing>)
 {
 }
@@ -113,6 +117,13 @@ void DebugDrawing::draw_editor()
 {
     Component::draw_editor();
 
+    custom_draw_editor();
+}
+#endif
+
+#if EDITOR
+void DebugDrawing::custom_draw_editor()
+{
     std::array const drawing_types = {"Sphere", "Box"};
     i32 current_item_index = static_cast<i32>(m_type);
     if (ImGui::Combo("Debug Drawing Type", &current_item_index, drawing_types.data(), drawing_types.size()))

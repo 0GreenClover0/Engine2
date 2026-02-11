@@ -6,6 +6,10 @@
 #include <imgui.h>
 #endif
 
+#if EDITOR
+#include "imgui_extensions.h"
+#endif
+
 Light::~Light()
 {
 }
@@ -15,6 +19,13 @@ void Light::draw_editor()
 {
     Component::draw_editor();
 
+    custom_draw_editor();
+}
+#endif
+
+#if EDITOR
+void Light::custom_draw_editor()
+{
     float diffuse_color[] = {diffuse.x, diffuse.y, diffuse.z};
     ImGui::ColorEdit3("Diffuse color", diffuse_color);
     diffuse = glm::vec3(diffuse_color[0], diffuse_color[1], diffuse_color[2]);

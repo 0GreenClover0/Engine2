@@ -8,6 +8,10 @@
 class Drawable : public Component
 {
 public:
+#if EDITOR
+    virtual void draw_editor() override;
+#endif
+
     explicit Drawable(std::shared_ptr<Material> const& material);
     ~Drawable() override = default;
 
@@ -36,6 +40,8 @@ public:
     NON_SERIALIZED
     BoundingBox bounds = {};
 
+    // FIXME: This cannot be represented in an editor right now.
+    CUSTOM_EDITOR
     std::shared_ptr<Material> material = nullptr;
 
 protected:

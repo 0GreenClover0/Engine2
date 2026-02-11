@@ -7,6 +7,7 @@
 #include "AK/Types.h"
 #include "Component.h"
 
+CUSTOM_EDITOR_ONLY
 class Sound final : public Component
 {
 public:
@@ -28,6 +29,10 @@ public:
 
 #if EDITOR
     virtual void draw_editor() override;
+#endif
+
+#if EDITOR
+    virtual void custom_draw_editor() override;
 #endif
 
     virtual void reprepare() override;

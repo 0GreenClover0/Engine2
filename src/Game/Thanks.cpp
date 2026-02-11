@@ -8,8 +8,11 @@
 #include "Popup.h"
 
 #if EDITOR
-#include "imgui_extensions.h"
 #include <imgui.h>
+#endif
+
+#if EDITOR
+#include "imgui_extensions.h"
 #endif
 
 std::shared_ptr<Thanks> Thanks::create()
@@ -52,7 +55,7 @@ void Thanks::draw_editor()
 {
     Component::draw_editor();
 
-    ImGuiEx::draw_ptr("Back to menu button", back_to_menu_button);
+    weak_ptr_draw_editor("Back To Menu Button: ", back_to_menu_button);
 }
 #endif
 

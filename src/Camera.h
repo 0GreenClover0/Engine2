@@ -22,6 +22,10 @@ public:
     virtual void draw_editor() override;
 #endif
 
+#if EDITOR
+    virtual void custom_draw_editor() override;
+#endif
+
     glm::vec3 get_position() const;
     glm::mat4 get_projection();
 
@@ -50,9 +54,7 @@ public:
     explicit Camera(AK::Badge<Camera>);
     explicit Camera(AK::Badge<Camera>, float const width, float const height, float const fov);
 
-    float width = 1280.0f;
-    float height = 720.0f;
-
+    CUSTOM_EDITOR
     float fov = 1.0f;
 
     float near_plane = 0.1f;
@@ -71,4 +73,7 @@ private:
     glm::vec3 m_last_frustum_position = {};
 
     inline static std::shared_ptr<Camera> m_main_camera;
+
+    float m_width = 1280.0f;
+    float m_height = 720.0f;
 };

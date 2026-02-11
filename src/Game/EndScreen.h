@@ -17,9 +17,15 @@ public:
     virtual void update() override;
     virtual void on_enabled() override;
     virtual void on_disabled() override;
+
 #if EDITOR
     virtual void draw_editor() override;
 #endif
+
+#if EDITOR
+    virtual void custom_draw_editor() override;
+#endif
+
     void update_background();
     void update_star(u32 const star_number);
 
@@ -29,15 +35,22 @@ public:
 
     virtual void hide() override;
 
+    CUSTOM_EDITOR
     bool is_failed = false;
+    CUSTOM_EDITOR
     u32 number_of_stars = 1;
 
+    CUSTOM_EDITOR
     std::vector<std::weak_ptr<Entity>> stars = {};
 
+    CUSTOM_EDITOR
     glm::vec2 star_scale = {};
 
+    CUSTOM_EDITOR
     std::weak_ptr<Button> next_level_button = {};
+    CUSTOM_EDITOR
     std::weak_ptr<Button> restart_button = {};
+    CUSTOM_EDITOR
     std::weak_ptr<Button> menu_button = {};
 
 private:

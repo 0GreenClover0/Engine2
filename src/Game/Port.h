@@ -17,6 +17,10 @@ public:
     virtual void draw_editor() override;
 #endif
 
+#if EDITOR
+    virtual void custom_draw_editor() override;
+#endif
+
     virtual void on_trigger_enter(std::shared_ptr<Collider2D> const& other) override;
     virtual void on_trigger_exit(std::shared_ptr<Collider2D> const& other) override;
 
@@ -26,6 +30,7 @@ public:
 
     float get_interactable_distance() const;
 
+    CUSTOM_EDITOR
     std::vector<std::weak_ptr<Entity>> lights = {};
 
 private:

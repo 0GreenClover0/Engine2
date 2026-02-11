@@ -30,6 +30,7 @@ struct ParticleSpawnData
     bool simulate_in_world_space = false;
 };
 
+CUSTOM_EDITOR_ONLY
 class ParticleSystem final : public Component
 {
 public:
@@ -40,6 +41,10 @@ public:
 
 #if EDITOR
     virtual void draw_editor() override;
+#endif
+
+#if EDITOR
+    virtual void custom_draw_editor() override;
 #endif
 
     virtual void update() override;

@@ -16,6 +16,10 @@ public:
     virtual void draw_editor() override;
 #endif
 
+#if EDITOR
+    virtual void custom_draw_editor() override;
+#endif
+
     virtual void initialize() override;
     virtual void uninitialize() override;
 
@@ -29,16 +33,25 @@ public:
     ID3D11ShaderResourceView* const* get_shadow_shader_resource_view_address() const;
     ID3D11ShaderResourceView* get_shadow_shader_resource_view() const;
 
+    CUSTOM_EDITOR
     glm::vec3 ambient = glm::vec3(0.2f, 0.2f, 0.2f);
+    CUSTOM_EDITOR
     glm::vec3 diffuse = glm::vec3(1.0f, 1.0f, 1.0f);
+    CUSTOM_EDITOR
     glm::vec3 specular = glm::vec3(1.0f, 1.0f, 1.0f);
 
+    CUSTOM_EDITOR
     float m_near_plane = 0.5f;
+    CUSTOM_EDITOR
     float m_far_plane = 25.0f;
 
+    CUSTOM_EDITOR
     u32 m_blocker_search_num_samples = 16;
+    CUSTOM_EDITOR
     u32 m_pcf_num_samples = 16;
+    CUSTOM_EDITOR
     float m_light_world_size = 0.5f;
+    CUSTOM_EDITOR
     float m_light_frustum_width = 30.0f;
 
 protected:
