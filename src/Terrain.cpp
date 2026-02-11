@@ -6,6 +6,10 @@
 #include "MeshFactory.h"
 #include "ResourceManager.h"
 
+#if EDITOR
+#include "imgui_extensions.h"
+#endif
+
 std::shared_ptr<Terrain> Terrain::create(std::shared_ptr<Material> const& material, bool const use_gpu, std::string const& height_map_path)
 {
     auto terrain = std::make_shared<Terrain>(AK::Badge<Terrain> {}, material, use_gpu, height_map_path);
@@ -191,3 +195,11 @@ std::shared_ptr<Mesh> Terrain::create_terrain_from_height_map()
 
     return ResourceManager::get_instance().load_mesh(m_meshes.size(), m_height_map_path, vertices, indices, {}, m_draw_type, material);
 }
+
+#if EDITOR
+void Terrain::draw_editor()
+{
+    Model::draw_editor();
+
+}
+#endif

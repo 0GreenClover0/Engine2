@@ -13,6 +13,7 @@
 #include "Komiks/Wheat.h"
 #include "LevelController.h"
 #include "Lighthouse.h"
+#include "Path.h"
 #include "PhysicsEngine.h"
 #include "Player.h"
 #include "Port.h"
@@ -24,10 +25,12 @@
 #include <glm/gtc/random.hpp>
 
 #if EDITOR
-#include "imgui_extensions.h"
 #include <imgui.h>
 #endif
-#include "Path.h"
+
+#if EDITOR
+#include "imgui_extensions.h"
+#endif
 
 std::shared_ptr<Sound> Jeep::m_jeep_sound = {};
 
@@ -182,10 +185,10 @@ void Jeep::draw_editor()
 {
     Component::draw_editor();
 
-    ImGuiEx::InputFloat("Acceleration", &acceleration);
-    ImGuiEx::InputFloat("Deceleration", &deceleration);
-    ImGuiEx::InputFloat("Maximum speed", &maximum_speed);
-    ImGuiEx::draw_ptr("Truther", player);
+    weak_ptr_draw_editor("Player: ", player);
+    float_draw_editor("Maximum Speed: ", maximum_speed);
+    float_draw_editor("Acceleration: ", acceleration);
+    float_draw_editor("Deceleration: ", deceleration);
 }
 #endif
 

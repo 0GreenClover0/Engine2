@@ -2,16 +2,16 @@
 
 #include "Entity.h"
 #include "Game/LevelController.h"
+#include "Globals.h"
 #include "Model.h"
 #include "Player.h"
+#include "Quad.h"
 #include "ResourceManager.h"
 #include "SceneSerializer.h"
 
 #if EDITOR
 #include "imgui_extensions.h"
 #endif
-#include <Globals.h>
-#include <Quad.h>
 
 std::shared_ptr<WheatOverlay> WheatOverlay::create()
 {
@@ -66,5 +66,6 @@ void WheatOverlay::set_overlay_alpha(float alpha)
 void WheatOverlay::draw_editor()
 {
     Component::draw_editor();
+
 }
 #endif

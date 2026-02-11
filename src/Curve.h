@@ -16,11 +16,17 @@ public:
     virtual void draw_editor() override;
 #endif
 
-    std::vector<glm::vec2> points = {};
+#if EDITOR
+    virtual void custom_draw_editor() override;
+#endif
+
     glm::vec2 get_point_at(float x) const;
     float get_y_at(float x) const;
     void add_points(std::initializer_list<glm::vec2> new_points);
     float length() const;
+
+    CUSTOM_EDITOR
+    std::vector<glm::vec2> points = {};
 
 protected:
     explicit Curve();

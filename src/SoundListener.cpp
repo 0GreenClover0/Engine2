@@ -5,6 +5,10 @@
 #include "Engine.h"
 #include "Entity.h"
 
+#if EDITOR
+#include "imgui_extensions.h"
+#endif
+
 std::shared_ptr<SoundListener> SoundListener::create()
 {
     auto sound_listener = std::make_shared<SoundListener>(AK::Badge<SoundListener> {});
@@ -37,3 +41,11 @@ void SoundListener::update()
     ma_engine_listener_set_position(&Engine::audio_engine, 0, position.x, position.y, position.z);
     ma_engine_listener_set_direction(&Engine::audio_engine, 0, forward.x, forward.y, forward.z);
 }
+
+#if EDITOR
+void SoundListener::draw_editor()
+{
+    Component::draw_editor();
+
+}
+#endif

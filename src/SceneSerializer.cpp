@@ -145,8 +145,6 @@ void SceneSerializer::auto_serialize_component(YAML::Emitter& out, std::shared_p
         out << YAML::Key << "ComponentName" << YAML::Value << "CameraComponent";
         out << YAML::Key << "guid" << YAML::Value << camera->guid;
         out << YAML::Key << "custom_name" << YAML::Value << camera->custom_name;
-        out << YAML::Key << "width" << YAML::Value << camera->width;
-        out << YAML::Key << "height" << YAML::Value << camera->height;
         out << YAML::Key << "fov" << YAML::Value << camera->fov;
         out << YAML::Key << "near_plane" << YAML::Value << camera->near_plane;
         out << YAML::Key << "far_plane" << YAML::Value << camera->far_plane;
@@ -208,7 +206,6 @@ void SceneSerializer::auto_serialize_component(YAML::Emitter& out, std::shared_p
         out << YAML::Key << "ComponentName" << YAML::Value << "DialoguePromptControllerComponent";
         out << YAML::Key << "guid" << YAML::Value << dialoguepromptcontroller->guid;
         out << YAML::Key << "custom_name" << YAML::Value << dialoguepromptcontroller->custom_name;
-        out << YAML::Key << "interp_speed" << YAML::Value << dialoguepromptcontroller->interp_speed;
         out << YAML::Key << "dialogue_panel" << YAML::Value << dialoguepromptcontroller->dialogue_panel;
         out << YAML::Key << "panel_parent" << YAML::Value << dialoguepromptcontroller->panel_parent;
         out << YAML::Key << "keeper_sprite" << YAML::Value << dialoguepromptcontroller->keeper_sprite;
@@ -311,10 +308,6 @@ void SceneSerializer::auto_serialize_component(YAML::Emitter& out, std::shared_p
             out << YAML::Key << "path_default" << YAML::Value << button->path_default;
             out << YAML::Key << "path_hovered" << YAML::Value << button->path_hovered;
             out << YAML::Key << "path_pressed" << YAML::Value << button->path_pressed;
-            out << YAML::Key << "top_left_corner" << YAML::Value << button->top_left_corner;
-            out << YAML::Key << "top_right_corner" << YAML::Value << button->top_right_corner;
-            out << YAML::Key << "bottom_left_corner" << YAML::Value << button->bottom_left_corner;
-            out << YAML::Key << "bottom_right_corner" << YAML::Value << button->bottom_right_corner;
         }
         else
         {
@@ -548,7 +541,6 @@ void SceneSerializer::auto_serialize_component(YAML::Emitter& out, std::shared_p
         out << YAML::Key << "custom_name" << YAML::Value << factory->custom_name;
         out << YAML::Key << "type" << YAML::Value << factory->type;
         out << YAML::Key << "lights" << YAML::Value << factory->lights;
-        out << YAML::Key << "factory_light" << YAML::Value << factory->factory_light;
         out << YAML::EndMap;
     }
     else
@@ -579,8 +571,6 @@ void SceneSerializer::auto_serialize_component(YAML::Emitter& out, std::shared_p
         out << YAML::Key << "ComponentName" << YAML::Value << "GameControllerComponent";
         out << YAML::Key << "guid" << YAML::Value << gamecontroller->guid;
         out << YAML::Key << "custom_name" << YAML::Value << gamecontroller->custom_name;
-        out << YAML::Key << "current_scene" << YAML::Value << gamecontroller->current_scene;
-        out << YAML::Key << "next_scene" << YAML::Value << gamecontroller->next_scene;
         out << YAML::Key << "dialog_manager" << YAML::Value << gamecontroller->dialog_manager;
         out << YAML::EndMap;
     }
@@ -609,11 +599,10 @@ void SceneSerializer::auto_serialize_component(YAML::Emitter& out, std::shared_p
         out << YAML::Key << "ComponentName" << YAML::Value << "JeepComponent";
         out << YAML::Key << "guid" << YAML::Value << jeep->guid;
         out << YAML::Key << "custom_name" << YAML::Value << jeep->custom_name;
+        out << YAML::Key << "player" << YAML::Value << jeep->player;
         out << YAML::Key << "maximum_speed" << YAML::Value << jeep->maximum_speed;
         out << YAML::Key << "acceleration" << YAML::Value << jeep->acceleration;
         out << YAML::Key << "deceleration" << YAML::Value << jeep->deceleration;
-        out << YAML::Key << "is_active" << YAML::Value << jeep->is_active;
-        out << YAML::Key << "player" << YAML::Value << jeep->player;
         out << YAML::EndMap;
     }
     else
@@ -670,10 +659,8 @@ void SceneSerializer::auto_serialize_component(YAML::Emitter& out, std::shared_p
         out << YAML::Key << "acceleration" << YAML::Value << lighthousekeeper->acceleration;
         out << YAML::Key << "deceleration" << YAML::Value << lighthousekeeper->deceleration;
         out << YAML::Key << "lighthouse" << YAML::Value << lighthousekeeper->lighthouse;
-        out << YAML::Key << "port" << YAML::Value << lighthousekeeper->port;
         out << YAML::Key << "keeper_dust" << YAML::Value << lighthousekeeper->keeper_dust;
         out << YAML::Key << "keeper_splash" << YAML::Value << lighthousekeeper->keeper_splash;
-        out << YAML::Key << "packages" << YAML::Value << lighthousekeeper->packages;
         out << YAML::EndMap;
     }
     else
@@ -711,8 +698,6 @@ void SceneSerializer::auto_serialize_component(YAML::Emitter& out, std::shared_p
             out << YAML::Key << "guid" << YAML::Value << endscreenfoliage->guid;
             out << YAML::Key << "custom_name" << YAML::Value << endscreenfoliage->custom_name;
             out << YAML::Key << "next_level_button" << YAML::Value << endscreenfoliage->next_level_button;
-            out << YAML::Key << "percentage" << YAML::Value << endscreenfoliage->percentage;
-            out << YAML::Key << "percentage_gained" << YAML::Value << endscreenfoliage->percentage_gained;
             out << YAML::Key << "percentage_text" << YAML::Value << endscreenfoliage->percentage_text;
             out << YAML::Key << "percentage_bar" << YAML::Value << endscreenfoliage->percentage_bar;
         }
@@ -812,7 +797,6 @@ void SceneSerializer::auto_serialize_component(YAML::Emitter& out, std::shared_p
         out << YAML::Key << "jump_horizontal_power" << YAML::Value << truther->jump_horizontal_power;
         out << YAML::Key << "gravitation" << YAML::Value << truther->gravitation;
         out << YAML::Key << "suck_power" << YAML::Value << truther->suck_power;
-        out << YAML::Key << "is_sucked" << YAML::Value << truther->is_sucked;
         out << YAML::Key << "wheat_overlay" << YAML::Value << truther->wheat_overlay;
         out << YAML::Key << "model_entity" << YAML::Value << truther->model_entity;
         out << YAML::EndMap;
@@ -844,8 +828,6 @@ void SceneSerializer::auto_serialize_component(YAML::Emitter& out, std::shared_p
         out << YAML::Key << "ComponentName" << YAML::Value << "CowComponent";
         out << YAML::Key << "guid" << YAML::Value << cow->guid;
         out << YAML::Key << "custom_name" << YAML::Value << cow->custom_name;
-        out << YAML::Key << "cow_manager" << YAML::Value << cow->cow_manager;
-        out << YAML::Key << "is_sucked" << YAML::Value << cow->is_sucked;
         out << YAML::EndMap;
     }
     else
@@ -856,16 +838,9 @@ void SceneSerializer::auto_serialize_component(YAML::Emitter& out, std::shared_p
         out << YAML::Key << "guid" << YAML::Value << cowmanager->guid;
         out << YAML::Key << "custom_name" << YAML::Value << cowmanager->custom_name;
         out << YAML::Key << "dialogue_prompt_controller" << YAML::Value << cowmanager->dialogue_prompt_controller;
-        out << YAML::Key << "paths" << YAML::Value << cowmanager->paths;
-        out << YAML::Key << "cows" << YAML::Value << cowmanager->cows;
-        out << YAML::Key << "truther" << YAML::Value << cowmanager->truther;
-        out << YAML::Key << "ufo" << YAML::Value << cowmanager->ufo;
-        out << YAML::Key << "jeep" << YAML::Value << cowmanager->jeep;
         out << YAML::Key << "wheat_overlay" << YAML::Value << cowmanager->wheat_overlay;
         out << YAML::Key << "clock_text_ref" << YAML::Value << cowmanager->clock_text_ref;
-        out << YAML::Key << "friel_grid" << YAML::Value << cowmanager->friel_grid;
-        out << YAML::Key << "event_timer" << YAML::Value << cowmanager->event_timer;
-        out << YAML::Key << "does_level_ended" << YAML::Value << cowmanager->does_level_ended;
+        out << YAML::Key << "field_grid" << YAML::Value << cowmanager->field_grid;
         out << YAML::EndMap;
     }
     else
@@ -996,14 +971,6 @@ void SceneSerializer::auto_deserialize_component(YAML::Node const& component, st
         else
         {
             auto const deserialized_component = std::dynamic_pointer_cast<class Camera>(get_from_pool(component["guid"].as<std::string>()));
-            if (component["width"].IsDefined())
-            {
-                deserialized_component->width = component["width"].as<float>();
-            }
-            if (component["height"].IsDefined())
-            {
-                deserialized_component->height = component["height"].as<float>();
-            }
             if (component["fov"].IsDefined())
             {
                 deserialized_component->fov = component["fov"].as<float>();
@@ -1153,10 +1120,6 @@ void SceneSerializer::auto_deserialize_component(YAML::Node const& component, st
         else
         {
             auto const deserialized_component = std::dynamic_pointer_cast<class DialoguePromptController>(get_from_pool(component["guid"].as<std::string>()));
-            if (component["interp_speed"].IsDefined())
-            {
-                deserialized_component->interp_speed = component["interp_speed"].as<float>();
-            }
             if (component["dialogue_panel"].IsDefined())
             {
                 deserialized_component->dialogue_panel = component["dialogue_panel"].as<std::weak_ptr<Button>>();
@@ -1213,22 +1176,6 @@ void SceneSerializer::auto_deserialize_component(YAML::Node const& component, st
             if (component["path_pressed"].IsDefined())
             {
                 deserialized_component->path_pressed = component["path_pressed"].as<std::string>();
-            }
-            if (component["top_left_corner"].IsDefined())
-            {
-                deserialized_component->top_left_corner = component["top_left_corner"].as<glm::vec2>();
-            }
-            if (component["top_right_corner"].IsDefined())
-            {
-                deserialized_component->top_right_corner = component["top_right_corner"].as<glm::vec2>();
-            }
-            if (component["bottom_left_corner"].IsDefined())
-            {
-                deserialized_component->bottom_left_corner = component["bottom_left_corner"].as<glm::vec2>();
-            }
-            if (component["bottom_right_corner"].IsDefined())
-            {
-                deserialized_component->bottom_right_corner = component["bottom_right_corner"].as<glm::vec2>();
             }
             if (component["material"].IsDefined())
             {
@@ -2127,10 +2074,6 @@ void SceneSerializer::auto_deserialize_component(YAML::Node const& component, st
             {
                 deserialized_component->lights = component["lights"].as<std::vector<std::weak_ptr<PointLight>>>();
             }
-            if (component["factory_light"].IsDefined())
-            {
-                deserialized_component->factory_light = component["factory_light"].as<std::weak_ptr<PointLight>>();
-            }
             deserialized_entity->add_component(deserialized_component);
             deserialized_component->reprepare();
         }
@@ -2194,14 +2137,6 @@ void SceneSerializer::auto_deserialize_component(YAML::Node const& component, st
         else
         {
             auto const deserialized_component = std::dynamic_pointer_cast<class GameController>(get_from_pool(component["guid"].as<std::string>()));
-            if (component["current_scene"].IsDefined())
-            {
-                deserialized_component->current_scene = component["current_scene"].as<std::weak_ptr<Entity>>();
-            }
-            if (component["next_scene"].IsDefined())
-            {
-                deserialized_component->next_scene = component["next_scene"].as<std::weak_ptr<Entity>>();
-            }
             if (component["dialog_manager"].IsDefined())
             {
                 deserialized_component->dialog_manager = component["dialog_manager"].as<std::weak_ptr<DialoguePromptController>>();
@@ -2257,6 +2192,10 @@ void SceneSerializer::auto_deserialize_component(YAML::Node const& component, st
         else
         {
             auto const deserialized_component = std::dynamic_pointer_cast<class Jeep>(get_from_pool(component["guid"].as<std::string>()));
+            if (component["player"].IsDefined())
+            {
+                deserialized_component->player = component["player"].as<std::weak_ptr<Truther>>();
+            }
             if (component["maximum_speed"].IsDefined())
             {
                 deserialized_component->maximum_speed = component["maximum_speed"].as<float>();
@@ -2268,14 +2207,6 @@ void SceneSerializer::auto_deserialize_component(YAML::Node const& component, st
             if (component["deceleration"].IsDefined())
             {
                 deserialized_component->deceleration = component["deceleration"].as<float>();
-            }
-            if (component["is_active"].IsDefined())
-            {
-                deserialized_component->is_active = component["is_active"].as<bool>();
-            }
-            if (component["player"].IsDefined())
-            {
-                deserialized_component->player = component["player"].as<std::weak_ptr<Truther>>();
             }
             deserialized_entity->add_component(deserialized_component);
             deserialized_component->reprepare();
@@ -2444,10 +2375,6 @@ void SceneSerializer::auto_deserialize_component(YAML::Node const& component, st
             {
                 deserialized_component->lighthouse = component["lighthouse"].as<std::weak_ptr<Lighthouse>>();
             }
-            if (component["port"].IsDefined())
-            {
-                deserialized_component->port = component["port"].as<std::weak_ptr<Port>>();
-            }
             if (component["keeper_dust"].IsDefined())
             {
                 deserialized_component->keeper_dust = component["keeper_dust"].as<std::weak_ptr<ParticleSystem>>();
@@ -2455,10 +2382,6 @@ void SceneSerializer::auto_deserialize_component(YAML::Node const& component, st
             if (component["keeper_splash"].IsDefined())
             {
                 deserialized_component->keeper_splash = component["keeper_splash"].as<std::weak_ptr<ParticleSystem>>();
-            }
-            if (component["packages"].IsDefined())
-            {
-                deserialized_component->packages = component["packages"].as<std::vector<std::weak_ptr<Entity>>>();
             }
             deserialized_entity->add_component(deserialized_component);
             deserialized_component->reprepare();
@@ -2600,14 +2523,6 @@ void SceneSerializer::auto_deserialize_component(YAML::Node const& component, st
             if (component["next_level_button"].IsDefined())
             {
                 deserialized_component->next_level_button = component["next_level_button"].as<std::weak_ptr<Button>>();
-            }
-            if (component["percentage"].IsDefined())
-            {
-                deserialized_component->percentage = component["percentage"].as<float>();
-            }
-            if (component["percentage_gained"].IsDefined())
-            {
-                deserialized_component->percentage_gained = component["percentage_gained"].as<float>();
             }
             if (component["percentage_text"].IsDefined())
             {
@@ -2807,10 +2722,6 @@ void SceneSerializer::auto_deserialize_component(YAML::Node const& component, st
             {
                 deserialized_component->suck_power = component["suck_power"].as<float>();
             }
-            if (component["is_sucked"].IsDefined())
-            {
-                deserialized_component->is_sucked = component["is_sucked"].as<bool>();
-            }
             if (component["wheat_overlay"].IsDefined())
             {
                 deserialized_component->wheat_overlay = component["wheat_overlay"].as<std::weak_ptr<WheatOverlay>>();
@@ -2878,14 +2789,6 @@ void SceneSerializer::auto_deserialize_component(YAML::Node const& component, st
         else
         {
             auto const deserialized_component = std::dynamic_pointer_cast<class Cow>(get_from_pool(component["guid"].as<std::string>()));
-            if (component["cow_manager"].IsDefined())
-            {
-                deserialized_component->cow_manager = component["cow_manager"].as<std::weak_ptr<CowManager>>();
-            }
-            if (component["is_sucked"].IsDefined())
-            {
-                deserialized_component->is_sucked = component["is_sucked"].as<bool>();
-            }
             deserialized_entity->add_component(deserialized_component);
             deserialized_component->reprepare();
         }
@@ -2907,26 +2810,6 @@ void SceneSerializer::auto_deserialize_component(YAML::Node const& component, st
             {
                 deserialized_component->dialogue_prompt_controller = component["dialogue_prompt_controller"].as<std::weak_ptr<DialoguePromptController>>();
             }
-            if (component["paths"].IsDefined())
-            {
-                deserialized_component->paths = component["paths"].as<std::vector<std::weak_ptr<Path>>>();
-            }
-            if (component["cows"].IsDefined())
-            {
-                deserialized_component->cows = component["cows"].as<std::vector<std::weak_ptr<Cow>>>();
-            }
-            if (component["truther"].IsDefined())
-            {
-                deserialized_component->truther = component["truther"].as<std::weak_ptr<Truther>>();
-            }
-            if (component["ufo"].IsDefined())
-            {
-                deserialized_component->ufo = component["ufo"].as<std::weak_ptr<UFO>>();
-            }
-            if (component["jeep"].IsDefined())
-            {
-                deserialized_component->jeep = component["jeep"].as<std::weak_ptr<Jeep>>();
-            }
             if (component["wheat_overlay"].IsDefined())
             {
                 deserialized_component->wheat_overlay = component["wheat_overlay"].as<std::weak_ptr<WheatOverlay>>();
@@ -2935,17 +2818,9 @@ void SceneSerializer::auto_deserialize_component(YAML::Node const& component, st
             {
                 deserialized_component->clock_text_ref = component["clock_text_ref"].as<std::weak_ptr<ScreenText>>();
             }
-            if (component["friel_grid"].IsDefined())
+            if (component["field_grid"].IsDefined())
             {
-                deserialized_component->friel_grid = component["friel_grid"].as<std::weak_ptr<FieldGrid>>();
-            }
-            if (component["event_timer"].IsDefined())
-            {
-                deserialized_component->event_timer = component["event_timer"].as<float>();
-            }
-            if (component["does_level_ended"].IsDefined())
-            {
-                deserialized_component->does_level_ended = component["does_level_ended"].as<bool>();
+                deserialized_component->field_grid = component["field_grid"].as<std::weak_ptr<FieldGrid>>();
             }
             deserialized_entity->add_component(deserialized_component);
             deserialized_component->reprepare();

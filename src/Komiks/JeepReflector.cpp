@@ -75,7 +75,7 @@ void JeepReflector::draw_editor()
 {
     Component::draw_editor();
 
-    ImGuiEx::draw_ptr("Jeep", jeep);
+    weak_ptr_draw_editor("Jeep: ", jeep);
 }
 #endif
 

@@ -10,8 +10,11 @@
 #include <algorithm>
 
 #if EDITOR
-#include "imgui_extensions.h"
 #include "imgui_stdlib.h"
+#endif
+
+#if EDITOR
+#include "imgui_extensions.h"
 #endif
 
 std::shared_ptr<DialoguePromptController> DialoguePromptController::create()
@@ -101,6 +104,13 @@ void DialoguePromptController::draw_editor()
 {
     Component::draw_editor();
 
+    custom_draw_editor();
+}
+#endif
+
+#if EDITOR
+void DialoguePromptController::custom_draw_editor()
+{
     realign_lines();
 
     if (ImGui::Button("Play"))

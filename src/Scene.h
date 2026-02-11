@@ -1,8 +1,9 @@
 #pragma once
-#include <memory>
-#include <vector>
 
 #include "Component.h"
+
+#include <memory>
+#include <vector>
 
 class Entity;
 

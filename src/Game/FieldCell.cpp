@@ -3,7 +3,10 @@
 #include "AK/AK.h"
 #include "Model.h"
 #include "SceneSerializer.h"
+
+#if EDITOR
 #include "imgui_extensions.h"
+#endif
 
 class Model;
 
@@ -92,5 +95,6 @@ bool FieldCell::is_cell_bended(float percent_limit)
 void FieldCell::draw_editor()
 {
     Component::draw_editor();
+
 }
 #endif

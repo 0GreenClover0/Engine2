@@ -10,6 +10,7 @@
 
 #pragma comment(lib, "Dwrite")
 
+CUSTOM_EDITOR_ONLY
 class ScreenText final : public Drawable
 {
 public:
@@ -29,12 +30,15 @@ public:
     virtual void on_disabled() override;
 
     virtual void draw() const override;
+    virtual void update() override;
 
 #if EDITOR
     virtual void draw_editor() override;
 #endif
 
-    virtual void update() override;
+#if EDITOR
+    virtual void custom_draw_editor() override;
+#endif
 
     void hover();
     void click();

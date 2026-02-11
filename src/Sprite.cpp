@@ -5,6 +5,10 @@
 #include "ResourceManager.h"
 #include "TextureLoader.h"
 
+#if EDITOR
+#include "imgui_extensions.h"
+#endif
+
 std::shared_ptr<Sprite> Sprite::create()
 {
     auto sprite = std::make_shared<Sprite>(AK::Badge<Sprite> {}, default_material);
@@ -81,3 +85,12 @@ std::shared_ptr<Mesh> Sprite::create_sprite() const
     return ResourceManager::get_instance().load_mesh(m_meshes.size(), diffuse_texture_path, vertices, indices, textures, m_draw_type,
                                                      material);
 }
+
+#if EDITOR
+void Sprite::draw_editor()
+{
+    Model::draw_editor();
+
+    string_draw_editor("Diffuse Texture Path: ", diffuse_texture_path);
+}
+#endif

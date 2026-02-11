@@ -20,9 +20,11 @@ public:
     virtual void update() override;
     virtual void on_enabled() override;
     virtual void on_disabled() override;
+
 #if EDITOR
     virtual void draw_editor() override;
 #endif
+
     void update_background();
 
     void next_level();
@@ -30,10 +32,13 @@ public:
     virtual void hide() override;
 
     std::weak_ptr<Button> next_level_button = {};
-    float percentage = 0.0f;
-    float percentage_gained = 0.0f;
     std::weak_ptr<ScreenText> percentage_text = {};
     std::weak_ptr<Panel> percentage_bar = {};
+
+    NON_SERIALIZED
+    float percentage = 0.0f;
+    NON_SERIALIZED
+    float percentage_gained = 0.0f;
 
 private:
     bool m_is_animation_end = false;

@@ -8,6 +8,10 @@
 #include "MeshFactory.h"
 #include "ResourceManager.h"
 
+#if EDITOR
+#include "imgui_extensions.h"
+#endif
+
 std::shared_ptr<class Ellipse> Ellipse::create()
 {
     auto ellipse = std::make_shared<Ellipse>(AK::Badge<Ellipse> {});
@@ -65,3 +69,16 @@ std::shared_ptr<Mesh> Ellipse::create_ellipse() const
     return ResourceManager::get_instance().load_mesh(m_meshes.size(), "ELLIPSE", vertices, {}, {}, m_draw_type, material,
                                                      DrawFunctionType::NotIndexed);
 }
+
+#if EDITOR
+void Ellipse::draw_editor()
+{
+    Model::draw_editor();
+
+    float_draw_editor("Center X: ", center_x);
+    float_draw_editor("Center Z: ", center_z);
+    float_draw_editor("Radius X: ", radius_x);
+    float_draw_editor("Radius Z: ", radius_z);
+    i32_draw_editor("Segment Count: ", segment_count);
+}
+#endif

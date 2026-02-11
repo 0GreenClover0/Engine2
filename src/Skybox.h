@@ -11,6 +11,10 @@ NON_SERIALIZED
 class Skybox : public Drawable
 {
 public:
+#if EDITOR
+    virtual void draw_editor() override;
+#endif
+
     Skybox(std::shared_ptr<Material> const& material, std::vector<std::string> const& face_paths);
     Skybox(std::shared_ptr<Material> const& material, std::string const& path);
 

@@ -8,6 +8,10 @@
 #include "TextureLoaderDX11.h"
 #include "VertexBufferDX11.h"
 
+#if EDITOR
+#include "imgui_extensions.h"
+#endif
+
 SkyboxDX11::SkyboxDX11(AK::Badge<SkyboxFactory>, std::shared_ptr<Material> const& material, std::string const& path)
     : Skybox(material, path)
 {
@@ -115,3 +119,11 @@ void SkyboxDX11::create_cube()
     m_vertex_buffer = std::make_shared<VertexBufferDX11>(device, vertices.data(), vertices.size());
     m_index_buffer = std::make_shared<IndexBufferDX11>(device, indices.data(), indices.size());
 }
+
+#if EDITOR
+void SkyboxDX11::draw_editor()
+{
+    Skybox::draw_editor();
+
+}
+#endif

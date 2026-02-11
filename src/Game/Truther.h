@@ -19,6 +19,10 @@ public:
     virtual void draw_editor() override;
 #endif
 
+#if EDITOR
+    virtual void custom_draw_editor() override;
+#endif
+
     virtual void on_trigger_enter(std::shared_ptr<Collider2D> const& other) override;
 
     virtual void on_trigger_exit(std::shared_ptr<Collider2D> const& other) override;
@@ -31,6 +35,7 @@ public:
     void stun();
 
     // Bend or unbend
+    CUSTOM_EDITOR
     bool truther_bends = true;
 
     float maximum_speed = 5.0f;
@@ -41,6 +46,7 @@ public:
     float gravitation = 0.01f;
     float suck_power = 0.01f;
 
+    NON_SERIALIZED
     bool is_sucked = false;
 
     std::weak_ptr<WheatOverlay> wheat_overlay = {};

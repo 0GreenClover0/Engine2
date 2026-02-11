@@ -10,6 +10,10 @@
 
 #include <glm/glm.hpp>
 
+#if EDITOR
+#include "imgui_extensions.h"
+#endif
+
 std::shared_ptr<PointLight> PointLight::create()
 {
     auto point_light = std::make_shared<PointLight>(AK::Badge<PointLight> {});
@@ -61,6 +65,14 @@ void PointLight::on_destroyed()
 void PointLight::draw_editor()
 {
     Light::draw_editor();
+
+    custom_draw_editor();
+}
+#endif
+
+#if EDITOR
+void PointLight::custom_draw_editor()
+{
     ImGui::Text("Attenuation:");
     ImGui::SliderFloat("Linear", &linear, 0.0f, 10.0f);
     ImGui::SliderFloat("Quadratic", &quadratic, 0.0f, 10.0f);

@@ -16,6 +16,7 @@ public:
     virtual void update() override;
     virtual void on_enabled() override;
     virtual void on_disabled() override;
+
 #if EDITOR
     virtual void draw_editor() override;
 #endif

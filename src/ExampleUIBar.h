@@ -11,10 +11,16 @@ public:
 
     virtual void awake() override;
     virtual void update() override;
+
 #if EDITOR
     virtual void draw_editor() override;
 #endif
 
+#if EDITOR
+    virtual void custom_draw_editor() override;
+#endif
+
+    CUSTOM_EDITOR
     float value = 0.0f;
 
 private:

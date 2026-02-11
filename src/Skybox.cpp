@@ -7,6 +7,10 @@
 #include "Renderer.h"
 #include "ResourceManager.h"
 
+#if EDITOR
+#include "imgui_extensions.h"
+#endif
+
 Skybox::Skybox(std::shared_ptr<Material> const& material, std::vector<std::string> const& face_paths)
     : Drawable(material), m_face_paths(face_paths)
 {
@@ -66,3 +70,11 @@ std::shared_ptr<Skybox> Skybox::get_instance()
 {
     return m_instance;
 }
+
+#if EDITOR
+void Skybox::draw_editor()
+{
+    Drawable::draw_editor();
+
+}
+#endif

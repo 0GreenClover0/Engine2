@@ -6,6 +6,10 @@
 #include "Globals.h"
 #include "SceneSerializer.h"
 
+#if EDITOR
+#include "imgui_extensions.h"
+#endif
+
 std::shared_ptr<NowPromptTrigger> NowPromptTrigger::create()
 {
     return std::make_shared<NowPromptTrigger>(AK::Badge<NowPromptTrigger> {});
@@ -50,3 +54,11 @@ void NowPromptTrigger::update()
             m_story_now_prompt.lock()->destroy_immediate();
     }
 }
+
+#if EDITOR
+void NowPromptTrigger::draw_editor()
+{
+    Component::draw_editor();
+
+}
+#endif

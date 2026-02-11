@@ -15,10 +15,15 @@ public:
 
     virtual void awake() override;
     virtual void update() override;
+    virtual void uninitialize() override;
+
 #if EDITOR
     virtual void draw_editor() override;
 #endif
-    virtual void uninitialize() override;
+
+#if EDITOR
+    virtual void custom_draw_editor() override;
+#endif
 
     void reset_player();
 

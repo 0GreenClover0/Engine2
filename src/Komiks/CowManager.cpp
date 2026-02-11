@@ -2,18 +2,19 @@
 
 #include "AK/AK.h"
 #include "Entity.h"
+#include "Game/EndScreenFoliage.h"
 #include "Game/GameController.h"
+#include "Globals.h"
+#include "Quad.h"
 #include "SceneSerializer.h"
-#include "glm/gtc/random.hpp"
+
+#include <glm/gtc/random.hpp>
 
 #include <random>
 
 #if EDITOR
 #include "imgui_extensions.h"
 #endif
-#include <Game/EndScreenFoliage.h>
-#include <Globals.h>
-#include <Quad.h>
 
 std::shared_ptr<CowManager> CowManager::create()
 {
@@ -85,13 +86,13 @@ void CowManager::start()
 
 void CowManager::setup_level()
 {
-    does_level_ended = false;
+    has_level_ended = false;
 
     has_player_moved_this_level = false;
 
     spawn_truther();
 
-    event_timer = 0.0f;
+    m_event_timer = 0.0f;
 
     switch (m_level)
     {
@@ -182,19 +183,19 @@ void CowManager::update()
 
     if (has_player_moved_this_level)
     {
-        event_timer += delta_time;
+        m_event_timer += delta_time;
     }
 
-    if (event_timer >= 5.0f && m_level == 0)
+    if (m_event_timer >= 5.0f && m_level == 0)
         dialogue_prompt_controller.lock()->end_content();
 
-    if (!m_wasd_prompt.expired() && event_timer >= 5.0f && m_level == 0)
+    if (!m_wasd_prompt.expired() && m_event_timer >= 5.0f && m_level == 0)
         m_wasd_prompt.lock()->destroy_immediate();
 
-    if (event_timer >= 5.0f && m_level == 1)
+    if (m_event_timer >= 5.0f && m_level == 1)
         dialogue_prompt_controller.lock()->end_content();
 
-    if (!m_shift_shown && event_timer >= 8.0f && m_level == 0)
+    if (!m_shift_shown && m_event_timer >= 8.0f && m_level == 0)
     {
         m_shift_prompt = SceneSerializer::load_prefab("KomiksShiftPrompt");
         m_shift_prompt.lock()->transform->set_position({0.15, 1.5f, 2.5f});
@@ -202,15 +203,15 @@ void CowManager::update()
         m_shift_shown = true;
     }
 
-    if (!m_shift_prompt.expired() && event_timer >= 12.0f && m_level == 0)
+    if (!m_shift_prompt.expired() && m_event_timer >= 12.0f && m_level == 0)
         m_shift_prompt.lock()->destroy_immediate();
 
-    Debug::log(std::to_string(event_timer));
+    Debug::log(std::to_string(m_event_timer));
 
-    if (!m_space_prompt.expired() && event_timer >= 5.0f && m_level == 1)
+    if (!m_space_prompt.expired() && m_event_timer >= 5.0f && m_level == 1)
         m_space_prompt.lock()->destroy_immediate();
 
-    if (event_timer >= m_event_time_threshold && !does_level_ended)
+    if (m_event_timer >= m_event_time_threshold && !has_level_ended)
     {
         switch (m_level)
         {
@@ -249,7 +250,7 @@ void CowManager::update()
             break;
         }
 
-        event_timer = 0.0f;
+        m_event_timer = 0.0f;
     }
 
     std::string min = "00";
@@ -271,7 +272,7 @@ void CowManager::update()
     }
     else
     {
-        if (!does_level_ended)
+        if (!has_level_ended)
         {
             end_level();
         }
@@ -283,11 +284,18 @@ void CowManager::draw_editor()
 {
     Component::draw_editor();
 
-    ImGui::Text((std::to_string(event_timer)).c_str());
-    ImGuiEx::draw_ptr("Dialogue Prompt Controller", dialogue_prompt_controller);
-    ImGuiEx::draw_ptr("Wheat Overlay", wheat_overlay);
-    ImGuiEx::draw_ptr("clock text ref", clock_text_ref);
-    ImGuiEx::draw_ptr("friel grid", friel_grid);
+    custom_draw_editor();
+    weak_ptr_draw_editor("Dialogue Prompt Controller: ", dialogue_prompt_controller);
+    weak_ptr_draw_editor("Wheat Overlay: ", wheat_overlay);
+    weak_ptr_draw_editor("Clock Text Ref: ", clock_text_ref);
+    weak_ptr_draw_editor("Field Grid: ", field_grid);
+}
+#endif
+
+#if EDITOR
+void CowManager::custom_draw_editor()
+{
+    ImGui::Text((std::to_string(m_event_timer)).c_str());
 }
 #endif
 
@@ -360,7 +368,7 @@ void CowManager::spawn_ufo()
     auto const ufo_comp = new_ufo->get_component<UFO>();
     ufo = ufo_comp;
     ufo.lock()->truther = truther;
-    ufo.lock()->field_grid = friel_grid;
+    ufo.lock()->field_grid = field_grid;
     ufo.lock()->cow_manager = static_pointer_cast<CowManager>(shared_from_this());
 }
 
@@ -399,13 +407,13 @@ void CowManager::end_level()
     {
         m_level++;
     }
-    does_level_ended = true;
+    has_level_ended = true;
 
     auto end_screen = SceneSerializer::load_prefab("EndScreenFoliage");
     auto end_screen_comp = end_screen->get_component<EndScreenFoliage>();
 
     end_screen_comp->update_background();
-    end_screen_comp->percentage_gained = friel_grid.lock()->calculate_faked_similarity();
+    end_screen_comp->percentage_gained = field_grid.lock()->calculate_faked_similarity();
 }
 
 void CowManager::set_pattern(u32 id)
@@ -414,5 +422,5 @@ void CowManager::set_pattern(u32 id)
     quad->path = "./res/textures/UI/overlay0" + std::to_string(id) + ".png";
     quad->reprepare();
 
-    friel_grid.lock()->set_pattern(id);
+    field_grid.lock()->set_pattern(id);
 }

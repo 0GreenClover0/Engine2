@@ -23,11 +23,21 @@ public:
     virtual void draw_editor() override;
 #endif
 
+#if EDITOR
+    virtual void custom_draw_editor() override;
+#endif
+
+    CUSTOM_EDITOR
     FloaterSettings big_boat_settings = {};
+    CUSTOM_EDITOR
     FloaterSettings small_boat_settings = {};
+    CUSTOM_EDITOR
     FloaterSettings medium_boat_settings = {};
+    CUSTOM_EDITOR
     FloaterSettings tool_boat_settings = {};
+    CUSTOM_EDITOR
     FloaterSettings pirate_boat_settings = {};
 
+    CUSTOM_EDITOR
     std::weak_ptr<Water> water = {};
 };

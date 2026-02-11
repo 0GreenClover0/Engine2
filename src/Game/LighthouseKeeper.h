@@ -59,10 +59,12 @@ public:
     float interact_with_factory_distance = 1.0f;
 
     std::weak_ptr<Lighthouse> lighthouse = {};
+    NON_SERIALIZED
     std::weak_ptr<Port> port = {};
     std::weak_ptr<ParticleSystem> keeper_dust = {};
     std::weak_ptr<ParticleSystem> keeper_splash = {};
 
+    NON_SERIALIZED
     std::vector<std::weak_ptr<Entity>> packages = {};
 
 private:

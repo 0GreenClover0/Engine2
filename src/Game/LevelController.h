@@ -42,8 +42,13 @@ public:
 
     virtual void awake() override;
     virtual void update() override;
+
 #if EDITOR
     virtual void draw_editor() override;
+#endif
+
+#if EDITOR
+    virtual void custom_draw_editor() override;
 #endif
 
     void on_lighthouse_upgraded() const;
@@ -67,37 +72,59 @@ public:
     NON_SERIALIZED
     bool is_ended = false;
 
+    CUSTOM_EDITOR
     float map_time = 180.0f;
+    CUSTOM_EDITOR
     u32 map_food = 20;
+    CUSTOM_EDITOR
     i32 maximum_lighthouse_level = 10;
     NON_SERIALIZED
     float time = 0.0f;
 
+    CUSTOM_EDITOR
     std::vector<std::weak_ptr<Factory>> factories = {};
+    CUSTOM_EDITOR
     std::weak_ptr<Port> port = {};
+    CUSTOM_EDITOR
     std::weak_ptr<Lighthouse> lighthouse = {};
+    CUSTOM_EDITOR
     std::weak_ptr<CustomerManager> customer_manager = {};
 
+    CUSTOM_EDITOR
     float playfield_width = 6.5f;
+    CUSTOM_EDITOR
     float playfield_additional_width = 2.0f;
+    CUSTOM_EDITOR
     float playfield_height = 4.8f;
+    CUSTOM_EDITOR
     float playfield_y_shift = -2.1f;
 
+    CUSTOM_EDITOR
     std::weak_ptr<Curve> ships_limit_curve = {};
+    CUSTOM_EDITOR
     u32 ships_limit = 1;
 
+    CUSTOM_EDITOR
     std::weak_ptr<Curve> ships_speed_curve = {};
+    CUSTOM_EDITOR
     float ships_speed = 0.0f;
 
+    CUSTOM_EDITOR
     std::weak_ptr<Curve> ships_range_curve = {};
+    CUSTOM_EDITOR
     std::weak_ptr<Curve> ships_turn_curve = {};
+    CUSTOM_EDITOR
     std::weak_ptr<Curve> ships_additional_speed_curve = {};
+    CUSTOM_EDITOR
     std::weak_ptr<Curve> pirates_in_control_curve = {};
 
+    CUSTOM_EDITOR
     bool is_tutorial = false;
+    CUSTOM_EDITOR
     u32 starting_packages = 2;
     NON_SERIALIZED
     u32 tutorial_progress = 0;
+    CUSTOM_EDITOR
     u32 tutorial_level = 1;
     NON_SERIALIZED
     u32 tutorial_spawn_path = 0;

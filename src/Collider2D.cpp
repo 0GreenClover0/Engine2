@@ -8,12 +8,12 @@
 #include "Globals.h"
 #include "PhysicsEngine.h"
 
+#include <glm/gtc/type_ptr.hpp>
+#include <glm/gtx/quaternion.hpp>
+
 #if EDITOR
 #include "imgui_extensions.h"
 #endif
-
-#include <glm/gtc/type_ptr.hpp>
-#include <glm/gtx/quaternion.hpp>
 
 std::shared_ptr<Collider2D> Collider2D::create()
 {
@@ -74,6 +74,13 @@ void Collider2D::draw_editor()
 {
     Component::draw_editor();
 
+    custom_draw_editor();
+}
+#endif
+
+#if EDITOR
+void Collider2D::custom_draw_editor()
+{
     bool is_dirty = false;
 
     glm::vec2 const previous_offset = offset;

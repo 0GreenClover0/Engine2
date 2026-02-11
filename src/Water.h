@@ -5,6 +5,7 @@
 
 #include <d3d11.h>
 
+CUSTOM_EDITOR_ONLY
 class Water final : public Model
 {
 public:
@@ -20,6 +21,10 @@ public:
 
 #if EDITOR
     virtual void draw_editor() override;
+#endif
+
+#if EDITOR
+    virtual void custom_draw_editor() override;
 #endif
 
     void add_wave();

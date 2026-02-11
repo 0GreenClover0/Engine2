@@ -70,6 +70,13 @@ void Factory::draw_editor()
 {
     Component::draw_editor();
 
+    custom_draw_editor();
+}
+#endif
+
+#if EDITOR
+void Factory::custom_draw_editor()
+{
     std::array const factory_types = {"Generator", "Workshop"};
     i32 current_item_index = static_cast<i32>(type);
     if (ImGui::Combo("Factory Type", &current_item_index, factory_types.data(), factory_types.size()))

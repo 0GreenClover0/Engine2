@@ -11,6 +11,10 @@
 class Wheat final : public Component
 {
 public:
+#if EDITOR
+    virtual void draw_editor() override;
+#endif
+
     static std::shared_ptr<Wheat> create();
 
     explicit Wheat(AK::Badge<Wheat>);

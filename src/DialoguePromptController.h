@@ -25,22 +25,31 @@ public:
     virtual void draw_editor() override;
 #endif
 
+#if EDITOR
+    virtual void custom_draw_editor() override;
+#endif
+
     // Those are your friends
     void play_content(u16 const vector_index);
     void end_content();
 
     void flip(bool value);
 
-    float interp_speed = 4.0f; // Unused but maybe will be used
-
+    CUSTOM_EDITOR
     std::weak_ptr<Button> dialogue_panel = {};
+    CUSTOM_EDITOR
     std::weak_ptr<Entity> panel_parent = {};
+    CUSTOM_EDITOR
     std::weak_ptr<Entity> keeper_sprite = {};
 
+    CUSTOM_EDITOR
     std::weak_ptr<ScreenText> upper_text = {};
+    CUSTOM_EDITOR
     std::weak_ptr<ScreenText> middle_text = {};
+    CUSTOM_EDITOR
     std::weak_ptr<ScreenText> lower_text = {};
 
+    CUSTOM_EDITOR
     std::vector<DialogueObject> dialogue_objects = {};
 
 private:

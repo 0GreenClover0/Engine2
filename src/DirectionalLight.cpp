@@ -4,6 +4,10 @@
 #include "Renderer.h"
 #include "RendererDX11.h"
 
+#if EDITOR
+#include "imgui_extensions.h"
+#endif
+
 std::shared_ptr<DirectionalLight> DirectionalLight::create()
 {
     auto directional_light = std::make_shared<DirectionalLight>(AK::Badge<DirectionalLight> {});
@@ -27,6 +31,7 @@ void DirectionalLight::on_destroyed()
 void DirectionalLight::draw_editor()
 {
     Light::draw_editor();
+
 }
 #endif
 

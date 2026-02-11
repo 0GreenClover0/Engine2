@@ -54,9 +54,9 @@ void Lighthouse::draw_editor()
 {
     Component::draw_editor();
 
-    ImGuiEx::draw_ptr("Light", light);
-    ImGuiEx::draw_ptr("Spawn", spawn_position);
-    ImGuiEx::draw_ptr("Water", water);
+    weak_ptr_draw_editor("Light: ", light);
+    weak_ptr_draw_editor("Water: ", water);
+    weak_ptr_draw_editor("Spawn Position: ", spawn_position);
 }
 #endif
 

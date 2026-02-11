@@ -17,6 +17,10 @@
 #include <imgui.h>
 #endif
 
+#if EDITOR
+#include "imgui_extensions.h"
+#endif
+
 std::shared_ptr<IceBound> IceBound::create()
 {
     return std::make_shared<IceBound>(AK::Badge<IceBound> {});
@@ -40,6 +44,13 @@ void IceBound::draw_editor()
 {
     Component::draw_editor();
 
+    custom_draw_editor();
+}
+#endif
+
+#if EDITOR
+void IceBound::custom_draw_editor()
+{
     if (entity->get_component<Collider2D>() != nullptr && entity->get_component<Model>() != nullptr)
     {
         bool is_dirty = false;

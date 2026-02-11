@@ -18,6 +18,10 @@ public:
     virtual void draw_editor() override;
 #endif
 
+#if EDITOR
+    virtual void custom_draw_editor() override;
+#endif
+
     void set_render_target_for_shadow_mapping() const;
     glm::mat4 get_projection_view_matrix();
     glm::mat4 get_rotated_inverse_model_matrix() const;
@@ -26,13 +30,19 @@ public:
     virtual void on_destroyed() override;
 
     // Default values for an around 50m distance of cover
+    CUSTOM_EDITOR
     float constant = 1.0f; // Should not be changed
+    CUSTOM_EDITOR
     float linear = 0.09f;
+    CUSTOM_EDITOR
     float quadratic = 0.032f;
 
+    CUSTOM_EDITOR
     float scattering_factor = 1.0f;
 
+    CUSTOM_EDITOR
     float cut_off = glm::cos(glm::radians(32.5f));
+    CUSTOM_EDITOR
     float outer_cut_off = glm::cos(glm::radians(60.0f));
 
 protected:

@@ -9,6 +9,10 @@
 #include <imgui.h>
 #endif
 
+#if EDITOR
+#include "imgui_extensions.h"
+#endif
+
 std::shared_ptr<ExampleUIBar> ExampleUIBar::create()
 {
     return std::make_shared<ExampleUIBar>();
@@ -45,6 +49,13 @@ void ExampleUIBar::draw_editor()
 {
     Component::draw_editor();
 
+    custom_draw_editor();
+}
+#endif
+
+#if EDITOR
+void ExampleUIBar::custom_draw_editor()
+{
     ImGui::SliderFloat("Value", &value, 0.0f, 1.0f);
 }
 #endif

@@ -11,6 +11,10 @@
 #include "SceneSerializer.h"
 #include "Ship.h"
 
+#if EDITOR
+#include "imgui_extensions.h"
+#endif
+
 std::shared_ptr<Port> Port::create()
 {
     return std::make_shared<Port>(AK::Badge<Port> {});
@@ -140,6 +144,13 @@ void Port::draw_editor()
 {
     Component::draw_editor();
 
+    custom_draw_editor();
+}
+#endif
+
+#if EDITOR
+void Port::custom_draw_editor()
+{
     if (entity->get_component<Collider2D>() == nullptr)
     {
         if (ImGui::Button("Add collider"))

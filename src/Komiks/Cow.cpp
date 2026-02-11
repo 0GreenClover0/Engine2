@@ -235,3 +235,11 @@ void Cow::play_sound_per_chance(float const chance) const
         sound->set_volume(1.6f);
     }
 }
+
+#if EDITOR
+void Cow::draw_editor()
+{
+    Component::draw_editor();
+
+}
+#endif

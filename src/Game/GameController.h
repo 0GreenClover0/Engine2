@@ -22,8 +22,13 @@ public:
 
     virtual void awake() override;
     virtual void update() override;
+
 #if EDITOR
     virtual void draw_editor() override;
+#endif
+
+#if EDITOR
+    virtual void custom_draw_editor() override;
 #endif
 
     bool is_moving_to_next_scene() const;
@@ -35,8 +40,11 @@ public:
     void reset_level();
     void restart_level();
 
+    NON_SERIALIZED
     std::weak_ptr<Entity> current_scene = {};
+    NON_SERIALIZED
     std::weak_ptr<Entity> next_scene = {};
+
     std::weak_ptr<DialoguePromptController> dialog_manager = {};
 
 private:

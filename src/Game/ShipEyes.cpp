@@ -18,6 +18,10 @@
 #include <imgui.h>
 #endif
 
+#if EDITOR
+#include "imgui_extensions.h"
+#endif
+
 std::shared_ptr<ShipEyes> ShipEyes::create()
 {
     return std::make_shared<ShipEyes>(AK::Badge<ShipEyes> {});
@@ -51,3 +55,11 @@ void ShipEyes::on_trigger_exit(std::shared_ptr<Collider2D> const& other)
         see_obstacle = false;
     }
 }
+
+#if EDITOR
+void ShipEyes::draw_editor()
+{
+    Component::draw_editor();
+
+}
+#endif
