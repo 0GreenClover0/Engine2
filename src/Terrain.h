@@ -8,6 +8,10 @@ NON_SERIALIZED
 class Terrain final : public Model
 {
 public:
+#if EDITOR
+    virtual void draw_editor() override;
+#endif
+
     static std::shared_ptr<Terrain> create(std::shared_ptr<Material> const& material, bool const use_gpu,
                                            std::string const& height_map_path = "");
 

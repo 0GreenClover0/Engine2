@@ -22,6 +22,10 @@
 #include <imgui_stdlib.h>
 #endif
 
+#if EDITOR
+#include "imgui_extensions.h"
+#endif
+
 std::shared_ptr<Model> Model::create()
 {
     auto model = std::make_shared<Model>(AK::Badge<Model> {}, default_material);
@@ -67,6 +71,13 @@ void Model::draw_editor()
 {
     Drawable::draw_editor();
 
+    custom_draw_editor();
+}
+#endif
+
+#if EDITOR
+void Model::custom_draw_editor()
+{
     ImGui::InputText("Model Path", &model_path);
 
     if (ImGui::IsItemDeactivatedAfterEdit())

@@ -9,8 +9,11 @@
 #include <GLFW/glfw3.h>
 
 #if EDITOR
-#include "imgui_extensions.h"
 #include <imgui.h>
+#endif
+
+#if EDITOR
+#include "imgui_extensions.h"
 #endif
 
 std::shared_ptr<LighthouseLight> LighthouseLight::create()
@@ -55,8 +58,10 @@ void LighthouseLight::update()
 #if EDITOR
 void LighthouseLight::draw_editor()
 {
-    ImGuiEx::draw_ptr("Spotlight", spotlight);
-    ImGui::InputFloat("Beam width", &spotlight_beam_width);
+    Component::draw_editor();
+
+    weak_ptr_draw_editor("Spotlight: ", spotlight);
+    float_draw_editor("Spotlight Beam Width: ", spotlight_beam_width);
 }
 #endif
 

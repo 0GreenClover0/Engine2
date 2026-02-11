@@ -102,3 +102,11 @@ void Wheat::set_destination(glm::vec2 destination)
     float angle_rad = glm::radians(angle_deg);
     m_target_rot = glm::angleAxis(angle_rad, axis);
 }
+
+#if EDITOR
+void Wheat::draw_editor()
+{
+    Component::draw_editor();
+
+}
+#endif

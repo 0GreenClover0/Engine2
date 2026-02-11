@@ -15,6 +15,10 @@ public:
     virtual void draw_editor() override;
 #endif
 
+#if EDITOR
+    virtual void custom_draw_editor() override;
+#endif
+
     void set_cell(bool value, u32 x, u32 y);
     void set_cell(bool value, u32 id);
     bool get_cell_value(u32 x, u32 y);
@@ -22,8 +26,11 @@ public:
     float calculate_faked_similarity(); // In percent
     void set_pattern(u32 id);
 
+    CUSTOM_EDITOR
     i32 rows_number = 13;
+    CUSTOM_EDITOR
     float punishment_multiplier = 0.1f;
+    CUSTOM_EDITOR
     float punishment_power = 1.3f;
 
 private:

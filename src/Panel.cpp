@@ -7,6 +7,10 @@
 #include "imgui_stdlib.h"
 #endif
 
+#if EDITOR
+#include "imgui_extensions.h"
+#endif
+
 std::shared_ptr<Panel> Panel::create()
 {
     auto const ui_shader = ResourceManager::get_instance().load_shader("./res/shaders/ui.hlsl", "./res/shaders/ui.hlsl");
@@ -52,6 +56,13 @@ void Panel::draw_editor()
 {
     Drawable::draw_editor();
 
+    custom_draw_editor();
+}
+#endif
+
+#if EDITOR
+void Panel::custom_draw_editor()
+{
     ImGui::InputText("Background Path", &background_path);
 
     if (ImGui::IsItemDeactivatedAfterEdit())

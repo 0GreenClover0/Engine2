@@ -6,6 +6,10 @@ NON_SERIALIZED
 class Ellipse final : public Model
 {
 public:
+#if EDITOR
+    virtual void draw_editor() override;
+#endif
+
     static std::shared_ptr<Ellipse> create();
     static std::shared_ptr<Ellipse> create(float const center_x, float const center_z, float const radius_x, float const radius_z,
                                            i32 const segment_count, std::shared_ptr<Material> const& material);

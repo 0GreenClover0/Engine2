@@ -1,8 +1,11 @@
 #include "FloatersManager.h"
 
 #if EDITOR
-#include "imgui_extensions.h"
 #include <imgui.h>
+#endif
+
+#if EDITOR
+#include "imgui_extensions.h"
 #endif
 
 FloatersManager::FloatersManager(AK::Badge<FloatersManager>)
@@ -18,6 +21,14 @@ std::shared_ptr<FloatersManager> FloatersManager::create()
 void FloatersManager::draw_editor()
 {
     Component::draw_editor();
+
+    custom_draw_editor();
+}
+#endif
+
+#if EDITOR
+void FloatersManager::custom_draw_editor()
+{
     ImGuiEx::draw_ptr("Water", water);
 
     ImGui::Text("Big Boat Settings");

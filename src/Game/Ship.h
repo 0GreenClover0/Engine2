@@ -149,6 +149,7 @@ static std::string behaviour_state_to_string(BehavioralState const state)
 
 class ShipSpawner;
 
+CUSTOM_EDITOR_ONLY
 class Ship final : public Component
 {
 public:
@@ -161,8 +162,13 @@ public:
     virtual void awake() override;
     virtual void update() override;
     virtual void on_destroyed() override;
+
 #if EDITOR
     virtual void draw_editor() override;
+#endif
+
+#if EDITOR
+    virtual void custom_draw_editor() override;
 #endif
 
     virtual void on_trigger_enter(std::shared_ptr<Collider2D> const& other) override;

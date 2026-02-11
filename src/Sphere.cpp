@@ -11,6 +11,10 @@
 #include "ResourceManager.h"
 #include "Vertex.h"
 
+#if EDITOR
+#include "imgui_extensions.h"
+#endif
+
 std::shared_ptr<Sphere> Sphere::create()
 {
     auto sphere = std::make_shared<Sphere>(AK::Badge<Sphere> {}, default_material);
@@ -151,3 +155,15 @@ std::shared_ptr<Mesh> Sphere::create_sphere() const
     stream << std::to_string(stack_count) << "|" << std::to_string(sector_count) << "SPHERE";
     return ResourceManager::get_instance().load_mesh(m_meshes.size(), stream.str(), vertices, indices, textures, m_draw_type, material);
 }
+
+#if EDITOR
+void Sphere::draw_editor()
+{
+    Model::draw_editor();
+
+    u32_draw_editor("Sector Count: ", sector_count);
+    u32_draw_editor("Stack Count: ", stack_count);
+    string_draw_editor("Texture Path: ", texture_path);
+    float_draw_editor("Radius: ", radius);
+}
+#endif

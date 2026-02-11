@@ -6,9 +6,18 @@
 
 class Entity;
 
+CUSTOM_EDITOR_ONLY
 class PlayerInput final : public Component
 {
 public:
+#if EDITOR
+    virtual void draw_editor() override;
+#endif
+
+#if EDITOR
+    virtual void custom_draw_editor() override;
+#endif
+
     static std::shared_ptr<PlayerInput> create();
 
     explicit PlayerInput(AK::Badge<PlayerInput>);

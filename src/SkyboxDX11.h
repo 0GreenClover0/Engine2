@@ -11,6 +11,10 @@
 class SkyboxDX11 final : public Skybox
 {
 public:
+#if EDITOR
+    virtual void draw_editor() override;
+#endif
+
     SkyboxDX11(AK::Badge<SkyboxFactory>, std::shared_ptr<Material> const& material, std::string const& path);
 
     virtual void bind() override;

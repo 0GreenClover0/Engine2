@@ -2,6 +2,10 @@
 #include "Input.h"
 #include "SceneSerializer.h"
 
+#if EDITOR
+#include "imgui_extensions.h"
+#endif
+
 std::shared_ptr<DebugInputController> DebugInputController::create()
 {
     auto instance = std::make_shared<DebugInputController>(AK::Badge<DebugInputController> {});
@@ -65,10 +69,9 @@ void DebugInputController::update()
 #if EDITOR
 void DebugInputController::draw_editor()
 {
-    ImGui::Text("Gamma Correction");
-    ImGui::SliderFloat("Gamma", &gamma, 0.0f, 3.0f);
+    Component::draw_editor();
 
-    ImGui::Text("Exposure");
-    ImGui::SliderFloat("Exposure", &exposure, 0.0f, 3.0f);
+    float_draw_editor("Gamma: ", gamma);
+    float_draw_editor("Exposure: ", exposure);
 }
 #endif

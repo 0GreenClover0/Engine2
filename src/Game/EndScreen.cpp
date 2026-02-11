@@ -19,8 +19,11 @@
 #include <glm/vec2.hpp>
 
 #if EDITOR
-#include "imgui_extensions.h"
 #include <imgui.h>
+#endif
+
+#if EDITOR
+#include "imgui_extensions.h"
 #endif
 
 std::shared_ptr<EndScreen> EndScreen::create()
@@ -159,6 +162,13 @@ void EndScreen::draw_editor()
 {
     Popup::draw_editor();
 
+    custom_draw_editor();
+}
+#endif
+
+#if EDITOR
+void EndScreen::custom_draw_editor()
+{
     if (ImGui::Checkbox("Failed", &is_failed))
     {
         update_background();

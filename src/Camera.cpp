@@ -6,6 +6,10 @@
 #include "Entity.h"
 #include "Renderer.h"
 
+#if EDITOR
+#include "imgui_extensions.h"
+#endif
+
 void Camera::initialize()
 {
     Component::initialize();
@@ -71,19 +75,19 @@ void Camera::set_far_plane(float const value)
 
 void Camera::set_width(float const value)
 {
-    if (glm::epsilonNotEqual(value, width, 0.0001f) && glm::epsilonNotEqual(value, 0.0f, 0.0001f))
+    if (glm::epsilonNotEqual(value, m_width, 0.0001f) && glm::epsilonNotEqual(value, 0.0f, 0.0001f))
     {
         m_dirty = true;
-        width = value;
+        m_width = value;
     }
 }
 
 void Camera::set_height(float const value)
 {
-    if (glm::epsilonNotEqual(value, height, 0.0001f) && glm::epsilonNotEqual(value, 0.0f, 0.0001f))
+    if (glm::epsilonNotEqual(value, m_height, 0.0001f) && glm::epsilonNotEqual(value, 0.0f, 0.0001f))
     {
         m_dirty = true;
-        height = value;
+        m_height = value;
     }
 }
 
@@ -186,7 +190,7 @@ Camera::Camera(AK::Badge<Camera>)
 {
 }
 
-Camera::Camera(AK::Badge<Camera>, float const width, float const height, float const fov) : width(width), height(height), fov(fov)
+Camera::Camera(AK::Badge<Camera>, float const width, float const height, float const fov) : m_width(width), m_height(height), fov(fov)
 {
 }
 
@@ -194,7 +198,7 @@ void Camera::update_internals()
 {
     if (m_dirty)
     {
-        m_projection = glm::perspective(fov, width / height, near_plane, far_plane);
+        m_projection = glm::perspective(fov, m_width / m_height, near_plane, far_plane);
 
         update_frustum();
     }
@@ -210,6 +214,15 @@ void Camera::draw_editor()
 {
     Component::draw_editor();
 
+    custom_draw_editor();
+    float_draw_editor("Near Plane: ", near_plane);
+    float_draw_editor("Far Plane: ", far_plane);
+}
+#endif
+
+#if EDITOR
+void Camera::custom_draw_editor()
+{
     float fov_angle = glm::degrees(get_main_camera()->fov);
     ImGui::InputFloat("Camera FoV", &fov_angle, 1.0f, 90.0f);
     fov = glm::radians(fov_angle);

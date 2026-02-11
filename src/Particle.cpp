@@ -17,6 +17,10 @@
 #include "imgui_stdlib.h"
 #endif
 
+#if EDITOR
+#include "imgui_extensions.h"
+#endif
+
 std::shared_ptr<Particle> Particle::create()
 {
     auto const particle_shader = ResourceManager::get_instance().load_shader("./res/shaders/particle.hlsl", "./res/shaders/particle.hlsl");
@@ -153,6 +157,13 @@ void Particle::draw_editor()
 {
     Drawable::draw_editor();
 
+    custom_draw_editor();
+}
+#endif
+
+#if EDITOR
+void Particle::custom_draw_editor()
+{
     ImGui::ColorEdit4("Color", glm::value_ptr(m_color));
     ImGui::InputText("Sprite Path", &path);
     if (ImGui::IsItemDeactivatedAfterEdit())

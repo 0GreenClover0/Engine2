@@ -25,6 +25,10 @@ public:
     virtual void draw_editor() override;
 #endif
 
+#if EDITOR
+    virtual void custom_draw_editor() override;
+#endif
+
     void set_render_target_for_shadow_mapping(u32 const face_index) const;
     glm::mat4 get_projection_view_matrix(u32 const face_index);
 
@@ -33,8 +37,11 @@ public:
     void set_flash(bool const value);
 
     // Default values for an around 50m distance of cover
+    CUSTOM_EDITOR
     float constant = 1.0f; // Should not be changed
+    CUSTOM_EDITOR
     float linear = 0.09f;
+    CUSTOM_EDITOR
     float quadratic = 0.032f;
 
 protected:

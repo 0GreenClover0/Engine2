@@ -33,9 +33,13 @@ public:
     virtual void update() override;
     virtual void uninitialize() override;
 
-    // TODO: This should be in an update_editor() method
 #if EDITOR
     virtual void draw_editor() override;
+#endif
+
+    // TODO: This should be in an update_editor() method
+#if EDITOR
+    virtual void custom_draw_editor() override;
 #endif
 
     void set_drawing_type(DrawingType const new_type);

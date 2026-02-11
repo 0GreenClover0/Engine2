@@ -25,8 +25,11 @@
 #include <glm/gtc/random.hpp>
 
 #if EDITOR
-#include "imgui_extensions.h"
 #include <imgui.h>
+#endif
+
+#if EDITOR
+#include "imgui_extensions.h"
 #endif
 
 std::shared_ptr<Truther> Truther::create()
@@ -344,6 +347,22 @@ void Truther::draw_editor()
 {
     Component::draw_editor();
 
+    custom_draw_editor();
+    float_draw_editor("Maximum Speed: ", maximum_speed);
+    float_draw_editor("Acceleration: ", acceleration);
+    float_draw_editor("Deceleration: ", deceleration);
+    float_draw_editor("Jump Power: ", jump_power);
+    float_draw_editor("Jump Horizontal Power: ", jump_horizontal_power);
+    float_draw_editor("Gravitation: ", gravitation);
+    float_draw_editor("Suck Power: ", suck_power);
+    weak_ptr_draw_editor("Wheat Overlay: ", wheat_overlay);
+    weak_ptr_draw_editor("Model Entity: ", model_entity);
+}
+#endif
+
+#if EDITOR
+void Truther::custom_draw_editor()
+{
     ImGui::Text("Does the truther bend or unbend wheat?");
     ImGui::Text("For testing.");
     ImGui::Checkbox("Bending", &truther_bends);
@@ -351,17 +370,6 @@ void Truther::draw_editor()
     ImGui::Spacing();
     ImGui::Spacing();
     ImGui::Spacing();
-
-    ImGuiEx::InputFloat("Acceleration", &acceleration);
-    ImGuiEx::InputFloat("Deceleration", &deceleration);
-    ImGuiEx::InputFloat("Maximum speed", &maximum_speed);
-    ImGuiEx::InputFloat("Jump power", &jump_power);
-    ImGuiEx::InputFloat("Gravitation", &gravitation);
-    ImGuiEx::InputFloat("jump_horizontal_power", &jump_horizontal_power);
-    ImGuiEx::InputFloat("suck power", &suck_power);
-
-    ImGuiEx::draw_ptr("Wheat Overlay", wheat_overlay);
-    ImGuiEx::draw_ptr("Model Entity", model_entity);
 }
 #endif
 

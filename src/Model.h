@@ -28,6 +28,10 @@ public:
     virtual void draw_editor() override;
 #endif
 
+#if EDITOR
+    virtual void custom_draw_editor() override;
+#endif
+
     virtual void draw() const override;
 
     virtual void draw_instanced(i32 const size) override;
@@ -40,6 +44,7 @@ public:
     virtual void adjust_bounding_box() override;
     virtual BoundingBox get_adjusted_bounding_box(glm::mat4 const& model_matrix) const override;
 
+    CUSTOM_EDITOR
     std::string model_path = "";
 
 protected:

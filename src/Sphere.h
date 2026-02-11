@@ -5,6 +5,10 @@
 class Sphere final : public Model
 {
 public:
+#if EDITOR
+    virtual void draw_editor() override;
+#endif
+
     static std::shared_ptr<Sphere> create();
     static std::shared_ptr<Sphere> create(float radius, u32 sectors, u32 stacks, std::string const& texture_path,
                                           std::shared_ptr<Material> const& material);

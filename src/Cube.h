@@ -6,6 +6,10 @@
 class Cube final : public Model
 {
 public:
+#if EDITOR
+    virtual void draw_editor() override;
+#endif
+
     static std::shared_ptr<Cube> create();
     static std::shared_ptr<Cube> create(std::shared_ptr<Material> const& material, bool const big_cube = false);
     static std::shared_ptr<Cube> create(std::string const& diffuse_texture_path, std::shared_ptr<Material> const& material,

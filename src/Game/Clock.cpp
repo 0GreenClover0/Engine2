@@ -10,8 +10,11 @@
 #include <glm/vec2.hpp>
 
 #if EDITOR
-#include "imgui_extensions.h"
 #include <imgui.h>
+#endif
+
+#if EDITOR
+#include "imgui_extensions.h"
 #endif
 
 std::shared_ptr<Clock> Clock::create()
@@ -56,6 +59,7 @@ void Clock::update()
 void Clock::draw_editor()
 {
     Component::draw_editor();
+
 }
 #endif
 

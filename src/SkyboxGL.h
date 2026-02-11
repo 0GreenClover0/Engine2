@@ -9,6 +9,10 @@ NON_SERIALIZED
 class SkyboxGL final : public Skybox
 {
 public:
+#if EDITOR
+    virtual void draw_editor() override;
+#endif
+
     SkyboxGL(AK::Badge<SkyboxFactory>, std::shared_ptr<Material> const& material, std::vector<std::string> const& face_paths);
 
     virtual void bind() override;

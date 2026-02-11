@@ -8,6 +8,10 @@
 class HovercraftWithoutKeeper final : public Component
 {
 public:
+#if EDITOR
+    virtual void draw_editor() override;
+#endif
+
     static std::shared_ptr<HovercraftWithoutKeeper> create();
     explicit HovercraftWithoutKeeper(AK::Badge<HovercraftWithoutKeeper>);
 

@@ -6,6 +6,10 @@
 class Sprite final : public Model
 {
 public:
+#if EDITOR
+    virtual void draw_editor() override;
+#endif
+
     static std::shared_ptr<Sprite> create();
     static std::shared_ptr<Sprite> create(std::shared_ptr<Material> const& material);
     static std::shared_ptr<Sprite> create(std::shared_ptr<Material> const& material, std::string const& diffuse_texture_path);

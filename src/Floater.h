@@ -16,6 +16,7 @@ public:
 #if EDITOR
     virtual void draw_editor() override;
 #endif
+
     virtual void awake() override;
     virtual void update() override;
 

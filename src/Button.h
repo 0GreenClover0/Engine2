@@ -25,6 +25,10 @@ public:
     virtual void draw_editor() override;
 #endif
 
+#if EDITOR
+    virtual void custom_draw_editor() override;
+#endif
+
     virtual void reprepare() override;
     void prepare();
 
@@ -40,25 +44,26 @@ public:
     bool is_hovered() const;
     bool is_pressed() const;
 
+    CUSTOM_EDITOR
     std::string path_default = "./res/textures/white.jpg";
     std::string path_hovered = "./res/textures/light_gray.jpg";
     std::string path_pressed = "./res/textures/dark_gray.jpg";
-
-    glm::vec2 top_left_corner = {};
-    glm::vec2 top_right_corner = {};
-    glm::vec2 bottom_left_corner = {};
-    glm::vec2 bottom_right_corner = {};
 
 private:
     void calculate_corners_position();
     [[nodiscard]] std::shared_ptr<Mesh> create_sprite() const;
 
+    std::string m_path = path_default;
+
+    glm::vec2 m_top_left_corner = {};
+    glm::vec2 m_top_right_corner = {};
+    glm::vec2 m_bottom_left_corner = {};
+    glm::vec2 m_bottom_right_corner = {};
+
+    std::shared_ptr<Mesh> m_mesh = {};
+
     bool m_previous_frame_hovered = false;
     bool m_this_frame_hovered = false;
     bool m_previous_frame_clicked = false;
     bool m_this_frame_clicked = false;
-
-    std::string m_path = path_default;
-
-    std::shared_ptr<Mesh> m_mesh = {};
 };

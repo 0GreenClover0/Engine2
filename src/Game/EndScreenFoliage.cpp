@@ -19,11 +19,15 @@
 #include <glm/vec2.hpp>
 
 #if EDITOR
-#include "imgui_extensions.h"
 #include <imgui.h>
 #endif
+
 #include <Komiks/CowManager.h>
 #include <glm/gtx/easing.hpp>
+
+#if EDITOR
+#include "imgui_extensions.h"
+#endif
 
 std::shared_ptr<EndScreenFoliage> EndScreenFoliage::create()
 {
@@ -126,9 +130,9 @@ void EndScreenFoliage::draw_editor()
 {
     Popup::draw_editor();
 
-    ImGuiEx::draw_ptr("Next level button", next_level_button);
-    ImGuiEx::draw_ptr("percentage text", percentage_text);
-    ImGuiEx::draw_ptr("percentage bar", percentage_bar);
+    weak_ptr_draw_editor("Next Level Button: ", next_level_button);
+    weak_ptr_draw_editor("Percentage Text: ", percentage_text);
+    weak_ptr_draw_editor("Percentage Bar: ", percentage_bar);
 }
 #endif
 

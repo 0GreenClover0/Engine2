@@ -22,8 +22,11 @@
 #include <glm/gtc/random.hpp>
 
 #if EDITOR
-#include "imgui_extensions.h"
 #include <imgui.h>
+#endif
+
+#if EDITOR
+#include "imgui_extensions.h"
 #endif
 
 std::shared_ptr<LighthouseKeeper> LighthouseKeeper::create()
@@ -163,13 +166,12 @@ void LighthouseKeeper::draw_editor()
 {
     Component::draw_editor();
 
-    ImGuiEx::InputFloat("Acceleration", &acceleration);
-    ImGuiEx::InputFloat("Deceleration", &deceleration);
-    ImGuiEx::InputFloat("Maximum speed", &maximum_speed);
-
-    ImGuiEx::draw_ptr("Lighthouse", lighthouse);
-    ImGuiEx::draw_ptr("Keeper dust", keeper_dust);
-    ImGuiEx::draw_ptr("Keeper splash", keeper_splash);
+    float_draw_editor("Maximum Speed: ", maximum_speed);
+    float_draw_editor("Acceleration: ", acceleration);
+    float_draw_editor("Deceleration: ", deceleration);
+    weak_ptr_draw_editor("Lighthouse: ", lighthouse);
+    weak_ptr_draw_editor("Keeper Dust: ", keeper_dust);
+    weak_ptr_draw_editor("Keeper Splash: ", keeper_splash);
 }
 #endif
 

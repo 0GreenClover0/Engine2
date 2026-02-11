@@ -217,9 +217,9 @@ void Customer::draw_editor()
 {
     Component::draw_editor();
 
-    ImGuiEx::draw_ptr("Collider", collider);
-    ImGuiEx::draw_ptr("Left Hand", left_hand);
-    ImGuiEx::draw_ptr("Right Hand", right_hand);
+    weak_ptr_draw_editor("Collider: ", collider);
+    weak_ptr_draw_editor("Left Hand: ", left_hand);
+    weak_ptr_draw_editor("Right Hand: ", right_hand);
 }
 #endif
 

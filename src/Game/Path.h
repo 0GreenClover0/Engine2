@@ -3,6 +3,7 @@
 #include "Component.h"
 #include "Curve.h"
 
+CUSTOM_EDITOR_ONLY
 class Path final : public Curve
 {
 public:
@@ -12,6 +13,10 @@ public:
 
 #if EDITOR
     virtual void draw_editor() override;
+#endif
+
+#if EDITOR
+    virtual void custom_draw_editor() override;
 #endif
 
     void shift_all_by(glm::vec2 const value);
