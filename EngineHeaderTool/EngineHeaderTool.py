@@ -455,7 +455,7 @@ def add_editor_code(files_to_serialize):
                     lines.insert(i + increment, "#endif\n")
                     lines_modified = True
 
-        # If draw_editor() is present and custom_draw_editor() is left unmofidied or it doesn't exist, skip this file.
+        # If draw_editor() is present and custom_draw_editor() is left unmofidied or it doesn't exist, skip this file already.
         if already_present and not lines_modified:
             continue
 
@@ -521,6 +521,8 @@ def add_editor_code(files_to_serialize):
         custom_editor_search_finished = False
         imgui_include_search_finished = False
 
+        lines_modified = False
+
         for i, line in enumerate(lines):
             # If everything was already found, break
             if editor_search_finished and custom_editor_search_finished and imgui_include_search_finished:
@@ -531,6 +533,7 @@ def add_editor_code(files_to_serialize):
                 # Stop searching if the line doesn't start with '#' - no include found. Add it manually.
                 if line.find('#') == -1 and line.strip() != "":
                     lines.insert(i, f"#if EDITOR\n{imgui_extension_include}\n#endif\n\n")
+                    lines_modified = True
                     imgui_include_search_finished = True
 
                 elif imgui_extension_include in line:
@@ -542,10 +545,12 @@ def add_editor_code(files_to_serialize):
                     increment = 1
                     if before != "#if EDITOR":
                         lines.insert(i, "#if EDITOR\n")
+                        lines_modified = True
                         increment += 1
 
                     if after != "#endif":
                         lines.insert(i + increment, "#endif\n")
+                        lines_modified = True
 
                     imgui_include_search_finished = True
 
@@ -623,12 +628,14 @@ def add_editor_code(files_to_serialize):
         if not already_present:
             lines += "\n"
             lines += new_impl
+            lines_modified = True
         else:
             if new_impl != current_impl:
                 assert start_index is not None and end_index is not None
 
                 # Replace existing function.
                 lines[start_index:end_index + 1] = new_impl.splitlines(keepends=True)
+                lines_modified = True
 
         if custom_needs_if_directive or custom_needs_endif_directive:
             for i, line in enumerate(lines):
@@ -636,15 +643,18 @@ def add_editor_code(files_to_serialize):
                     increment = 1
                     if custom_needs_if_directive:
                         lines.insert(i, "#if EDITOR\n")
+                        lines_modified = True
                         increment += 1
 
                     if custom_needs_endif_directive:
                         lines.insert(i + custom_height + increment, "#endif\n")
+                        lines_modified = True
 
                     break
         
-        with open(cpp_path, 'w') as f:
-            f.writelines(lines)
+        if lines_modified:
+            with open(cpp_path, 'w') as f:
+                f.writelines(lines)
 
 # Outer identifier is the very first "raw" type of a variable.
 # Ex. in std::vector<i32> it is a vector.
