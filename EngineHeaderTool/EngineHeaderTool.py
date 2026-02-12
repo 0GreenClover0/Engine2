@@ -3,6 +3,7 @@ import regex as re
 import keyboard
 import argparse
 
+DEBUG = False
 menu = []
 active_choice = 0
 scene_serializer_lines = ""
@@ -113,7 +114,8 @@ def display_menu(menu_items, active_index):
 def check_includes(Component, file = '/src/SceneSerializer.cpp'):
     global scene_serializer_lines
 
-    print(Component)
+    if DEBUG:
+        print(Component)
 
     header_pattern = re.compile('#include "' + Component.replace(args.engine_dir + "/src/", "", 1) + '"')
     file_path = args.engine_dir + file
@@ -132,7 +134,9 @@ def check_includes(Component, file = '/src/SceneSerializer.cpp'):
 
 def remove_lines_between(start_line, end_line, first_skip = False, file = '/src/SceneSerializer.cpp'):
     global scene_serializer_lines
-    print('Removing lines from ' + start_line + ' to ' + end_line)
+
+    if DEBUG:
+        print('Removing lines from ' + start_line + ' to ' + end_line)
 
     file_path = args.engine_dir + file
     lines = None
@@ -752,8 +756,9 @@ def add_serialization(file, pick_vars, pick_files, indentation = 0):
     header_file_path = args.engine_dir + '/src/' + Component + '.h'
     serializable_vars = find_serializable_variables(header_file_path, pick_vars)
     
-    print('Adding ' + Component)
-    print(serializable_vars)
+    if DEBUG:
+        print('Adding ' + Component)
+        print(serializable_vars)
 
     if pick_vars == True:
         serializable_vars = pick_variables(serializable_vars)
@@ -774,16 +779,21 @@ def add_serialization(file, pick_vars, pick_files, indentation = 0):
         shift = 1
         
     add_lines_at_target(place_to_add_serialization, create_serialization_code(file, Component, serializable_vars, indentation), shift)
-    print('Succesful added serialization for ' + Component + '!')
+
+    if DEBUG:
+        print('Succesful added serialization for ' + Component + '!')
 
     additional_variables = recursively_search_serializable_variables(header_file_path)
 
-    print("Additional variables from parents added to deserialization code: ")
-    print(additional_variables)
+    if DEBUG:
+        print("Additional variables from parents added to deserialization code: ")
+        print(additional_variables)
 
     if is_abstract == False:
         add_lines_at_target('// # Put new deserialization here', create_deserialization_code(Component, serializable_vars + additional_variables), -3)
-        print('Succesful added deserialization for ' + Component + '!')
+
+        if DEBUG:
+            print('Succesful added deserialization for ' + Component + '!')
 
     components_to_remove = []
 
@@ -810,7 +820,9 @@ def add_to_component_list(file):
     if is_abstract:
         return
     
-    print('Adding ' + Component + ' to component list')
+    if DEBUG:
+        print('Adding ' + Component + ' to component list')
+
     add_lines_at_target('// # Put new component here', ['    ENUMERATE_COMPONENT(' + Component + ', "' + readable + '") \\'], 0, '/src/ComponentList.h')
     
     is_already_serialized = check_includes(name, '/src/Editor.cpp')
@@ -834,8 +846,9 @@ all_components = scan_files(allow_non_serialized = True)
 
 add_editor_code(all_components)
 
-for i in range(len(files_to_serialize)):
-    print(files_to_serialize[i])
+if DEBUG:
+    for i in range(len(files_to_serialize)):
+        print(files_to_serialize[i])
 
 remove_lines_between('// # Auto serialization start', '// # Put new serialization here')
 code = [
