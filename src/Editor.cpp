@@ -1879,7 +1879,21 @@ bool Editor::are_debug_drawings_enabled() const
 std::string Editor::get_component_custom_name(std::string const& guid)
 {
     auto const it = m_component_custom_names.find(guid);
-    return it == m_component_custom_names.end() ? it->second : "";
+    return it != m_component_custom_names.end() ? it->second : "";
+}
+
+std::string* Editor::get_component_custom_name_by_ptr(std::string const& guid)
+{
+    // This is a bit hacky but makes the job done.
+    auto it = m_component_custom_names.find(guid);
+
+    if (it == m_component_custom_names.end())
+    {
+        m_component_custom_names.insert({guid, ""});
+        it = m_component_custom_names.find(guid);
+    }
+
+    return &it->second;
 }
 
 void Editor::set_component_custom_name(std::string const& guid, std::string const& custom_name)
