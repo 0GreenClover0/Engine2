@@ -24,7 +24,8 @@ public:
 
     static ResourceManager& get_instance();
 
-    std::shared_ptr<Texture> load_texture(std::string const& path, TextureType const type, TextureSettings const& settings = {});
+    std::shared_ptr<Texture> load_texture(std::string const& path, std::optional<TextureType> const type,
+                                          TextureSettings const& settings = {});
     std::shared_ptr<Texture> load_cubemap(std::vector<std::string> const& paths, TextureType const type,
                                           TextureSettings const& settings = {});
     std::shared_ptr<Texture> load_cubemap(std::string const& path, TextureType const type, TextureSettings const& settings = {});
