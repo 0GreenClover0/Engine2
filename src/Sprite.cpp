@@ -77,8 +77,7 @@ std::shared_ptr<Mesh> Sprite::create_sprite() const
     texture_settings.wrap_mode_y = TextureWrapMode::ClampToEdge;
 
     if (!diffuse_texture_path.empty())
-        diffuse_maps.emplace_back(
-            ResourceManager::get_instance().load_texture(diffuse_texture_path, TextureType::Diffuse, texture_settings));
+        diffuse_maps.emplace_back(ResourceManager::get_instance().load_texture(diffuse_texture_path, std::nullopt, texture_settings));
 
     textures.insert(textures.end(), diffuse_maps.begin(), diffuse_maps.end());
 

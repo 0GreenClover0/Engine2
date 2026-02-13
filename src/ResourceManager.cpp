@@ -16,7 +16,9 @@ ResourceManager& ResourceManager::get_instance()
     return instance;
 }
 
-std::shared_ptr<Texture> ResourceManager::load_texture(std::string const& path, TextureType const type, TextureSettings const& settings)
+// 'type' is required in the case of OpenGL API.
+std::shared_ptr<Texture> ResourceManager::load_texture(std::string const& path, std::optional<TextureType> const type,
+                                                       TextureSettings const& settings)
 {
     std::stringstream stream;
 
@@ -33,7 +35,15 @@ std::shared_ptr<Texture> ResourceManager::load_texture(std::string const& path, 
     if (resource_ptr != nullptr)
         return resource_ptr;
 
-    resource_ptr = TextureLoader::get_instance()->load_texture(path, type, settings);
+    if (type.has_value())
+    {
+        resource_ptr = TextureLoader::get_instance()->load_texture(path, type.value(), settings);
+    }
+    else
+    {
+        resource_ptr = TextureLoader::get_instance()->load_texture(path, settings);
+    }
+
     m_textures.emplace_back(resource_ptr);
     names_to_textures.insert(std::pair<std::string, u16>(key, m_textures.size() - 1));
 

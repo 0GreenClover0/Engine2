@@ -10,6 +10,18 @@ std::shared_ptr<Texture> TextureLoader::load_texture(std::string const& path, Te
                                      path);
 }
 
+std::shared_ptr<Texture> TextureLoader::load_texture(std::string const& path, TextureSettings const& settings)
+{
+    assert(Renderer::renderer_api != OpenGL);
+
+    auto const [id, width, height, number_of_components, texture_2d, shader_resource_view, image_sampler_state] =
+        texture_from_file(path, settings);
+
+    // NOTE: Since no type was passed, we treat the texture as Diffuse. This only affects OpenGL API.
+    return std::make_shared<Texture>(id, width, height, number_of_components, TextureType::Diffuse, texture_2d, shader_resource_view,
+                                     image_sampler_state, path);
+}
+
 std::shared_ptr<Texture> TextureLoader::load_cubemap(std::vector<std::string> const& paths, TextureType const type,
                                                      TextureSettings const& settings)
 {
