@@ -146,27 +146,27 @@ void Game::initialize()
     controller->add_component(Player::create());
 
     controller_comp->ships_limit_curve = controller->add_component<Curve>(Curve::create());
-    controller_comp->ships_limit_curve.lock()->custom_name = "Ships limit";
+    controller_comp->ships_limit_curve.lock()->set_custom_name("Ships limit");
     controller_comp->ships_limit_curve.lock()->add_points({{0.0f, 2.0f}, {0.1f, 2.0f}, {0.6f, 6.0f}, {1.0f, 6.0f}});
 
     controller_comp->ships_speed_curve = controller->add_component<Curve>(Curve::create());
-    controller_comp->ships_speed_curve.lock()->custom_name = "Ships speed";
+    controller_comp->ships_speed_curve.lock()->set_custom_name("Ships speed");
     controller_comp->ships_speed_curve.lock()->add_points({{0.0f, 0.21f}, {0.756f, 0.26f}, {1.0f, 0.26f}});
 
     controller_comp->ships_range_curve = controller->add_component<Curve>(Curve::create());
-    controller_comp->ships_range_curve.lock()->custom_name = "Ships range";
+    controller_comp->ships_range_curve.lock()->set_custom_name("Ships range");
     controller_comp->ships_range_curve.lock()->add_points({{0.0f, 0.4f}, {0.5f, 0.6f}, {1.0f, 1.5f}});
 
     controller_comp->ships_turn_curve = controller->add_component<Curve>(Curve::create());
-    controller_comp->ships_turn_curve.lock()->custom_name = "Ships turn";
+    controller_comp->ships_turn_curve.lock()->set_custom_name("Ships turn");
     controller_comp->ships_turn_curve.lock()->add_points({{0.0f, 15.0f}, {1.0f, 60.0f}});
 
     controller_comp->ships_additional_speed_curve = controller->add_component<Curve>(Curve::create());
-    controller_comp->ships_additional_speed_curve.lock()->custom_name = "Ships additional speed";
+    controller_comp->ships_additional_speed_curve.lock()->set_custom_name("Ships additional speed");
     controller_comp->ships_additional_speed_curve.lock()->add_points({{0.0f, 0.001f}, {0.2f, 0.0025f}, {1.0f, 0.01f}});
 
     controller_comp->pirates_in_control_curve = controller->add_component<Curve>(Curve::create());
-    controller_comp->pirates_in_control_curve.lock()->custom_name = "Pirates in control";
+    controller_comp->pirates_in_control_curve.lock()->set_custom_name("Pirates in control");
     controller_comp->pirates_in_control_curve.lock()->add_points({{0.0f, 0.16f}, {1.0f, 1.66f}});
 
     controller_comp->factories.emplace_back(generator_comp);
