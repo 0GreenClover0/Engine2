@@ -4,27 +4,27 @@
 
 #include "AK/Types.h"
 
-enum class TextureType
+enum class TextureType : u8
 {
-    None,
-    Diffuse,
-    Specular,
-    Heightmap,
+    None = 0,
+    Diffuse = 1,
+    Specular = 2,
+    Heightmap = 3,
 };
 
-enum class TextureWrapMode
+enum class TextureWrapMode : u8
 {
-    Repeat,
-    MirroredRepeat,
-    ClampToEdge,
-    ClampToBorder
+    Repeat = 0,
+    MirroredRepeat = 1,
+    ClampToEdge = 2,
+    ClampToBorder = 3
 };
 
-enum class TextureFiltering
+enum class TextureFiltering : u8
 {
-    None,
-    Nearest,
-    Linear,
+    None = 0,
+    Nearest = 1,
+    Linear = 2,
 };
 
 struct TextureSettings
