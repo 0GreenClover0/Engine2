@@ -39,11 +39,6 @@ public:
     virtual void draw_editor();
     virtual void custom_draw_editor();
 
-    std::shared_ptr<Entity> entity;
-
-    bool has_been_awaken = false;
-    bool has_been_started = false;
-
     void set_can_tick(bool const value);
     bool get_can_tick() const;
 
@@ -53,7 +48,12 @@ public:
     std::string get_custom_name() const;
     void set_custom_name(std::string const& custom_name) const;
 
-    std::string guid = "";
+    std::string guid;
+
+    std::shared_ptr<Entity> entity;
+
+    bool has_been_awaken = false;
+    bool has_been_started = false;
 
 private:
     bool m_enabled = true;
