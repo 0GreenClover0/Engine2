@@ -50,9 +50,10 @@ public:
     void set_enabled(bool const value);
     bool enabled() const;
 
-    std::string guid = "";
+    std::string get_custom_name() const;
+    void set_custom_name(std::string const& custom_name) const;
 
-    std::string custom_name = "";
+    std::string guid = "";
 
 private:
     bool m_enabled = true;

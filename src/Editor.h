@@ -167,6 +167,9 @@ public:
 
     [[nodiscard]] bool are_debug_drawings_enabled() const;
 
+    std::string get_component_custom_name(std::string const& guid);
+    void set_component_custom_name(std::string const& guid, std::string const& custom_name);
+
     static std::shared_ptr<Editor> get_instance()
     {
         return m_instance;
@@ -281,6 +284,8 @@ private:
     float m_thumbnail_size = 64.0f;
 
     std::unordered_map<std::string, std::shared_ptr<Texture>> m_textures_map = {};
+
+    std::unordered_map<std::string, std::string> m_component_custom_names = {};
 
     std::string m_search_filter = {};
     std::string m_content_search_filter = {};

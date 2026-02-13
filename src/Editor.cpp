@@ -1218,7 +1218,12 @@ void Editor::draw_inspector(std::shared_ptr<EditorWindow> const& window)
 
         // NOTE: This only returns unmangled name while using the MSVC compiler
         std::string const typeid_name = typeid(*component).name();
-        std::string const name = typeid_name.substr(6) + " " + component->custom_name;
+        std::string name = typeid_name.substr(6);
+
+        if (auto custom_name = m_component_custom_names.find(component->guid); custom_name != m_component_custom_names.end())
+        {
+            name += " " + custom_name->second;
+        }
 
         bool const component_open = ImGui::TreeNode((name + guid).c_str());
 
@@ -1869,6 +1874,17 @@ void Editor::remove_window(std::shared_ptr<EditorWindow> const& window)
 bool Editor::are_debug_drawings_enabled() const
 {
     return m_debug_drawings_enabled;
+}
+
+std::string Editor::get_component_custom_name(std::string const& guid)
+{
+    auto const it = m_component_custom_names.find(guid);
+    return it == m_component_custom_names.end() ? it->second : "";
+}
+
+void Editor::set_component_custom_name(std::string const& guid, std::string const& custom_name)
+{
+    m_component_custom_names.insert({guid, custom_name});
 }
 
 #endif

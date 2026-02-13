@@ -1,6 +1,7 @@
 #include "Component.h"
 
 #include "AK/AK.h"
+#include "Editor.h"
 #include "Entity.h"
 #include "MainScene.h"
 
@@ -147,4 +148,18 @@ void Component::set_enabled(bool const value)
 bool Component::enabled() const
 {
     return m_enabled;
+}
+
+std::string Component::get_custom_name() const
+{
+#if EDITOR
+    return Editor::Editor::get_instance()->get_component_custom_name(guid);
+#endif
+}
+
+void Component::set_custom_name(std::string const& custom_name) const
+{
+#if EDITOR
+    Editor::Editor::get_instance()->set_component_custom_name(guid, custom_name);
+#endif
 }
