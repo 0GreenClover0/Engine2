@@ -219,6 +219,8 @@ private:
 
     glm::vec3 update_locked_value(glm::vec3 new_value, glm::vec3 const old_value) const;
 
+    std::string* get_component_custom_name_by_ptr(std::string const& guid);
+
     std::vector<std::shared_ptr<DebugDrawing>> m_debug_drawings = {};
     bool m_debug_drawings_enabled = true;
 
