@@ -4,6 +4,7 @@
 
 #include <iostream>
 #include <sstream>
+#include <utility>
 
 #include "MeshFactory.h"
 #include "ShaderFactory.h"
@@ -17,7 +18,16 @@ ResourceManager& ResourceManager::get_instance()
 
 std::shared_ptr<Texture> ResourceManager::load_texture(std::string const& path, TextureType const type, TextureSettings const& settings)
 {
-    std::string const& key = path; // No need to even call generate_key()
+    std::stringstream stream;
+
+    // TODO: Some of these settings only affect the API side of Textures, so we could skip loading image data from disk.
+    stream << path << settings.flip_vertically << settings.generate_mipmaps << std::to_underlying<TextureWrapMode>(settings.wrap_mode_x)
+           << std::to_underlying<TextureWrapMode>(settings.wrap_mode_y) << std::to_underlying<TextureWrapMode>(settings.wrap_mode_z)
+           << std::to_underlying<TextureFiltering>(settings.filtering_min) << std::to_underlying<TextureFiltering>(settings.filtering_max)
+           << std::to_underlying<TextureFiltering>(settings.filtering_mipmap);
+
+    std::string const key = generate_key(stream);
+
     std::shared_ptr<Texture> resource_ptr = get_from_vector<Texture>(key);
 
     if (resource_ptr != nullptr)
