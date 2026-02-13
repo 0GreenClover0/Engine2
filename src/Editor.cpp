@@ -1227,6 +1227,31 @@ void Editor::draw_inspector(std::shared_ptr<EditorWindow> const& window)
 
         bool const component_open = ImGui::TreeNode((name + guid).c_str());
 
+        if (ImGui::IsItemClicked(ImGuiMouseButton_Right))
+        {
+            ImGui::OpenPopup("ComponentPopup");
+        }
+
+        if (ImGui::BeginPopup("ComponentPopup", ImGuiPopupFlags_MouseButtonRight))
+        {
+            if (ImGui::Button("Rename"))
+            {
+                ImGui::OpenPopup("RenameComponentPopup");
+            }
+
+            if (ImGui::BeginPopup("RenameComponentPopup"))
+            {
+                if (ImGui::InputText("##empty", get_component_custom_name_by_ptr(component->guid), ImGuiInputTextFlags_EnterReturnsTrue))
+                {
+                    ImGui::CloseCurrentPopup();
+                }
+
+                ImGui::EndPopup();
+            }
+
+            ImGui::EndPopup();
+        }
+
         ImGuiDragDropFlags src_flags = 0;
         src_flags |= ImGuiDragDropFlags_SourceNoDisableHover;
 
