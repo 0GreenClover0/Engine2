@@ -1376,22 +1376,26 @@ void Editor::draw_scene_save()
 
         if (ImGui::InputText("##empty", &scene_name, ImGuiInputTextFlags_EnterReturnsTrue))
         {
-            save_scene_as(scene_name);
+            std::string const new_opened_scene_path = get_scene_path(scene_name);
+            save_scene_as(new_opened_scene_path);
+            m_opened_scene_path = new_opened_scene_path;
 
             ImGui::CloseCurrentPopup();
 
-            Editor::load_assets();
+            load_assets();
 
             scene_name = "scene";
         }
 
         if (ImGui::Button("Save"))
         {
-            save_scene_as(scene_name);
+            std::string const new_opened_scene_path = get_scene_path(scene_name);
+            save_scene_as(new_opened_scene_path);
+            m_opened_scene_path = new_opened_scene_path;
 
             ImGui::CloseCurrentPopup();
 
-            Editor::load_assets();
+            load_assets();
 
             scene_name = "scene";
         }
@@ -1409,15 +1413,24 @@ void Editor::draw_scene_save()
 
 void Editor::save_scene() const
 {
-    save_scene_as("scene");
+    [[unlikely]]
+    if (m_opened_scene_path.empty())
+    {
+        Debug::log("Saving scene failed. Opened scene is empty.", DebugType::Error);
+        return;
+    }
+
+    save_scene_as(m_opened_scene_path);
 }
 
-void Editor::save_scene_as(std::string const& name) const
+void Editor::save_scene_as(std::string const& path) const
 {
     auto const scene_serializer = std::make_shared<SceneSerializer>(m_open_scene);
     SceneSerializer::set_instance(scene_serializer);
     ScopeGuard unset_instance = [&] { SceneSerializer::set_instance(nullptr); };
-    scene_serializer->serialize(get_scene_path(name));
+    scene_serializer->serialize(path);
+
+    Debug::log("Scene " + path + " saved.", DebugType::Log);
 }
 
 glm::vec2 Editor::get_game_size() const
@@ -1446,17 +1459,24 @@ void Editor::unregister_debug_drawing(std::shared_ptr<DebugDrawing> const& debug
     AK::swap_and_erase(m_debug_drawings, debug_drawing);
 }
 
-bool Editor::load_scene() const
+bool Editor::load_scene()
 {
     return load_scene_name("scene");
 }
 
-bool Editor::load_scene_name(std::string const& name) const
+bool Editor::load_scene_name(std::string const& name)
 {
     auto const scene_serializer = std::make_shared<SceneSerializer>(m_open_scene);
     SceneSerializer::set_instance(scene_serializer);
     ScopeGuard unset_instance = [&] { SceneSerializer::set_instance(nullptr); };
-    bool const deserialized = scene_serializer->deserialize(get_scene_path(name));
+    std::string const scene_to_load = get_scene_path(name);
+    bool const deserialized = scene_serializer->deserialize(scene_to_load);
+
+    if (deserialized)
+    {
+        m_opened_scene_path = scene_to_load;
+    }
+
     return deserialized;
 }
 
