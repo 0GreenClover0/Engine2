@@ -9,6 +9,7 @@
 #include <string>
 
 #include <glm/glm.hpp>
+#include <glm/gtc/epsilon.hpp>
 
 #include "Types.h"
 
@@ -244,6 +245,44 @@ void erase(std::vector<std::weak_ptr<T>>& vector, std::shared_ptr<T> element)
             return;
         }
     }
+}
+
+inline bool are_not_equal(glm::vec3 const& a, glm::vec3 const& b)
+{
+    auto const result = glm::epsilonNotEqual(a, b, 0.0001f);
+
+    return result.x || result.y || result.z;
+}
+
+inline bool are_not_equal(glm::vec2 const& a, glm::vec2 const& b)
+{
+    auto const result = glm::epsilonNotEqual(a, b, 0.0001f);
+
+    return result.x || result.y;
+}
+
+inline bool are_not_equal(float const a, float const b)
+{
+    return glm::abs(a - b) >= 0.0001f;
+}
+
+inline bool are_equal(glm::vec3 const& a, glm::vec3 const& b)
+{
+    auto const result = glm::epsilonEqual(a, b, 0.0001f);
+
+    return result.x && result.y && result.z;
+}
+
+inline bool are_equal(glm::vec2 const& a, glm::vec2 const& b)
+{
+    auto const result = glm::epsilonEqual(a, b, 0.0001f);
+
+    return result.x && result.y;
+}
+
+inline bool are_equal(float const a, float const b)
+{
+    return glm::abs(a - b) < 0.0001f;
 }
 
 #pragma endregion
