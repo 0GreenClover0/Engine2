@@ -31,7 +31,7 @@ Window::Window(Renderer::RendererApi const renderer_api, i32 const screen_width,
         std::unreachable();
     }
 
-    m_window = glfwCreateWindow(screen_width, screen_height, "Engine", nullptr, nullptr);
+    m_window = glfwCreateWindow(screen_width, screen_height, Engine::window_title.c_str(), nullptr, nullptr);
 
     if (m_window == nullptr)
         throw std::runtime_error("Could not create a window.");

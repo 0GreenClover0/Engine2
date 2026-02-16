@@ -462,6 +462,10 @@ void Editor::draw_content_browser(std::shared_ptr<EditorWindow> const& window)
                         {
                             MainScene::get_instance()->unload();
                         }
+                        else
+                        {
+                            m_is_scene_dirty = true;
+                        }
 
                         bool const loaded = load_prefab(filename);
 
@@ -716,6 +720,8 @@ void Editor::draw_game(std::shared_ptr<EditorWindow> const& window)
     if (was_transform_changed)
     {
         entity->transform->set_model_matrix(global_model);
+
+        m_is_scene_dirty = true;
     }
 
     ImGui::End();
@@ -746,6 +752,8 @@ void Editor::draw_scene_hierarchy(std::shared_ptr<EditorWindow> const& window)
         if (ImGui::Button("Add Entity"))
         {
             Entity::create("Entity");
+
+            m_is_scene_dirty = true;
         }
 
         ImGui::EndMenuBar();
@@ -1122,6 +1130,11 @@ void Editor::draw_inspector(std::shared_ptr<EditorWindow> const& window)
     glm::vec3 position = entity->transform->get_local_position();
     ImGuiEx::InputFloat3("Position", glm::value_ptr(position));
 
+    if (AK::are_not_equal(position, entity->transform->get_local_position()))
+    {
+        m_is_scene_dirty = true;
+    }
+
     float const input_width = ImGui::CalcItemWidth() / 3.0f - ImGui::GetStyle().ItemSpacing.x * 0.66f;
 
     ImGui::SameLine();
@@ -1138,6 +1151,12 @@ void Editor::draw_inspector(std::shared_ptr<EditorWindow> const& window)
 
     glm::vec3 rotation = entity->transform->get_euler_angles();
     ImGuiEx::InputFloat3("Rotation", glm::value_ptr(rotation));
+
+    if (AK::are_not_equal(rotation, entity->transform->get_euler_angles()))
+    {
+        m_is_scene_dirty = true;
+    }
+
     entity->transform->set_euler_angles(rotation);
 
     ImGui::SameLine();
@@ -1172,6 +1191,11 @@ void Editor::draw_inspector(std::shared_ptr<EditorWindow> const& window)
     ImGui::EndDisabled();
 
     ImGui::PopItemWidth();
+
+    if (AK::are_not_equal(scale, old_scale))
+    {
+        m_is_scene_dirty = true;
+    }
 
     if (scale != old_scale && m_lock_scale)
     {
@@ -1411,7 +1435,7 @@ void Editor::draw_scene_save()
     }
 }
 
-void Editor::save_scene() const
+void Editor::save_scene()
 {
     [[unlikely]]
     if (m_opened_scene_path.empty())
@@ -1423,12 +1447,15 @@ void Editor::save_scene() const
     save_scene_as(m_opened_scene_path);
 }
 
-void Editor::save_scene_as(std::string const& path) const
+void Editor::save_scene_as(std::string const& path)
 {
     auto const scene_serializer = std::make_shared<SceneSerializer>(m_open_scene);
     SceneSerializer::set_instance(scene_serializer);
     ScopeGuard unset_instance = [&] { SceneSerializer::set_instance(nullptr); };
     scene_serializer->serialize(path);
+
+    m_is_scene_dirty = false;
+    glfwSetWindowTitle(Engine::window->get_glfw_window(), (Engine::window_title).c_str());
 
     Debug::log("Scene " + path + " saved.", DebugType::Log);
 }
@@ -1657,11 +1684,13 @@ void Editor::switch_gizmo_snapping()
     }
 }
 
-void Editor::delete_selected_entity() const
+void Editor::delete_selected_entity()
 {
     if (!m_selected_entity.expired())
     {
         m_selected_entity.lock()->destroy_immediate();
+
+        m_is_scene_dirty = true;
     }
 }
 
@@ -1676,15 +1705,17 @@ void Editor::copy_selected_entity() const
     scene_serializer->serialize_this_entity(m_selected_entity.lock(), m_copied_entity_path);
 }
 
-void Editor::paste_entity() const
+void Editor::paste_entity()
 {
     auto const scene_serializer = std::make_shared<SceneSerializer>(m_open_scene);
     SceneSerializer::set_instance(scene_serializer);
     ScopeGuard unset_instance = [&] { SceneSerializer::set_instance(nullptr); };
     scene_serializer->deserialize_this_entity("./.editor/copied_entity.txt");
+
+    m_is_scene_dirty = true;
 }
 
-void Editor::add_child_entity() const
+void Editor::add_child_entity()
 {
     if (m_selected_entity.expired())
         return;
@@ -1692,6 +1723,8 @@ void Editor::add_child_entity() const
     auto const entity = m_selected_entity.lock();
     auto const child_entity = Entity::create("Child");
     child_entity->transform->set_parent(entity->transform);
+
+    m_is_scene_dirty = true;
 }
 
 void Editor::save_entity_as_prefab()
@@ -1707,12 +1740,13 @@ void Editor::save_entity_as_prefab()
     load_assets();
 }
 
-bool Editor::load_prefab(std::string const& name) const
+bool Editor::load_prefab(std::string const& name)
 {
     auto const scene_serializer = std::make_shared<SceneSerializer>(m_open_scene);
     SceneSerializer::set_instance(scene_serializer);
     ScopeGuard unset_instance = [&] { SceneSerializer::set_instance(nullptr); };
     std::shared_ptr<Entity> const entity = scene_serializer->deserialize_this_entity(m_prefab_path + name + ".txt");
+
     return entity != nullptr;
 }
 
@@ -1860,6 +1894,19 @@ void Editor::handle_input()
     if (ImGui::GetIO().KeyCtrl && input->get_key_down(GLFW_KEY_S))
     {
         save_scene();
+    }
+}
+
+void Editor::run()
+{
+    bool const was_scene_dirty = m_is_scene_dirty;
+
+    handle_input();
+    draw();
+
+    if (!was_scene_dirty && m_is_scene_dirty)
+    {
+        glfwSetWindowTitle(Engine::window->get_glfw_window(), (Engine::window_title + " *").c_str());
     }
 }
 

@@ -47,6 +47,8 @@ public:
 
     inline static std::shared_ptr<AssetPreloader> asset_preloader;
 
+    inline static std::string window_title = "Engine";
+
 private:
     static i32 initialize_thirdparty_before_renderer();
     static i32 initialize_thirdparty_after_renderer();

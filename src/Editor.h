@@ -151,13 +151,17 @@ public:
     ~Editor();
 
     void draw();
-    void set_scene(std::shared_ptr<Scene> const& scene);
     void handle_input();
+
+    void run();
+
     void set_docking_space() const;
+
+    void set_scene(std::shared_ptr<Scene> const& scene);
     bool load_scene();
-    void save_scene() const;
+    void save_scene();
     bool load_scene_name(std::string const& name);
-    void save_scene_as(std::string const& path) const;
+    void save_scene_as(std::string const& path);
     glm::vec2 get_game_size() const;
     glm::vec2 get_game_position() const;
     bool is_rendering_to_editor() const;
@@ -208,12 +212,12 @@ private:
 
     void switch_gizmo_snapping();
 
-    void delete_selected_entity() const;
+    void delete_selected_entity();
     void copy_selected_entity() const;
-    void paste_entity() const;
-    void add_child_entity() const;
+    void paste_entity();
+    void add_child_entity();
     void save_entity_as_prefab();
-    [[nodiscard]] bool load_prefab(std::string const& name) const;
+    [[nodiscard]] bool load_prefab(std::string const& name);
 
     [[nodiscard]] std::string get_scene_path(std::string const& scene_name) const;
 
@@ -301,6 +305,8 @@ private:
     bool m_append_scene = false;
 
     bool m_viewport_crop = false;
+
+    bool m_is_scene_dirty = false;
 
     inline static std::shared_ptr<Editor> m_instance = nullptr;
 
