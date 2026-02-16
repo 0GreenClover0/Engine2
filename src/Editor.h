@@ -215,6 +215,8 @@ private:
     void save_entity_as_prefab();
     [[nodiscard]] bool load_prefab(std::string const& name) const;
 
+    [[nodiscard]] std::string get_scene_path(std::string const& scene_name) const;
+
     void mouse_callback(double const x, double const y);
 
     glm::vec3 update_locked_value(glm::vec3 new_value, glm::vec3 const old_value) const;
@@ -278,6 +280,7 @@ private:
     std::string m_prefab_path = "./res/prefabs/";
     std::string m_textures_path = "./res/textures/";
     std::string m_audio_path = "./res/audio/";
+    std::string m_scene_extension = ".txt";
     std::array<std::string, 3> m_known_model_formats = {".gltf", ".obj", ".fbx"};
     std::array<std::string, 3> m_known_audio_formats = {".wav"};
     std::array<std::string, 1> m_known_scene_formats = {".txt"};

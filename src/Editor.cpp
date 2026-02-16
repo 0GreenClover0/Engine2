@@ -1417,7 +1417,7 @@ void Editor::save_scene_as(std::string const& name) const
     auto const scene_serializer = std::make_shared<SceneSerializer>(m_open_scene);
     SceneSerializer::set_instance(scene_serializer);
     ScopeGuard unset_instance = [&] { SceneSerializer::set_instance(nullptr); };
-    scene_serializer->serialize("./res/scenes/" + name + ".txt");
+    scene_serializer->serialize(get_scene_path(name));
 }
 
 glm::vec2 Editor::get_game_size() const
@@ -1456,7 +1456,7 @@ bool Editor::load_scene_name(std::string const& name) const
     auto const scene_serializer = std::make_shared<SceneSerializer>(m_open_scene);
     SceneSerializer::set_instance(scene_serializer);
     ScopeGuard unset_instance = [&] { SceneSerializer::set_instance(nullptr); };
-    bool const deserialized = scene_serializer->deserialize("./res/scenes/" + name + ".txt");
+    bool const deserialized = scene_serializer->deserialize(get_scene_path(name));
     return deserialized;
 }
 
@@ -1694,6 +1694,11 @@ bool Editor::load_prefab(std::string const& name) const
     ScopeGuard unset_instance = [&] { SceneSerializer::set_instance(nullptr); };
     std::shared_ptr<Entity> const entity = scene_serializer->deserialize_this_entity(m_prefab_path + name + ".txt");
     return entity != nullptr;
+}
+
+std::string Editor::get_scene_path(std::string const& scene_name) const
+{
+    return m_scene_path + scene_name + m_scene_extension;
 }
 
 void Editor::mouse_callback(double const x, double const y)
