@@ -154,10 +154,10 @@ public:
     void set_scene(std::shared_ptr<Scene> const& scene);
     void handle_input();
     void set_docking_space() const;
-    bool load_scene() const;
+    bool load_scene();
     void save_scene() const;
-    bool load_scene_name(std::string const& name) const;
-    void save_scene_as(std::string const& name) const;
+    bool load_scene_name(std::string const& name);
+    void save_scene_as(std::string const& path) const;
     glm::vec2 get_game_size() const;
     glm::vec2 get_game_position() const;
     bool is_rendering_to_editor() const;
@@ -285,6 +285,8 @@ private:
     std::array<std::string, 3> m_known_audio_formats = {".wav"};
     std::array<std::string, 1> m_known_scene_formats = {".txt"};
     std::array<std::string, 1> m_known_textures_formats = {".png"};
+
+    std::string m_opened_scene_path = {};
 
     float m_thumbnail_size = 64.0f;
 
