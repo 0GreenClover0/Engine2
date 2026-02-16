@@ -1415,8 +1415,8 @@ void Editor::save_scene() const
 void Editor::save_scene_as(std::string const& name) const
 {
     auto const scene_serializer = std::make_shared<SceneSerializer>(m_open_scene);
-    scene_serializer->set_instance(scene_serializer);
-    ScopeGuard unset_instance = [&] { scene_serializer->set_instance(nullptr); };
+    SceneSerializer::set_instance(scene_serializer);
+    ScopeGuard unset_instance = [&] { SceneSerializer::set_instance(nullptr); };
     scene_serializer->serialize("./res/scenes/" + name + ".txt");
 }
 
@@ -1454,8 +1454,8 @@ bool Editor::load_scene() const
 bool Editor::load_scene_name(std::string const& name) const
 {
     auto const scene_serializer = std::make_shared<SceneSerializer>(m_open_scene);
-    scene_serializer->set_instance(scene_serializer);
-    ScopeGuard unset_instance = [&] { scene_serializer->set_instance(nullptr); };
+    SceneSerializer::set_instance(scene_serializer);
+    ScopeGuard unset_instance = [&] { SceneSerializer::set_instance(nullptr); };
     bool const deserialized = scene_serializer->deserialize("./res/scenes/" + name + ".txt");
     return deserialized;
 }
@@ -1651,16 +1651,16 @@ void Editor::copy_selected_entity() const
         return;
 
     auto const scene_serializer = std::make_shared<SceneSerializer>(m_open_scene);
-    scene_serializer->set_instance(scene_serializer);
-    ScopeGuard unset_instance = [&] { scene_serializer->set_instance(nullptr); };
+    SceneSerializer::set_instance(scene_serializer);
+    ScopeGuard unset_instance = [&] { SceneSerializer::set_instance(nullptr); };
     scene_serializer->serialize_this_entity(m_selected_entity.lock(), m_copied_entity_path);
 }
 
 void Editor::paste_entity() const
 {
     auto const scene_serializer = std::make_shared<SceneSerializer>(m_open_scene);
-    scene_serializer->set_instance(scene_serializer);
-    ScopeGuard unset_instance = [&] { scene_serializer->set_instance(nullptr); };
+    SceneSerializer::set_instance(scene_serializer);
+    ScopeGuard unset_instance = [&] { SceneSerializer::set_instance(nullptr); };
     scene_serializer->deserialize_this_entity("./.editor/copied_entity.txt");
 }
 
@@ -1680,8 +1680,8 @@ void Editor::save_entity_as_prefab()
         return;
 
     auto const scene_serializer = std::make_shared<SceneSerializer>(m_open_scene);
-    scene_serializer->set_instance(scene_serializer);
-    ScopeGuard unset_instance = [&] { scene_serializer->set_instance(nullptr); };
+    SceneSerializer::set_instance(scene_serializer);
+    ScopeGuard unset_instance = [&] { SceneSerializer::set_instance(nullptr); };
     scene_serializer->serialize_this_entity(m_selected_entity.lock(), m_prefab_path + m_selected_entity.lock()->name + ".txt");
 
     load_assets();
@@ -1690,8 +1690,8 @@ void Editor::save_entity_as_prefab()
 bool Editor::load_prefab(std::string const& name) const
 {
     auto const scene_serializer = std::make_shared<SceneSerializer>(m_open_scene);
-    scene_serializer->set_instance(scene_serializer);
-    ScopeGuard unset_instance = [&] { scene_serializer->set_instance(nullptr); };
+    SceneSerializer::set_instance(scene_serializer);
+    ScopeGuard unset_instance = [&] { SceneSerializer::set_instance(nullptr); };
     std::shared_ptr<Entity> const entity = scene_serializer->deserialize_this_entity(m_prefab_path + name + ".txt");
     return entity != nullptr;
 }
