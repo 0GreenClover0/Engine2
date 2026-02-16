@@ -176,8 +176,7 @@ void Engine::run()
         m_editor->set_docking_space();
         ImGuizmo::BeginFrame();
 
-        m_editor->handle_input();
-        m_editor->draw();
+        m_editor->run();
 #endif
 
         Renderer::get_instance()->begin_frame();
