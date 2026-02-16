@@ -1856,6 +1856,11 @@ void Editor::handle_input()
             camera_input();
         }
     }
+
+    if (ImGui::GetIO().KeyCtrl && input->get_key_down(GLFW_KEY_S))
+    {
+        save_scene();
+    }
 }
 
 void Editor::set_docking_space() const
