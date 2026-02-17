@@ -192,7 +192,7 @@ public:
 
     void set_scene(std::shared_ptr<Scene> const& scene);
     bool load_scene();
-    void save_scene();
+    void save_asset();
     bool load_scene_name(std::string const& name);
     void save_scene_as(std::string const& path);
     glm::vec2 get_game_size() const;
