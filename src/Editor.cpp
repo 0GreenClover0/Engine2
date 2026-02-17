@@ -1349,15 +1349,15 @@ void Editor::draw_scene_save()
     {
         if (ImGui::BeginMenu("File"))
         {
-            if (ImGui::MenuItem("Save scene"))
+            if (ImGui::MenuItem("Save asset"))
             {
                 if (Engine::is_game_running())
                 {
-                    Debug::log("Game is currently running. Scene has not been saved.", DebugType::Error);
+                    Debug::log("Game is currently running. Asset has not been saved.", DebugType::Error);
                 }
                 else
                 {
-                    save_scene();
+                    save_asset();
                 }
             }
 
@@ -1373,7 +1373,7 @@ void Editor::draw_scene_save()
                 }
             }
 
-            if (ImGui::MenuItem("Load scene"))
+            if (ImGui::MenuItem("Load default scene"))
             {
                 MainScene::get_instance()->unload();
 
@@ -1402,7 +1402,8 @@ void Editor::draw_scene_save()
             std::string const new_opened_scene_path = get_scene_path(scene_name);
             m_opened_asset_path = new_opened_scene_path;
             m_opened_asset_name = scene_name;
-            save_scene_as(new_opened_scene_path);
+            m_opened_asset_type = AssetType::Scene;
+            save_asset();
 
             ImGui::CloseCurrentPopup();
 
@@ -1415,11 +1416,10 @@ void Editor::draw_scene_save()
         {
             std::string const new_opened_scene_path = get_scene_path(scene_name);
 
-            // TODO: Save an asset, not a scene.
-
             m_opened_asset_path = new_opened_scene_path;
             m_opened_asset_name = scene_name;
-            save_scene_as(new_opened_scene_path);
+            m_opened_asset_type = AssetType::Scene;
+            save_asset();
 
             ImGui::CloseCurrentPopup();
 
@@ -1439,16 +1439,39 @@ void Editor::draw_scene_save()
     }
 }
 
-void Editor::save_scene()
+void Editor::save_asset()
 {
     [[unlikely]]
     if (m_opened_asset_path.empty())
     {
-        Debug::log("Saving scene failed. Opened scene is empty.", DebugType::Error);
+        Debug::log("Saving asset failed. Opened asset path is empty.", DebugType::Error);
         return;
     }
 
-    save_scene_as(m_opened_asset_path);
+    switch (m_opened_asset_type)
+    {
+    case AssetType::Scene:
+    {
+        save_scene_as(m_opened_asset_path);
+        break;
+    }
+    case AssetType::Prefab:
+    {
+    }
+    case AssetType::Audio:
+    case AssetType::Model:
+    case AssetType::Texture:
+    case AssetType::Unknown:
+    {
+        Debug::log("Cannot save this asset type.", DebugType::Error);
+        break;
+    }
+    }
+
+    m_is_scene_dirty = false;
+    update_window_title();
+
+    Debug::log("Asset " + m_opened_asset_path + " saved.", DebugType::Log);
 }
 
 void Editor::save_scene_as(std::string const& path)
@@ -1457,12 +1480,6 @@ void Editor::save_scene_as(std::string const& path)
     SceneSerializer::set_instance(scene_serializer);
     ScopeGuard unset_instance = [&] { SceneSerializer::set_instance(nullptr); };
     scene_serializer->serialize(path);
-
-    m_is_scene_dirty = false;
-    m_opened_asset_type = AssetType::Scene;
-    update_window_title();
-
-    Debug::log("Scene " + path + " saved.", DebugType::Log);
 }
 
 glm::vec2 Editor::get_game_size() const
@@ -1958,7 +1975,7 @@ void Editor::handle_input()
 
     if (ImGui::GetIO().KeyCtrl && input->get_key_down(GLFW_KEY_S))
     {
-        save_scene();
+        save_asset();
     }
 }
 
