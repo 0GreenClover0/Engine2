@@ -32,6 +32,12 @@ enum class EditorWindowType
     Hierarchy,
 };
 
+enum class AssetLoadType
+{
+    Load,
+    Open,
+};
+
 struct LockData
 {
     std::weak_ptr<Entity> selected_entity;
@@ -130,6 +136,33 @@ enum class AssetType
     Audio
 };
 
+inline std::string asset_type_to_string(AssetType const type)
+{
+    switch (type)
+    {
+    case AssetType::Unknown:
+        return "Unknown";
+
+    case AssetType::Model:
+        return "Model";
+
+    case AssetType::Scene:
+        return "Scene";
+
+    case AssetType::Prefab:
+        return "Prefab";
+
+    case AssetType::Texture:
+        return "Texture";
+
+    case AssetType::Audio:
+        return "Audio";
+
+    default:
+        return "Undefined Asset Type";
+    }
+}
+
 class Asset
 {
 public:
@@ -218,8 +251,10 @@ private:
     void add_child_entity();
     void save_entity_as_prefab();
     [[nodiscard]] bool load_prefab(std::string const& name);
+    bool load_asset(std::string const& name, AssetType const type, AssetLoadType const load_type);
 
     [[nodiscard]] std::string get_scene_path(std::string const& scene_name) const;
+    void update_window_title() const;
 
     void mouse_callback(double const x, double const y);
 
@@ -290,7 +325,9 @@ private:
     std::array<std::string, 1> m_known_scene_formats = {".txt"};
     std::array<std::string, 1> m_known_textures_formats = {".png"};
 
-    std::string m_opened_scene_path = {};
+    std::string m_opened_asset_name = {};
+    std::string m_opened_asset_path = {};
+    AssetType m_opened_asset_type = {};
 
     float m_thumbnail_size = 64.0f;
 
