@@ -429,13 +429,11 @@ void Editor::draw_content_browser(std::shared_ptr<EditorWindow> const& window)
                         if (!m_append_scene && !ctrl_pressed)
                         {
                             MainScene::get_instance()->unload();
+                            load_asset(filename, AssetType::Scene, AssetLoadType::Open);
                         }
-
-                        bool const loaded = load_scene_name(filename);
-
-                        if (!loaded)
+                        else
                         {
-                            Debug::log("Could not load a scene.", DebugType::Error);
+                            load_asset(filename, AssetType::Scene, AssetLoadType::Load);
                         }
                     }
                 }
@@ -460,18 +458,24 @@ void Editor::draw_content_browser(std::shared_ptr<EditorWindow> const& window)
 
                         if (!m_append_scene && !ctrl_pressed)
                         {
+                            // We are entering prefab mode.
+
+                            // TODO: Instead of unloading the current scene we might want to create a new editor tab.
+
                             MainScene::get_instance()->unload();
+
+                            m_opened_asset_name = filename;
+                            m_opened_asset_path = asset.path;
+
+                            load_asset(filename, AssetType::Prefab, AssetLoadType::Open);
                         }
                         else
                         {
+                            // Appending to the current scene.
+
+                            load_asset(filename, AssetType::Prefab, AssetLoadType::Load);
+
                             m_is_scene_dirty = true;
-                        }
-
-                        bool const loaded = load_prefab(filename);
-
-                        if (!loaded)
-                        {
-                            Debug::log("Could not load a prefab.", DebugType::Error);
                         }
                     }
                 }
@@ -1373,12 +1377,7 @@ void Editor::draw_scene_save()
             {
                 MainScene::get_instance()->unload();
 
-                bool const loaded = load_scene();
-
-                if (!loaded)
-                {
-                    Debug::log("Could not load a scene.", DebugType::Error);
-                }
+                load_scene();
             }
 
             ImGui::EndMenu();
@@ -1401,8 +1400,9 @@ void Editor::draw_scene_save()
         if (ImGui::InputText("##empty", &scene_name, ImGuiInputTextFlags_EnterReturnsTrue))
         {
             std::string const new_opened_scene_path = get_scene_path(scene_name);
+            m_opened_asset_path = new_opened_scene_path;
+            m_opened_asset_name = scene_name;
             save_scene_as(new_opened_scene_path);
-            m_opened_scene_path = new_opened_scene_path;
 
             ImGui::CloseCurrentPopup();
 
@@ -1414,8 +1414,12 @@ void Editor::draw_scene_save()
         if (ImGui::Button("Save"))
         {
             std::string const new_opened_scene_path = get_scene_path(scene_name);
+
+            // TODO: Save an asset, not a scene.
+
+            m_opened_asset_path = new_opened_scene_path;
+            m_opened_asset_name = scene_name;
             save_scene_as(new_opened_scene_path);
-            m_opened_scene_path = new_opened_scene_path;
 
             ImGui::CloseCurrentPopup();
 
@@ -1438,13 +1442,13 @@ void Editor::draw_scene_save()
 void Editor::save_scene()
 {
     [[unlikely]]
-    if (m_opened_scene_path.empty())
+    if (m_opened_asset_path.empty())
     {
         Debug::log("Saving scene failed. Opened scene is empty.", DebugType::Error);
         return;
     }
 
-    save_scene_as(m_opened_scene_path);
+    save_scene_as(m_opened_asset_path);
 }
 
 void Editor::save_scene_as(std::string const& path)
@@ -1455,7 +1459,8 @@ void Editor::save_scene_as(std::string const& path)
     scene_serializer->serialize(path);
 
     m_is_scene_dirty = false;
-    glfwSetWindowTitle(Engine::window->get_glfw_window(), (Engine::window_title).c_str());
+    m_opened_asset_type = AssetType::Scene;
+    update_window_title();
 
     Debug::log("Scene " + path + " saved.", DebugType::Log);
 }
@@ -1488,7 +1493,7 @@ void Editor::unregister_debug_drawing(std::shared_ptr<DebugDrawing> const& debug
 
 bool Editor::load_scene()
 {
-    return load_scene_name("scene");
+    return load_asset("scene", AssetType::Scene, AssetLoadType::Open);
 }
 
 bool Editor::load_scene_name(std::string const& name)
@@ -1501,7 +1506,8 @@ bool Editor::load_scene_name(std::string const& name)
 
     if (deserialized)
     {
-        m_opened_scene_path = scene_to_load;
+        m_opened_asset_path = scene_to_load;
+        m_opened_asset_name = name;
     }
 
     return deserialized;
@@ -1750,9 +1756,68 @@ bool Editor::load_prefab(std::string const& name)
     return entity != nullptr;
 }
 
+bool Editor::load_asset(std::string const& name, AssetType const type, AssetLoadType const load_type)
+{
+    switch (type)
+    {
+    case AssetType::Scene:
+    {
+        bool const result = load_scene_name(name);
+
+        if (!result)
+        {
+            Debug::log("Could not load a scene.", DebugType::Error);
+            return false;
+        }
+
+        break;
+    }
+    case AssetType::Prefab:
+    {
+        bool const result = load_prefab(name);
+
+        if (!result)
+        {
+            Debug::log("Could not load a prefab.", DebugType::Error);
+            return false;
+        }
+
+        break;
+    }
+    case AssetType::Audio:
+    case AssetType::Model:
+    case AssetType::Texture:
+    case AssetType::Unknown:
+    {
+        Debug::log("Opening asset type " + std::to_string(static_cast<i32>(type)) + " is not supported,", DebugType::Error);
+        return false;
+    }
+    }
+
+    if (load_type == AssetLoadType::Open)
+    {
+        m_opened_asset_type = type;
+        update_window_title();
+    }
+
+    return true;
+}
+
 std::string Editor::get_scene_path(std::string const& scene_name) const
 {
     return m_scene_path + scene_name + m_scene_extension;
+}
+
+void Editor::update_window_title() const
+{
+    std::string title = Engine::window_title + " : " + asset_type_to_string(m_opened_asset_type) + " " + m_opened_asset_name;
+
+    if (m_is_scene_dirty)
+    {
+        title += "*";
+    }
+
+    glfwSetWindowTitle(Engine::window->get_glfw_window(), title.c_str());
 }
 
 void Editor::mouse_callback(double const x, double const y)
@@ -1906,7 +1971,7 @@ void Editor::run()
 
     if (!was_scene_dirty && m_is_scene_dirty)
     {
-        glfwSetWindowTitle(Engine::window->get_glfw_window(), (Engine::window_title + " *").c_str());
+        update_window_title();
     }
 }
 
