@@ -1923,7 +1923,7 @@ void Editor::handle_input()
 
     if (input->get_key_down(GLFW_KEY_F2))
     {
-        if (!ImGui::IsAnyItemActive())
+        if (!ImGui::IsAnyItemActive() && !m_selected_entity.expired())
         {
             ImGui::OpenPopup("RenamePopup");
         }
