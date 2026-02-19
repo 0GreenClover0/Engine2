@@ -37,9 +37,12 @@ void GBuffer::bind_render_targets() const
 void GBuffer::bind_shader_resources() const
 {
     auto const renderer = RendererDX11::get_instance_dx11();
-    renderer->get_device_context()->PSSetShaderResources(10, 1, &m_position_texture_view);
-    renderer->get_device_context()->PSSetShaderResources(11, 1, &m_normal_texture_view);
-    renderer->get_device_context()->PSSetShaderResources(12, 1, &m_diffuse_texture_view);
+    renderer->get_device_context()->PSSetShaderResources(7, 1, &m_position_texture_view);
+    renderer->get_device_context()->PSSetShaderResources(8, 1, &m_albedo_texture_view);
+    renderer->get_device_context()->PSSetShaderResources(9, 1, &m_normal_texture_view);
+    renderer->get_device_context()->PSSetShaderResources(10, 1, &m_metallic_texture_view);
+    renderer->get_device_context()->PSSetShaderResources(11, 1, &m_roughness_texture_view);
+    renderer->get_device_context()->PSSetShaderResources(12, 1, &m_ambient_occlusion_texture_view);
 }
 
 void GBuffer::update()
@@ -47,9 +50,9 @@ void GBuffer::update()
     auto renderer = RendererDX11::get_instance_dx11();
     auto viewport = renderer->get_main_view_port();
 
-    if (m_diffuse_texture != nullptr)
+    if (m_albedo_texture != nullptr)
     {
-        m_diffuse_texture->Release();
+        m_albedo_texture->Release();
     }
 
     // Create the render target view
@@ -66,7 +69,7 @@ void GBuffer::update()
     diffuse_tex_desc.CPUAccessFlags = 0;
     diffuse_tex_desc.MiscFlags = 0;
 
-    HRESULT hr = renderer->get_device()->CreateTexture2D(&diffuse_tex_desc, nullptr, &m_diffuse_texture);
+    HRESULT hr = renderer->get_device()->CreateTexture2D(&diffuse_tex_desc, nullptr, &m_albedo_texture);
     assert(SUCCEEDED(hr));
 
     if (m_normal_texture != nullptr)
@@ -78,6 +81,37 @@ void GBuffer::update()
     normal_tex_desc.Format = DXGI_FORMAT_R32G32B32A32_FLOAT;
 
     hr = renderer->get_device()->CreateTexture2D(&normal_tex_desc, nullptr, &m_normal_texture);
+    assert(SUCCEEDED(hr));
+
+    if (m_metallic_texture != nullptr)
+    {
+        m_metallic_texture->Release();
+    }
+
+    D3D11_TEXTURE2D_DESC metallic_tex_desc = diffuse_tex_desc;
+    metallic_tex_desc.Format = DXGI_FORMAT_R32_FLOAT;
+
+    hr = renderer->get_device()->CreateTexture2D(&metallic_tex_desc, nullptr, &m_metallic_texture);
+    assert(SUCCEEDED(hr));
+
+    if (m_roughness_texture != nullptr)
+    {
+        m_roughness_texture->Release();
+    }
+
+    D3D11_TEXTURE2D_DESC roughness_tex_desc = metallic_tex_desc;
+
+    hr = renderer->get_device()->CreateTexture2D(&roughness_tex_desc, nullptr, &m_roughness_texture);
+    assert(SUCCEEDED(hr));
+
+    if (m_ambient_occlusion_texture != nullptr)
+    {
+        m_ambient_occlusion_texture->Release();
+    }
+
+    D3D11_TEXTURE2D_DESC ambient_occlusion_tex_desc = metallic_tex_desc;
+
+    hr = renderer->get_device()->CreateTexture2D(&ambient_occlusion_tex_desc, nullptr, &m_ambient_occlusion_texture);
     assert(SUCCEEDED(hr));
 
     if (m_position_texture != nullptr)
@@ -116,12 +150,42 @@ void GBuffer::update()
 
     srv_desc.Format = diffuse_tex_desc.Format;
 
-    if (m_diffuse_texture_view != nullptr)
+    if (m_albedo_texture_view != nullptr)
     {
-        m_diffuse_texture_view->Release();
+        m_albedo_texture_view->Release();
     }
 
-    hr = renderer->get_device()->CreateShaderResourceView(m_diffuse_texture, &srv_desc, &m_diffuse_texture_view);
+    hr = renderer->get_device()->CreateShaderResourceView(m_albedo_texture, &srv_desc, &m_albedo_texture_view);
+    assert(SUCCEEDED(hr));
+
+    srv_desc.Format = metallic_tex_desc.Format;
+
+    if (m_metallic_texture_view != nullptr)
+    {
+        m_metallic_texture_view->Release();
+    }
+
+    hr = renderer->get_device()->CreateShaderResourceView(m_metallic_texture, &srv_desc, &m_metallic_texture_view);
+    assert(SUCCEEDED(hr));
+
+    srv_desc.Format = roughness_tex_desc.Format;
+
+    if (m_roughness_texture_view != nullptr)
+    {
+        m_roughness_texture_view->Release();
+    }
+
+    hr = renderer->get_device()->CreateShaderResourceView(m_roughness_texture, &srv_desc, &m_roughness_texture_view);
+    assert(SUCCEEDED(hr));
+
+    srv_desc.Format = ambient_occlusion_tex_desc.Format;
+
+    if (m_ambient_occlusion_texture_view != nullptr)
+    {
+        m_ambient_occlusion_texture_view->Release();
+    }
+
+    hr = renderer->get_device()->CreateShaderResourceView(m_ambient_occlusion_texture, &srv_desc, &m_ambient_occlusion_texture_view);
     assert(SUCCEEDED(hr));
 
     D3D11_RENDER_TARGET_VIEW_DESC rtv_desc = {};
@@ -147,6 +211,21 @@ void GBuffer::update()
 
     rtv_desc.Format = diffuse_tex_desc.Format;
 
-    hr = renderer->get_device()->CreateRenderTargetView(m_diffuse_texture, &rtv_desc, &m_gbuffer_rendertargets[2]);
+    hr = renderer->get_device()->CreateRenderTargetView(m_albedo_texture, &rtv_desc, &m_gbuffer_rendertargets[2]);
+    assert(SUCCEEDED(hr));
+
+    rtv_desc.Format = metallic_tex_desc.Format;
+
+    hr = renderer->get_device()->CreateRenderTargetView(m_metallic_texture, &rtv_desc, &m_gbuffer_rendertargets[3]);
+    assert(SUCCEEDED(hr));
+
+    rtv_desc.Format = roughness_tex_desc.Format;
+
+    hr = renderer->get_device()->CreateRenderTargetView(m_roughness_texture, &rtv_desc, &m_gbuffer_rendertargets[4]);
+    assert(SUCCEEDED(hr));
+
+    rtv_desc.Format = ambient_occlusion_tex_desc.Format;
+
+    hr = renderer->get_device()->CreateRenderTargetView(m_ambient_occlusion_texture, &rtv_desc, &m_gbuffer_rendertargets[5]);
     assert(SUCCEEDED(hr));
 }

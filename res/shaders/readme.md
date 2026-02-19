@@ -17,7 +17,8 @@
 [DX11 has circa 128 texture registers according to this source.](https://gamedev.stackexchange.com/questions/158632/hlsl-registers-and-slots)
 - `t0` is always the object's texture
 - `t1` is for the directional shadow map
-- `t10`, `t11`, `t12` are for deferred shading textures
+- `t8`, `t9`, `t10`, `t11`, `t12` are for deferred shading textures
+- `t13` is for noise, for SSAO
 - `t14` is for ambient occlusion
 - `t15` is for the SkyBox resource
 - `t16` is for the Fog texture

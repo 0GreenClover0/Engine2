@@ -14,10 +14,10 @@ struct VS_Output
     float2 UV : TEXCOORD0;
 };
 
-Texture2D pos_tex : register(t10);
-Texture2D normal_tex : register(t11);
-Texture2D diffuse_tex : register(t12);
-Texture2D ambient_occlusion_tex : register(t14);
+Texture2D pos_tex : register(t7);
+Texture2D albedo_tex : register(t8);
+Texture2D normal_tex : register(t9);
+Texture2D ssao_tex : register(t14);
 Texture2D fog_tex : register(t16);
 
 SamplerState obj_sampler_state : register(s0);
@@ -36,8 +36,8 @@ float4 ps_main(VS_Output input) : SV_Target
     float4 result = float4(0.0f, 0.0f, 0.0f, 0.0f);
     float4 pos = pos_tex.Sample(obj_sampler_state, input.UV);
     float4 normal = normalize(normal_tex.Sample(obj_sampler_state, input.UV));
-    float4 diffuse = diffuse_tex.Sample(obj_sampler_state, input.UV);
-    float ambient_occlusion = ambient_occlusion_tex.Sample(obj_sampler_state, input.UV).r;
+    float4 diffuse = albedo_tex.Sample(obj_sampler_state, input.UV);
+    float ambient_occlusion = ssao_tex.Sample(obj_sampler_state, input.UV).r;
     if (diffuse.r == 0.0f && diffuse.g == 0.0f && diffuse.b == 0.0f)
     {
         discard;
