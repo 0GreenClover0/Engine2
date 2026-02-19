@@ -178,7 +178,7 @@ void Model::reprepare()
 void Model::load_model(std::string const& path)
 {
     Assimp::Importer importer;
-    aiScene const* scene = importer.ReadFile(path, aiProcess_Triangulate | aiProcess_FlipUVs);
+    aiScene const* scene = importer.ReadFile(path, aiProcess_FlipUVs | aiProcessPreset_TargetRealtime_MaxQuality);
 
     if (scene == nullptr || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || scene->mRootNode == nullptr)
     {
