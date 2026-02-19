@@ -1,4 +1,4 @@
-float4 gamma_correction(float3 color, float strength = 1.5f)
+float4 gamma_correction(float3 color, float strength = 2.2f)
 {
     // If screen is too bright it might be because DirectX can do gamma correction by itself.
     // However, it works only in fullscreen so keep that in mind just in case.
