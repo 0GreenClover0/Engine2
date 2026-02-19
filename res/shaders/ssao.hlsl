@@ -18,9 +18,8 @@ cbuffer ssao_buffer : register(b1)
     float3 kernel_samples[64];
 }
 
-Texture2D pos_tex : register(t10);
-Texture2D normal_tex : register(t11);
-Texture2D diffuse_tex : register(t12);
+Texture2D pos_tex : register(t7);
+Texture2D normal_tex : register(t9);
 Texture2D noise_tex : register(t13);
 
 SamplerState gbuffer_sampler : register(s0);

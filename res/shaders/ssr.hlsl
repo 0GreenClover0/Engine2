@@ -1,7 +1,7 @@
 #include "lighting_calculations.hlsl"
 
 Texture2D rendered_scene : register(t17);
-Texture2D position_buffer : register(t10);
+Texture2D position_buffer : register(t7);
 
 SamplerState wrap_sampler : register(s2);
 
