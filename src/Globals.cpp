@@ -133,8 +133,10 @@ void initialize()
         big_cube.indices.emplace_back(index);
     }
 
-    // Load white texture
+    // Load 1x1 textures
     white_texture = ResourceManager::get_instance().load_texture("./res/textures/white.jpg", TextureType::Diffuse);
+    black_texture = ResourceManager::get_instance().load_texture("./res/textures/black.jpg", TextureType::Diffuse);
+    normal_texture = ResourceManager::get_instance().load_texture("./res/textures/normal.jpg", TextureType::Diffuse);
 }
 
 }

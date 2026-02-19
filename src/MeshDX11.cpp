@@ -1,5 +1,7 @@
 #include "MeshDX11.h"
 
+#include "Globals.h"
+
 #include <array>
 #include <iostream>
 
@@ -117,10 +119,54 @@ void MeshDX11::bind_textures() const
 {
     auto const device_context = RendererDX11::get_instance_dx11()->get_device_context();
 
-    for (u32 i = 0; i < m_textures.size(); ++i)
+    // TODO: Don't assume 1st texture is always albedo, 2nd is normal, etc.
+    for (i32 i = 0; i < m_textures.size(); ++i)
     {
         device_context->PSSetShaderResources(i, 1, &m_textures[i]->shader_resource_view);
         device_context->PSSetSamplers(i, 1, &m_textures[i]->image_sampler_state);
+    }
+
+    // NOTE: We always pass all 5 PBR textures. If the texture is not present in the model,
+    //       we pass a 1x1 white texture instead.
+    for (i32 i = m_textures.size(); i < PBR_texture_count; ++i)
+    {
+        switch (static_cast<TextureTypePBR>(i))
+        {
+        case TextureTypePBR::Albedo:
+        {
+            device_context->PSSetShaderResources(i, 1, &InternalMeshData::white_texture->shader_resource_view);
+            device_context->PSSetSamplers(i, 1, &InternalMeshData::white_texture->image_sampler_state);
+            break;
+        }
+        case TextureTypePBR::Normal:
+        {
+            device_context->PSSetShaderResources(i, 1, &InternalMeshData::normal_texture->shader_resource_view);
+            device_context->PSSetSamplers(i, 1, &InternalMeshData::normal_texture->image_sampler_state);
+            break;
+        }
+        case TextureTypePBR::Metallic:
+        {
+            device_context->PSSetShaderResources(i, 1, &InternalMeshData::black_texture->shader_resource_view);
+            device_context->PSSetSamplers(i, 1, &InternalMeshData::black_texture->image_sampler_state);
+            break;
+        }
+        case TextureTypePBR::Roughness:
+        {
+            device_context->PSSetShaderResources(i, 1, &InternalMeshData::white_texture->shader_resource_view);
+            device_context->PSSetSamplers(i, 1, &InternalMeshData::white_texture->image_sampler_state);
+            break;
+        }
+        case TextureTypePBR::AmbientOcclusion:
+        {
+            device_context->PSSetShaderResources(i, 1, &InternalMeshData::white_texture->shader_resource_view);
+            device_context->PSSetSamplers(i, 1, &InternalMeshData::white_texture->image_sampler_state);
+            break;
+        }
+        case TextureTypePBR::None:
+        {
+            break;
+        }
+        }
     }
 }
 
@@ -131,7 +177,7 @@ void MeshDX11::unbind_textures() const
     ID3D11ShaderResourceView* null_shader_resource_view = nullptr;
     ID3D11SamplerState* null_sampler_state = nullptr;
 
-    for (u32 i = 0; i < m_textures.size(); ++i)
+    for (i32 i = 0; i < PBR_texture_count; ++i)
     {
         device_context->PSSetShaderResources(i, 1, &null_shader_resource_view);
         device_context->PSSetSamplers(i, 1, &null_sampler_state);

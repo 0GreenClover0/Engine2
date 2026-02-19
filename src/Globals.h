@@ -11,6 +11,8 @@
 inline double delta_time;
 inline double constexpr fixed_delta_time = 0.008333;
 
+inline i32 constexpr PBR_texture_count = 5;
+
 inline i32 SKYBOX_RENDER_ORDER = 100;
 
 inline std::shared_ptr<Shader> default_shader;
@@ -31,6 +33,8 @@ namespace InternalMeshData
 inline MeshData cube;
 inline MeshData big_cube;
 inline std::shared_ptr<Texture> white_texture;
+inline std::shared_ptr<Texture> black_texture;
+inline std::shared_ptr<Texture> normal_texture;
 
 void initialize();
 

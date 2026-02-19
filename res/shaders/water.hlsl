@@ -1,4 +1,3 @@
-#define PI 3.141592f
 #define gravity 9.81f
 
 #include "ssr.hlsl"
@@ -232,7 +231,7 @@ float4 ps_main(VS_Output input) : SV_TARGET
     pixel_color = top_color * height + bottom_color * (1.0f - height);
 
     float3 view_dir = normalize(camera_pos.xyz - input.world_pos.xyz);
-    float3 result = calculate_directional_light(directional_light, combined_normal, view_dir, pixel_color, input.world_pos, true);
+    float3 result = calculate_directional_light(directional_light, combined_normal, view_dir, pixel_color, 0.0f, 1.0f, 1.0f, input.world_pos, true);
 
     // Volumetric lighting variables
     float3 scatter = float3(0.0f.xxx);
@@ -241,12 +240,12 @@ float4 ps_main(VS_Output input) : SV_TARGET
     for (int i = 0; i < number_of_point_lights; i++)
     {
         scatter += calculate_scatter(point_lights[i], float4(input.world_pos, 1.0f)) * fog_value;
-        result += calculate_point_light(point_lights[i], combined_normal, input.world_pos.rgb, view_dir, pixel_color, i, RENDER_POINT_SHADOW_MAPS);
+        result += calculate_point_light(point_lights[i], combined_normal, input.world_pos.rgb, view_dir, pixel_color, 0.0f, 1.0f, 1.0f, i, RENDER_POINT_SHADOW_MAPS);
     }
 
     for (int j = 0; j < number_of_spot_lights; j++)
     {
-        result += calculate_spot_light(spot_lights[j], combined_normal, input.world_pos, view_dir, pixel_color, j, true);
+        result += calculate_spot_light(spot_lights[j], combined_normal, input.world_pos, view_dir, pixel_color, 0.0f, 1.0f, 1.0f, j, true);
         scatter += calculate_scatter(spot_lights[j], float4(input.world_pos, 1.0f), j) * fog_value;
     }
 

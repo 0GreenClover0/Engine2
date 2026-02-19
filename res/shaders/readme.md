@@ -15,8 +15,8 @@
 
 ## Texture Registers:
 [DX11 has circa 128 texture registers according to this source.](https://gamedev.stackexchange.com/questions/158632/hlsl-registers-and-slots)
-- `t0` is always the object's texture
-- `t1` is for the directional shadow map
+- `t0` is always the object's texture, albedo
+- `t1` to `t5` are additional PBR textures (normal, metallic, roughness, ambient occlusion)
 - `t8`, `t9`, `t10`, `t11`, `t12` are for deferred shading textures
 - `t13` is for noise, for SSAO
 - `t14` is for ambient occlusion
@@ -29,5 +29,6 @@
 - `t40` to `t59` are for point shadow maps
 - `t20` to `t39` are for spotlight shadow maps
 - `t40` to `t59` are for point shadow maps
+- `t60` is for the directional shadow map
 
 If you want to bind any new textures specific to an object, I suggest using `t2-t9` registers.

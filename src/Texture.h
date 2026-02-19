@@ -27,6 +27,16 @@ enum class TextureFiltering : u8
     Linear = 2,
 };
 
+enum class TextureTypePBR : u8
+{
+    None = 255,
+    Albedo = 0,
+    Normal = 1,
+    Metallic = 2,
+    Roughness = 3,
+    AmbientOcclusion = 4
+};
+
 struct TextureSettings
 {
     TextureWrapMode wrap_mode_x = TextureWrapMode::Repeat;

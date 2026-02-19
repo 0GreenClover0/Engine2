@@ -43,16 +43,16 @@ float4 ps_main(VS_Output input) : SV_TARGET
     float3 view_dir = normalize(camera_pos.xyz - input.world_pos.xyz);
     float3 diffuse_texture = obj_texture.Sample(obj_sampler_state, input.UV).rgb;
 
-    float3 result = calculate_directional_light(directional_light, norm, view_dir, diffuse_texture, input.world_pos, true);
+    float3 result = calculate_directional_light(directional_light, norm, view_dir, diffuse_texture, 0.0f, 1.0f, 1.0f, input.world_pos, true);
 
     for (int point_light_index = 0; point_light_index < number_of_point_lights; point_light_index++)
     {
-        result += calculate_point_light(point_lights[point_light_index], norm, input.world_pos.rgb, view_dir, diffuse_texture, point_light_index, true);
+        result += calculate_point_light(point_lights[point_light_index], norm, input.world_pos.rgb, view_dir, diffuse_texture, 0.0f, 1.0f, 1.0f, point_light_index, true);
     }
 
     for (int spot_light_index = 0; spot_light_index < number_of_spot_lights; spot_light_index++)
     {
-        result += calculate_spot_light(spot_lights[spot_light_index], norm, input.world_pos, view_dir, diffuse_texture, spot_light_index, true);
+        result += calculate_spot_light(spot_lights[spot_light_index], norm, input.world_pos, view_dir, diffuse_texture, 0.0f, 1.0f, 1.0f, spot_light_index, true);
     }
 
     return gamma_correction(result);
