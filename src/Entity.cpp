@@ -4,7 +4,8 @@
 #include "Engine.h"
 #include "MainScene.h"
 
-Entity::Entity(AK::Badge<Entity>, std::string const& name) : name(std::move(name))
+// ReSharper disable once CppPossiblyUninitializedMember
+Entity::Entity(AK::Badge<Entity>, std::string const& name) : name(name)
 {
 }
 
