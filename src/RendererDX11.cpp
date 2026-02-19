@@ -132,7 +132,7 @@ std::shared_ptr<RendererDX11> RendererDX11::create()
     renderer->m_ssao = SSAO::create();
     renderer->m_ssao_blur = BlurPassContainer::create();
     renderer->m_lighting_pass_shader =
-        ResourceManager::get_instance().load_shader("./res/shaders/deferred_lighting.hlsl", "./res/shaders/deferred_lighting.hlsl");
+        ResourceManager::get_instance().load_shader("./res/shaders/deferred_lighting_pbr.hlsl", "./res/shaders/deferred_lighting_pbr.hlsl");
     renderer->m_fxaa_shader = ResourceManager::get_instance().load_shader("./res/shaders/fxaa.hlsl", "./res/shaders/fxaa.hlsl");
 
     // FIXME: Maybe move this somewhere else

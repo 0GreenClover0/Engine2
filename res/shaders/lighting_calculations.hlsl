@@ -2,6 +2,8 @@
 #include "common_functions.hlsl"
 #include "ShadingDefines.h"
 
+#define PI 3.141592f
+
 cbuffer light_buffer : register(b0)
 {
     DirectionalLight directional_light;
@@ -131,6 +133,73 @@ float PCSS(Texture2D shadow_map_tex, float4 coords, float bias, PCSSSettingsPerL
     return PCF_Filter(uv, z_receiver, filter_radius_uv, shadow_map_tex, bias, pcss_settings.pcf_num_samples) / SHADOWS_BRIGHTNESS;
 }
 
+// surface_reflection - surface reflection at zero incidence or how much the surface reflects if looking directly at the surface.
+float3 fresnel_schlick(float cos_theta, float3 surface_reflection)
+{
+    return surface_reflection + (1.0f - surface_reflection) * pow(clamp(1.0f - cos_theta, 0.0f, 1.0f), 5.0f);
+}
+
+float distribution_ggx(float3 normal, float3 halfway_direction, float roughness)
+{
+    float a = roughness * roughness;
+    float a_squared = a * a;
+    float normal_dot_halfway = max(dot(normal, halfway_direction), 0.0f); // TODO: This was already computed, pass it.
+    float normal_dot_halfway_squared = normal_dot_halfway * normal_dot_halfway;
+
+    float num = a_squared;
+    float denom = (normal_dot_halfway_squared * (a_squared - 1.0f) + 1.0f);
+    denom = PI * denom * denom;
+
+    return num / denom;
+}
+
+float geometry_schlick_ggx(float normal_dot_view, float roughness)
+{
+    float r = (roughness + 1.0f);
+    float k = (r * r) / 8.0f;
+
+    float num = normal_dot_view;
+    float denom = normal_dot_view * (1.0f - k) + k;
+
+    return num / denom;
+}
+
+float geometry_smith(float3 normal, float3 view_direction, float3 light_direction, float roughness)
+{
+    float normal_dot_view = max(dot(normal, view_direction), 0.0f);
+    float normal_dot_light = max(dot(normal, light_direction), 0.0f);
+    float ggx2 = geometry_schlick_ggx(normal_dot_view, roughness);
+    float ggx1 = geometry_schlick_ggx(normal_dot_light, roughness);
+
+    return ggx1 * ggx2;
+}
+
+float brdf(float3 light_diffuse, float3 view_dir, float3 light_direction, float3 albedo, float3 normal, float metallic, float roughness)
+{
+    float3 halfway_dir = normalize(light_direction + view_dir);
+    float cos_theta = max(dot(normal, light_direction), 0.0f);
+
+    float3 radiance = light_diffuse;
+
+    float3 surface_reflection = float3(0.04f, 0.04f, 0.04f);
+    surface_reflection = lerp(surface_reflection, albedo, metallic);
+    float3 fresnel = fresnel_schlick(max(dot(view_dir, halfway_dir), 0.0f), surface_reflection);
+
+    float normal_distribution_function = distribution_ggx(normal, halfway_dir, roughness);
+    float geometry = geometry_smith(normal, view_dir, light_direction, roughness);
+
+    float3 numerator = normal_distribution_function * geometry * fresnel;
+    // NOTE: We add 0.0001f to the denominator to prevent a divide by zero in case any dot product ends up 0.0f.
+    float denominator = 4.0f * max(dot(normal, view_dir), 0.0f) * cos_theta + 0.0001f;
+    float3 specular = numerator / denominator;
+
+    float3 k_s = fresnel;
+    float3 k_d = float3(1.0f, 1.0f, 1.0f) - k_s;
+    k_d *= 1.0f - metallic;
+
+    return (k_d * albedo / PI + specular) * radiance * cos_theta;
+}
+
 float point_shadow_calculation(PointLight light, float3 world_pos, int index)
 {
     float3 pixel_to_light = world_pos - light.position;
@@ -219,20 +288,9 @@ float directional_shadow_calculation(DirectionalLight light, float3 world_pos, f
     return PCSS(directional_shadow_map, coords, bias, light.pcss_settings, light.near_plane);
 }
 
-float3 calculate_directional_light(DirectionalLight light, float3 normal, float3 view_dir, float3 diffuse_texture, float3 world_pos, bool calculate_shadows, float ambient_occlusion = 1.0f)
+float3 calculate_directional_light(DirectionalLight light, float3 normal, float3 view_dir, float3 albedo, float metallic, float roughness, float ambient_occlusion, float3 world_pos, bool calculate_shadows)
 {
     float3 light_direction = normalize(-light.direction);
-    // Diffuse
-    float3 cos_theta = max(dot(normal, light_direction), 0.0f);
-
-    // Specular
-    float3 reflect_dir = reflect(light_direction,normal); // Phong
-    //float3 halfway_dir = normalize(light_direction + view_dir); // Blinn-Phong
-    float spec = pow(max(dot(view_dir, reflect_dir), 0.0f), 1); // TODO: Take shininess from the material
-
-    float3 ambient = light.ambient * diffuse_texture * ambient_occlusion; // We should be sampling diffuse map
-    float3 diffuse = light.diffuse * cos_theta * diffuse_texture; // We should be sampling diffuse map
-    float3 specular = light.specular * spec * diffuse_texture; // We should be sampling specular map
 
     float shadow = 0.0f;
     if (calculate_shadows)
@@ -240,28 +298,20 @@ float3 calculate_directional_light(DirectionalLight light, float3 normal, float3
         shadow = directional_shadow_calculation(light, world_pos, normal);
     }
 
-    return ambient + (1.0f - shadow) * (diffuse + specular);
+    float3 ambient = light.ambient * albedo * ambient_occlusion;
+    float radiance = brdf(light.diffuse, view_dir, light_direction, albedo, normal, metallic, roughness);
+
+    return radiance * (1.0f - shadow) + ambient;
 }
 
-float3 calculate_point_light(PointLight light, float3 normal, float3 world_pos, float3 view_dir, float3 diffuse_texture, int index, bool calculate_shadows, float ambient_occlusion = 1.0f)
+float3 calculate_point_light(PointLight light, float3 normal, float3 world_pos, float3 view_dir, float3 albedo, float metallic, float roughness, float ambient_occlusion, int index, bool calculate_shadows)
 {
     float3 light_direction = normalize(light.position - world_pos);
 
-    // Diffuse
-    float cos_theta = max(dot(normal, light_direction), 0.0f);
-
-    // Specular
-    //float3 reflect_dir = reflect(-light_direction,normal); // Phong
-    float3 halfway_dir = normalize(light_direction + view_dir); // Blinn-Phong
-    float spec = pow(max(dot(view_dir, halfway_dir), 0.0f), 32);
-
     // Attenuation
     float distance = length(light.position.xyz - world_pos);
+    //float attenuation = 1.0f / (distance * distance); // More realistically accurate.
     float attenuation = 1.0f / (light.constant + light.linear_ * distance + light.quadratic * (distance * distance));
-
-    float3 ambient = light.ambient * diffuse_texture * ambient_occlusion;
-    float3 diffuse = light.diffuse * cos_theta * diffuse_texture;
-    float3 specular = light.specular * spec * diffuse_texture;
 
     float shadow = 0.0f;
     if (calculate_shadows)
@@ -269,40 +319,14 @@ float3 calculate_point_light(PointLight light, float3 normal, float3 world_pos, 
         shadow = point_shadow_calculation(light, world_pos, index);
     }
 
-    return attenuation * (ambient + (1.0f - shadow) * (diffuse + specular));
+    float3 ambient = light.ambient * albedo * ambient_occlusion;
+    float radiance = brdf(light.diffuse, view_dir, light_direction, albedo, normal, metallic, roughness);
+
+    return radiance * attenuation * (1.0f - shadow) + ambient * attenuation;
 }
 
-float3 calculate_spot_light(SpotLight light, float3 normal, float3 world_pos, float3 view_dir, float3 diffuse_texture, int index, bool calculate_shadows, float ambient_occlusion = 1.0f)
+float3 calculate_spot_light(SpotLight light, float3 normal, float3 world_pos, float3 view_dir, float3 albedo, float metallic, float roughness, float ambient_occlusion, int index, bool calculate_shadows)
 {
-    float3 light_direction = normalize(light.position - world_pos.xyz);
-
-    // Diffuse
-    float cos_theta = max(dot(normal, light_direction), 0.0f);
-
-    // Specular
-    //float3 reflect_dir = reflect(-light_direction,normal); // Phong
-    float3 halfway_dir = normalize(light_direction + view_dir); // Blinn-Phong
-    float spec = pow(max(dot(view_dir, halfway_dir), 0.0f), 32);
-
-    // Attenuation
-    float distance = length(light.position - world_pos);
-    float attenuation = 1.0f / (light.constant + light.linear_ * distance + light.quadratic * distance * distance);
-
-    // Spotlight intensity
-    float theta = dot(light_direction, normalize(-light.direction));
-    float epsilon = light.cut_off - light.outer_cut_off;
-    float intensity = clamp((theta - light.outer_cut_off) / epsilon, 0.0f , 1.0f);
-
-    float3 ambient = light.ambient * diffuse_texture * ambient_occlusion;
-    float3 diffuse = light.diffuse * cos_theta * diffuse_texture;
-    float3 specular = light.specular * spec * diffuse_texture;
-
-    float shadow = 0.0f;
-    if (calculate_shadows)
-    {
-        shadow = spot_shadow_calculation(light, world_pos, index, normal, true);
-    }
-
 #ifdef BELOW_WATER_HACK
     if (world_pos.y < -0.1f)
     {
@@ -310,8 +334,29 @@ float3 calculate_spot_light(SpotLight light, float3 normal, float3 world_pos, fl
     }
 #endif
 
-    // Ambient has to be affected by shadow, so we do not have a resulting "decal" not connected to the cone
-    return attenuation * intensity *  ((1.0f - shadow) * (diffuse + specular + ambient));
+    float3 light_direction = normalize(light.position - world_pos);
+
+    // Attenuation
+    float distance = length(light.position - world_pos);
+    //float attenuation = 1.0f / (distance * distance); // More realistically accurate.
+    float attenuation = 1.0f / (light.constant + light.linear_ * distance + light.quadratic * distance * distance);
+
+    // Spotlight intensity
+    float theta = dot(light_direction, normalize(-light.direction));
+    float epsilon = light.cut_off - light.outer_cut_off;
+    float intensity = clamp((theta - light.outer_cut_off) / epsilon, 0.0f , 1.0f);
+
+    float shadow = 0.0f;
+    if (calculate_shadows)
+    {
+        shadow = spot_shadow_calculation(light, world_pos, index, normal, true);
+    }
+
+    float3 ambient = light.ambient * albedo * ambient_occlusion;
+    float radiance = brdf(light.diffuse, view_dir, light_direction, albedo, normal, metallic, roughness);
+
+    // Ambient has to be affected by shadow, so we do not have a resulting "decal" not connected to the cone.
+    return (radiance * attenuation * (1.0f - shadow) * ambient) * intensity;
 }
 
 float2 intersect_light_cone(SpotLight light, float3 ray_origin, float3 ray_direction, out float shadow, float light_index)

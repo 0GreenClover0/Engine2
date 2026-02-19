@@ -19,11 +19,6 @@ SamplerState wrap_sampler : register(s2);
 #define reflection_max_steps 30
 #define reflection_thickness 0.1f
 
-float3 fresnel_schlick(float cosTheta, float3 F0)
-{
-    return F0 + (1.0f - F0) * pow(1.0f - cosTheta, 5.0f);
-}
-
 float3 binary_search(float3 dir, float3 hit_coords, float dDepth)
 {
     float depth;
