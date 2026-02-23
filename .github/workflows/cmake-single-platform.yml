@@ -8,17 +8,17 @@ on:
   pull_request:
     branches: [ "main" ]
 
-env:
-  # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
-  BUILD_TYPE: Release
-  IS_CI: True
-
 jobs:
   build:
     # The CMake configure and build commands are platform agnostic and should work equally well on Windows or Mac.
     # You can convert this to a matrix build if you need cross-platform coverage.
     # See: https://docs.github.com/en/free-pro-team@latest/actions/learn-github-actions/managing-complex-workflows#using-a-build-matrix
     runs-on: windows-latest
+
+    env:
+      IS_CI: True
+      # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
+      BUILD_TYPE: ${{ github.ref == 'refs/heads/main' && 'Release' || 'Debug' }}
 
     steps:    
     - uses: actions/checkout@v4
@@ -35,14 +35,14 @@ jobs:
     - name: Copy and compress build files
       run: |
        mkdir ${{github.workspace}}/result
-       xcopy /s "${{github.workspace}}\build\src\Release\" "${{github.workspace}}\result\"
+       xcopy /s "${{github.workspace}}\build\src\${{env.BUILD_TYPE}}\" "${{github.workspace}}\result\"
        xcopy /s "${{github.workspace}}\build\src\res\" "${{github.workspace}}\result\res\"
-       xcopy /s "${{github.workspace}}\build\thirdparty\Release\" "${{github.workspace}}\result\"
-       xcopy /s "${{github.workspace}}\build\_deps\glm-build\glm\Release\glm.lib" "${{github.workspace}}\result\"
-       xcopy /s "${{github.workspace}}\build\_deps\yaml-cpp-build\Release\yaml-cpp.lib" "${{github.workspace}}\result\"
-       xcopy /s "${{github.workspace}}\build\_deps\assimp-build\lib\Release\assimp-vc143-mt.lib" "${{github.workspace}}\result\"
-       xcopy /s "${{github.workspace}}\build\_deps\glfw-build\src\Release\glfw3.lib" "${{github.workspace}}\result\"
-       xcopy /s "${{github.workspace}}\build\_deps\assimp-build\contrib\zlib\Release\zlibstatic.lib" "${{github.workspace}}\result\"
+       xcopy /s "${{github.workspace}}\build\thirdparty\${{env.BUILD_TYPE}}\" "${{github.workspace}}\result\"
+       xcopy /s "${{github.workspace}}\build\_deps\glm-build\glm\${{env.BUILD_TYPE}}\glm.lib" "${{github.workspace}}\result\"
+       xcopy /s "${{github.workspace}}\build\_deps\yaml-cpp-build\${{env.BUILD_TYPE}}\yaml-cpp.lib" "${{github.workspace}}\result\"
+       xcopy /s "${{github.workspace}}\build\_deps\assimp-build\lib\${{env.BUILD_TYPE}}\assimp-vc143-mt.lib" "${{github.workspace}}\result\"
+       xcopy /s "${{github.workspace}}\build\_deps\glfw-build\src\${{env.BUILD_TYPE}}\glfw3.lib" "${{github.workspace}}\result\"
+       xcopy /s "${{github.workspace}}\build\_deps\assimp-build\contrib\zlib\${{env.BUILD_TYPE}}\zlibstatic.lib" "${{github.workspace}}\result\"
        xcopy /s "${{github.workspace}}\.editor\" "${{github.workspace}}\result\"
 
     - name: Upload a Build Artifact
