@@ -484,6 +484,8 @@ void Editor::draw_content_browser(std::shared_ptr<EditorWindow> const& window)
         }
 
         ImGui::EndTabBar();
+
+        ImGui::End();
     }
 }
 
