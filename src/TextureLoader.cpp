@@ -1,5 +1,7 @@
 #include "TextureLoader.h"
 
+#include "Renderer.h"
+
 #include <cassert>
 
 std::shared_ptr<Texture> TextureLoader::load_texture(std::string const& path, TextureType const type, TextureSettings const& settings)
@@ -12,7 +14,7 @@ std::shared_ptr<Texture> TextureLoader::load_texture(std::string const& path, Te
 
 std::shared_ptr<Texture> TextureLoader::load_texture(std::string const& path, TextureSettings const& settings)
 {
-    assert(Renderer::renderer_api != OpenGL);
+    assert(Renderer::renderer_api != Renderer::RendererApi::OpenGL);
 
     auto const [id, width, height, number_of_components, texture_2d, shader_resource_view, image_sampler_state] =
         texture_from_file(path, settings);
