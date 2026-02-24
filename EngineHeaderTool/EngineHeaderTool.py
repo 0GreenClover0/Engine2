@@ -836,6 +836,139 @@ def add_to_component_list(file):
     if is_already_serialized == False:
         add_lines_at_target('// # Put new header here', create_header_code(name), 0, '/src/Editor.cpp')
 
+def check_imgui_in_draw_editor(all_components):
+    METHODS = ("draw_editor", "custom_draw_editor")
+
+    # ImGui - funkcje zwracające bool (kontrolki interaktywne)
+    IMGUI_FORBIDDEN = {
+        "ImGui::Button", "ImGui::SmallButton", "ImGui::InvisibleButton",
+        "ImGui::ArrowButton", "ImGui::Checkbox", "ImGui::CheckboxFlags",
+        "ImGui::RadioButton", "ImGui::ImageButton", "ImGui::TextLink",
+        "ImGui::TextLinkOpenURL", "ImGui::ShowStyleSelector",
+        # Combo / Dropdown
+        "ImGui::BeginCombo", "ImGui::Combo",
+        # Drag sliders
+        "ImGui::DragFloat", "ImGui::DragFloat2", "ImGui::DragFloat3",
+        "ImGui::DragFloat4", "ImGui::DragFloatRange2",
+        "ImGui::DragInt", "ImGui::DragInt2", "ImGui::DragInt3",
+        "ImGui::DragInt4", "ImGui::DragIntRange2", "ImGui::DragScalar",
+        "ImGui::DragScalarN",
+        # Sliders
+        "ImGui::SliderFloat", "ImGui::SliderFloat2", "ImGui::SliderFloat3",
+        "ImGui::SliderFloat4", "ImGui::SliderAngle",
+        "ImGui::SliderInt", "ImGui::SliderInt2", "ImGui::SliderInt3",
+        "ImGui::SliderInt4", "ImGui::SliderScalar", "ImGui::SliderScalarN",
+        "ImGui::VSliderFloat", "ImGui::VSliderInt", "ImGui::VSliderScalar",
+        # Input text
+        "ImGui::InputText", "ImGui::InputTextMultiline",
+        "ImGui::InputTextWithHint", "ImGui::InputFloat", "ImGui::InputFloat2",
+        "ImGui::InputFloat3", "ImGui::InputFloat4", "ImGui::InputInt",
+        "ImGui::InputInt2", "ImGui::InputInt3", "ImGui::InputInt4",
+        "ImGui::InputDouble", "ImGui::InputScalar", "ImGui::InputScalarN",
+        # Color
+        "ImGui::ColorEdit3", "ImGui::ColorEdit4",
+        "ImGui::ColorPicker3", "ImGui::ColorPicker4", "ImGui::ColorButton",
+        # Trees / Collapsing
+        "ImGui::TreeNode", "ImGui::TreeNodeEx", "ImGui::CollapsingHeader",
+        # Selectables
+        "ImGui::Selectable",
+        # List box
+        "ImGui::BeginListBox", "ImGui::ListBox",
+        # Menus
+        "ImGui::BeginMenuBar", "ImGui::BeginMainMenuBar",
+        "ImGui::BeginMenu", "ImGui::MenuItem",
+        # Popups / Modals
+        "ImGui::BeginPopup", "ImGui::BeginPopupModal",
+        "ImGui::BeginPopupContextItem", "ImGui::BeginPopupContextWindow",
+        "ImGui::BeginPopupContextVoid", "ImGui::IsPopupOpen",
+        # Tables
+        "ImGui::BeginTable",
+        # Tab bars
+        "ImGui::BeginTabBar", "ImGui::BeginTabItem",
+        # Drag & Drop
+        "ImGui::BeginDragDropSource", "ImGui::AcceptDragDropPayload",
+        "ImGui::BeginDragDropTarget",
+        # Utilities / queries
+        "ImGui::IsItemHovered", "ImGui::IsItemActive",
+        "ImGui::IsItemFocused", "ImGui::IsItemClicked",
+        "ImGui::IsItemVisible", "ImGui::IsItemEdited",
+        "ImGui::IsItemActivated", "ImGui::IsItemDeactivated",
+        "ImGui::IsItemDeactivatedAfterEdit", "ImGui::IsItemToggledOpen",
+        "ImGui::IsAnyItemHovered", "ImGui::IsAnyItemActive",
+        "ImGui::IsAnyItemFocused",
+        "ImGui::IsWindowAppearing", "ImGui::IsWindowCollapsed",
+        "ImGui::IsWindowFocused", "ImGui::IsWindowHovered",
+        "ImGui::IsKeyDown", "ImGui::IsKeyPressed", "ImGui::IsKeyReleased",
+        "ImGui::IsKeyChordPressed",
+        "ImGui::IsMouseDown", "ImGui::IsMouseClicked",
+        "ImGui::IsMouseReleased", "ImGui::IsMouseDoubleClicked",
+        "ImGui::IsMouseHoveringRect", "ImGui::IsMousePosValid",
+        "ImGui::IsMouseDragging",
+        "ImGui::Begin", "ImGui::BeginChild",
+        # Shortcut
+        "ImGui::Shortcut",
+    }
+
+    # ImPlot - funkcje zwracające bool
+    IMPLOT_FORBIDDEN = {
+        "ImPlot::BeginPlot", "ImPlot::BeginSubplots",
+        "ImPlot::BeginLegendPopup",
+        "ImPlot::BeginDragDropSourcePlot", "ImPlot::BeginDragDropSourceAxis",
+        "ImPlot::BeginDragDropSourceItem", "ImPlot::BeginDragDropTarget",
+        "ImPlot::BeginDragDropTargetPlot", "ImPlot::BeginDragDropTargetAxis",
+        "ImPlot::BeginDragDropTargetLegend",
+        "ImPlot::BeginAlignedPlots",
+        "ImPlot::ColormapButton",
+        "ImPlot::IsPlotHovered", "ImPlot::IsAxisHovered",
+        "ImPlot::IsSubplotsHovered", "ImPlot::IsPlotSelected",
+        "ImPlot::DragPoint", "ImPlot::DragLineX", "ImPlot::DragLineY",
+        "ImPlot::DragRect",
+    }
+
+    # ImGuizmo - funkcje zwracające bool
+    IMGUIZMO_FORBIDDEN = {
+        "ImGuizmo::Manipulate", "ImGuizmo::IsOver", "ImGuizmo::IsUsing",
+        "ImGuizmo::IsOverOperation",
+    }
+
+    ALL_FORBIDDEN = IMGUI_FORBIDDEN | IMPLOT_FORBIDDEN | IMGUIZMO_FORBIDDEN
+
+    for file in all_components:
+        header_path = file[0]
+        file_name = file[4]
+        class_name = file_name[:-2]
+        cpp_path = header_path[:-2] + ".cpp"
+
+        if not os.path.isfile(cpp_path):
+            continue
+
+        with open(cpp_path, 'r') as f:
+            lines = f.readlines()
+
+        in_target_method = False
+        brace_count = 0
+
+        for i, line in enumerate(lines, 1):
+            if not in_target_method:
+                for method in METHODS:
+                    if f"{class_name}::{method}(" in line:
+                        in_target_method = True
+                        brace_count = 0
+                        break
+
+            if in_target_method:
+                brace_count += line.count("{")
+                brace_count -= line.count("}")
+
+                stripped = line.strip()
+                if not stripped.startswith("//"):  # pomijaj komentarze
+                    for forbidden in ALL_FORBIDDEN:
+                        if forbidden + "(" in line:
+                            print(f"{cpp_path}({i}): warning: '{forbidden}' in '{class_name}'. It won't work with undo / redo system!")
+                            break
+
+                if brace_count < 0 or (brace_count == 0 and "{" in line):
+                    in_target_method = False
 
 parser = argparse.ArgumentParser(description='Engine Header Tool')
 parser.add_argument('-d', '--engine_dir', action='store', help="root directory of the engine")
@@ -892,6 +1025,8 @@ add_lines_at_target('// # Put new component here', ['    // # Auto component lis
 with open(args.engine_dir + '/src/SceneSerializer.cpp', 'w') as file:
     file.truncate(0)
     file.writelines(scene_serializer_lines)
+
+check_imgui_in_draw_editor(all_components)
 
 #cmd = input()
 print("\033[A                             \033[A")
