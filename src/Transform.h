@@ -51,6 +51,7 @@ public:
     void compute_local_model_matrix();
 
     void set_parent(std::shared_ptr<Transform> const& new_parent);
+    void set_dirty();
 
     std::vector<std::shared_ptr<Transform>> children;
     std::weak_ptr<Transform> parent = {};
@@ -88,7 +89,6 @@ private:
     void add_child(std::shared_ptr<Transform> const& transform);
     void remove_child(std::shared_ptr<Transform> const& transform);
 
-    void set_dirty();
     void set_parent_dirty();
 
     glm::vec3 m_world_up = glm::vec3(0.0f, 1.0f, 0.0f);
