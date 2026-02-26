@@ -103,6 +103,7 @@ inline void register_data_for_undo(T* v, std::string label)
         if (Editor::Editor::get_instance()->does_edited_value_changed())
         {
             Editor::Editor::get_instance()->set_value_pointer_of_currently_edited_value(v);
+            Editor::Editor::get_instance()->set_currently_edited_value_label(label);
             Editor::Editor::get_instance()->add_action_to_history();
         }
         

@@ -1320,11 +1320,12 @@ void Editor::draw_inspector(std::shared_ptr<EditorWindow> const& window)
     auto const components_copy = entity->components;
     for (auto const& component : components_copy)
     {
-        ImGui::Spacing();
+        m_selected_component = component;
 
-        // NOTE: This only returns unmangled name while using the MSVC compiler
-        std::string const typeid_name = typeid(*component).name();
-        std::string const name = typeid_name.substr(6);
+        ImGui::Spacing();
+        std::string guid = "##" + component->guid;
+        
+        std::string name = component->get_name();
         std::string full_name = name;
 
         if (auto custom_name = m_component_custom_names.find(component->guid); custom_name != m_component_custom_names.end())
@@ -2205,6 +2206,15 @@ bool Editor::does_edited_value_changed()
 
 void Editor::add_action_to_history()
 {
+    std::string name = m_selected_component.lock()->get_name();
+
+    if (auto custom_name = m_component_custom_names.find(m_selected_component.lock()->guid); custom_name != m_component_custom_names.end())
+    {
+        name += " " + custom_name->second;
+    }
+
+    m_currently_edited_value->entity = m_selected_entity.lock()->name;
+    m_currently_edited_value->component = name;
     m_editor_history.emplace_back(m_currently_edited_value);
 }
 
@@ -2221,6 +2231,11 @@ bool Editor::is_currently_edited_value_saved()
 void Editor::set_currently_edited_value_saved(bool is_saved)
 {
     m_currently_edited_value->is_saved = is_saved;
+}
+
+void Editor::set_currently_edited_value_label(std::string label)
+{
+    m_currently_edited_value->label = label;
 }
 
 void Editor::undo()

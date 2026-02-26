@@ -62,6 +62,9 @@ std::string event_value_to_string(glm::vec4 const& v);
 struct EditorEventBase
 {
     bool is_saved = true;
+    std::string entity = "";
+    std::string component = "";
+    std::string label = "";
 
     virtual void apply_before() = 0;
     virtual void apply_after() = 0;
@@ -93,7 +96,7 @@ struct EditorEvent : EditorEventBase
 
     std::string to_string() override
     {
-        return "Changed from " + event_value_to_string(value_before) + " to " + event_value_to_string(value_after);
+        return "Changed " + label + " in " + entity + " " + component + " from " + event_value_to_string(value_before) + " to " + event_value_to_string(value_after);
     }
 };
 
@@ -313,6 +316,7 @@ public:
     void add_action_to_history();
     bool is_currently_edited_value_saved();
     void set_currently_edited_value_saved(bool is_saved);
+    void set_currently_edited_value_label(std::string label);
     void undo();
     void redo();
 
@@ -394,6 +398,7 @@ private:
     glm::vec2 m_game_size = {};
 
     std::weak_ptr<Entity> m_selected_entity;
+    std::weak_ptr<Component> m_selected_component;
     std::shared_ptr<Scene> m_open_scene;
 
     std::vector<std::shared_ptr<EditorWindow>> m_editor_windows = {};
