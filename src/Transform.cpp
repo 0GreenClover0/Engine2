@@ -124,6 +124,11 @@ glm::vec3 Transform::get_local_position() const
     return m_local_position;
 }
 
+glm::vec3& Transform::get_local_position_ref()
+{
+    return m_local_position;
+}
+
 void Transform::set_local_scale(glm::vec3 const& scale)
 {
     auto const is_scale_modified = glm::epsilonNotEqual(scale, m_local_scale, 0.0001f);
@@ -138,6 +143,11 @@ void Transform::set_local_scale(glm::vec3 const& scale)
 }
 
 glm::vec3 Transform::get_local_scale() const
+{
+    return m_local_scale;
+}
+
+glm::vec3& Transform::get_local_scale_ref()
 {
     return m_local_scale;
 }
@@ -157,6 +167,11 @@ void Transform::set_euler_angles(glm::vec3 const& euler_angles)
 }
 
 glm::vec3 Transform::get_euler_angles() const
+{
+    return m_euler_angles;
+}
+
+glm::vec3& Transform::get_euler_angles_ref()
 {
     return m_euler_angles;
 }

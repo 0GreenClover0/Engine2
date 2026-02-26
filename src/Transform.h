@@ -26,12 +26,15 @@ public:
 
     void set_local_position(glm::vec3 const&);
     [[nodiscard]] glm::vec3 get_local_position() const;
+    [[nodiscard]] glm::vec3& get_local_position_ref();
 
     void set_local_scale(glm::vec3 const&);
     [[nodiscard]] glm::vec3 get_local_scale() const;
+    [[nodiscard]] glm::vec3& get_local_scale_ref();
 
     void set_euler_angles(glm::vec3 const&);
     [[nodiscard]] glm::vec3 get_euler_angles() const;
+    [[nodiscard]] glm::vec3& get_euler_angles_ref();
 
     [[nodiscard]] glm::vec3 get_euler_angles_restricted() const;
 
