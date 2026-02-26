@@ -2037,6 +2037,24 @@ void Editor::handle_input()
         }
     }
 
+    if (ImGui::GetIO().KeyCtrl)
+    {
+        if (!ImGui::GetIO().KeyShift && input->get_key_down(GLFW_KEY_Z))
+        {
+            undo();
+        }
+
+        if (input->get_key_down(GLFW_KEY_Y))
+        {
+            redo();
+        }
+
+        if (ImGui::GetIO().KeyShift && input->get_key_down(GLFW_KEY_Z))
+        {
+            redo();
+        }
+    }
+
     if (input->get_key_down(GLFW_KEY_F5))
     {
         Renderer::get_instance()->reload_shaders();
