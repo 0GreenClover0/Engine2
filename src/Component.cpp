@@ -104,6 +104,13 @@ void Component::draw_editor()
 #endif
 }
 
+std::string Component::get_name()
+{
+#if EDITOR
+    return "Component";
+#endif
+}
+
 void Component::custom_draw_editor()
 {
 #if EDITOR

@@ -37,6 +37,7 @@ public:
     void destroy_immediate();
 
     virtual void draw_editor();
+    virtual std::string get_name();
     virtual void custom_draw_editor();
 
     void set_can_tick(bool const value);
