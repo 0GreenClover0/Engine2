@@ -11,10 +11,10 @@
 #if EDITOR
 #include <imgui.h>
 #include <imgui_stdlib.h>
+#include <Editor.h>
 
 namespace ImGuiEx
 {
-
 template<class T>
 bool draw_ptr(std::string const& label, std::weak_ptr<T>& ptr)
 {
@@ -88,80 +88,131 @@ inline bool InputFloat4(char const* label, float v[4])
 
 }
 
+template<typename T>
+inline void register_data_for_undo(T* v, std::string label)
+{
+    if (ImGui::IsItemActive() and Editor::Editor::get_instance()->is_currently_edited_value_saved())
+    {
+        Editor::Editor::get_instance()->begin_edit_value(v);
+        Editor::Editor::get_instance()->set_value_before_of_currently_edited_value(*v);
+    }
+
+    if (ImGui::IsItemDeactivated())
+    {
+        Editor::Editor::get_instance()->set_value_after_of_currently_edited_value(*v);
+        if (Editor::Editor::get_instance()->does_edited_value_changed())
+        {
+            Editor::Editor::get_instance()->set_value_pointer_of_currently_edited_value(v);
+            Editor::Editor::get_instance()->add_action_to_history();
+        }
+        
+        Editor::Editor::get_instance()->set_currently_edited_value_saved(true);
+    }
+}
 
 inline bool u8_draw_editor(std::string const& label, u8& value)
 {
-    return ImGui::InputScalar(label.c_str(), ImGuiDataType_U8, &value);
+    bool is_changed = ImGui::InputScalar(label.c_str(), ImGuiDataType_U8, &value);
+    register_data_for_undo(&value, label);
+    return is_changed;
 }
 
 inline bool u16_draw_editor(std::string const& label, u16& value)
 {
-    return ImGui::InputScalar(label.c_str(), ImGuiDataType_U16, &value);
+    bool is_changed = ImGui::InputScalar(label.c_str(), ImGuiDataType_U16, &value);
+    register_data_for_undo(&value, label);
+    return is_changed;
 }
 
 inline bool u32_draw_editor(std::string const& label, u32& value)
 {
-    return ImGui::InputScalar(label.c_str(), ImGuiDataType_U32, &value);
+    bool is_changed = ImGui::InputScalar(label.c_str(), ImGuiDataType_U32, &value);
+    register_data_for_undo(&value, label);
+    return is_changed;
 }
 
 inline bool u64_draw_editor(std::string const& label, u64& value)
 {
-    return ImGui::InputScalar(label.c_str(), ImGuiDataType_U64, &value);
+    bool is_changed = ImGui::InputScalar(label.c_str(), ImGuiDataType_U64, &value);
+    register_data_for_undo(&value, label);
+    return is_changed;
 }
 
 inline bool i8_draw_editor(std::string const& label, i8& value)
 {
-    return ImGui::InputScalar(label.c_str(), ImGuiDataType_S8, &value);
+    bool is_changed = ImGui::InputScalar(label.c_str(), ImGuiDataType_S8, &value);
+    register_data_for_undo(&value, label);
+    return is_changed;
 }
 
 inline bool i16_draw_editor(std::string const& label, i16& value)
 {
-    return ImGui::InputScalar(label.c_str(), ImGuiDataType_S16, &value);
+    bool is_changed = ImGui::InputScalar(label.c_str(), ImGuiDataType_S16, &value);
+    register_data_for_undo(&value, label);
+    return is_changed;
 }
 
 inline bool i32_draw_editor(std::string const& label, i32& value)
 {
-    return ImGui::InputScalar(label.c_str(), ImGuiDataType_S32, &value);
+    bool is_changed = ImGui::InputScalar(label.c_str(), ImGuiDataType_S32, &value);
+    register_data_for_undo(&value, label);
+    return is_changed;
 }
 
 inline bool i64_draw_editor(std::string const& label, i64& value)
 {
-    return ImGui::InputScalar(label.c_str(), ImGuiDataType_S64, &value);
+    bool is_changed = ImGui::InputScalar(label.c_str(), ImGuiDataType_S64, &value);
+    register_data_for_undo(&value, label);
+    return is_changed;
 }
 
 inline bool float_draw_editor(std::string const& label, float& value)
 {
-    return ImGuiEx::InputFloat(label.c_str(), &value);
+    bool is_changed = ImGuiEx::InputFloat(label.c_str(), &value);
+    register_data_for_undo(&value, label);
+    return is_changed;
 }
 
 inline bool double_draw_editor(std::string const& label, double& value)
 {
-    return ImGui::InputDouble(label.c_str(), &value);
+    bool is_changed = ImGui::InputDouble(label.c_str(), &value);
+    register_data_for_undo(&value, label);
+    return is_changed;
 }
 
 inline bool string_draw_editor(std::string const& label, std::string& value)
 {
-    return ImGui::InputText(label.c_str(), &value);
+    bool is_changed = ImGui::InputText(label.c_str(), &value);
+    register_data_for_undo(&value, label);
+    return is_changed;
 }
 
 inline bool bool_draw_editor(std::string const& label, bool& value)
 {
-    return ImGui::Checkbox(label.c_str(), &value);
+    bool is_changed = ImGui::Checkbox(label.c_str(), &value);
+    register_data_for_undo(&value, label);
+    return is_changed;
 }
 
 inline bool vec2_draw_editor(std::string const& label, glm::vec2& value)
 {
-    return ImGuiEx::InputFloat2(label.c_str(), glm::value_ptr(value));
+    bool is_changed = ImGuiEx::InputFloat2(label.c_str(), glm::value_ptr(value));
+    register_data_for_undo(&value, label);
+    return is_changed;
 }
 
 inline bool vec3_draw_editor(std::string const& label, glm::vec3& value)
 {
-    return ImGuiEx::InputFloat3(label.c_str(), glm::value_ptr(value));
+    bool is_changed = ImGuiEx::InputFloat3(label.c_str(), glm::value_ptr(value));
+    register_data_for_undo(&value, label);
+    return is_changed;
 }
 
 inline bool vec4_draw_editor(std::string const& label, glm::vec4& value)
 {
-    return ImGuiEx::InputFloat4(label.c_str(), glm::value_ptr(value));
+    bool is_changed = ImGuiEx::InputFloat4(label.c_str(), glm::value_ptr(value));
+    register_data_for_undo(&value, label);
+    return is_changed;
 }
 
 template<class T>

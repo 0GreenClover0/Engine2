@@ -63,6 +63,7 @@
 #include "Game/ShipSpawner.h"
 #include "Game/Thanks.h"
 #include "Game/Truther.h"
+#include "Game/UndoTest.h"
 #include "Game/WheatOverlay.h"
 #include "Globals.h"
 #include "Grass.h"
@@ -831,6 +832,51 @@ void Editor::draw_history(std::shared_ptr<EditorWindow> const& window)
     }
 
     draw_window_menu_bar(window);
+
+    if (m_editor_history.size() == m_history_head)
+    {
+        ImGui::Text("--- Head ---");
+    }
+
+    for (i32 i = 0; i < m_editor_history.size(); i++)
+    {
+        std::string history_entry = m_editor_history[i]->to_string();
+        if (ImGui::Selectable(history_entry.c_str(), false))
+        {
+            if (m_editor_history.size() - m_history_head > i)
+            {
+                for (i32 j = m_editor_history.size() - m_history_head - 1; j >= i; j--)
+                {
+                    m_editor_history[j]->apply_before();
+                }
+            }
+
+            if (m_editor_history.size() - m_history_head < i)
+            {
+                for (i32 j = m_editor_history.size() - m_history_head; j < i; j++)
+                {
+                    m_editor_history[j]->apply_after();
+                }
+            }
+
+            m_history_head = m_editor_history.size() - i;
+        }
+
+        if (m_editor_history.size() - i - 1 == m_history_head)
+        {
+            ImGui::Text("--- Head ---");
+        }
+    }
+
+    if (ImGui::Selectable("Newest", false))
+    {
+        for (i32 i = m_editor_history.size() - m_history_head; i < m_editor_history.size(); i++)
+        {
+            m_editor_history[i]->apply_after();
+        }
+
+        m_history_head = 0;
+    }
 
     ImGui::End();
 }
@@ -2132,6 +2178,75 @@ std::string* Editor::get_component_custom_name_by_ptr(std::string const& guid)
 void Editor::set_component_custom_name(std::string const& guid, std::string const& custom_name)
 {
     m_component_custom_names.insert({guid, custom_name});
+}
+
+bool Editor::does_edited_value_changed()
+{
+    return !m_currently_edited_value->is_values_equal();
+}
+
+void Editor::add_action_to_history()
+{
+    m_editor_history.emplace_back(m_currently_edited_value);
+}
+
+bool Editor::is_currently_edited_value_saved()
+{
+    if (m_currently_edited_value == nullptr)
+    {
+        return true;
+    }
+
+    return m_currently_edited_value->is_saved;
+}
+
+void Editor::set_currently_edited_value_saved(bool is_saved)
+{
+    m_currently_edited_value->is_saved = is_saved;
+}
+
+void Editor::undo()
+{
+    i32 undoId = m_editor_history.size() - m_history_head - 1;
+    if (undoId >= 0)
+    {
+        m_editor_history[undoId]->apply_before();
+        m_history_head = m_editor_history.size() - undoId;
+    }
+}
+
+void Editor::redo()
+{
+    i32 undoId = m_editor_history.size() - m_history_head;
+    if (undoId < m_editor_history.size())
+    {
+        m_editor_history[undoId]->apply_after();
+        m_history_head = m_editor_history.size() - undoId - 1;
+    }
+}
+
+template<>
+std::string event_value_to_string(std::string const& v)
+{
+    return v;
+}
+
+template<>
+std::string event_value_to_string(glm::vec2 const& v)
+{
+    return "(" + std::to_string(v.x) + ", " + std::to_string(v.y) + ")";
+}
+
+template<>
+std::string event_value_to_string(glm::vec3 const& v)
+{
+    return "(" + std::to_string(v.x) + ", " + std::to_string(v.y) + ", " + std::to_string(v.z) + ")";
+}
+
+template<>
+std::string event_value_to_string(glm::vec4 const& v)
+{
+    return "(" + std::to_string(v.x) + ", " + std::to_string(v.y) + ", " + std::to_string(v.z) + ", " + std::to_string(v.w) + ")";
 }
 
 #endif

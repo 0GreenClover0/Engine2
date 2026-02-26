@@ -44,6 +44,59 @@ struct LockData
     std::weak_ptr<Entity> selected_entity;
 };
 
+template<typename T>
+std::string event_value_to_string(T const& v)
+{
+    return std::to_string(v);
+}
+
+template<>
+std::string event_value_to_string(std::string const& v);
+template<>
+std::string event_value_to_string(glm::vec2 const& v);
+template<>
+std::string event_value_to_string(glm::vec3 const& v);
+template<>
+std::string event_value_to_string(glm::vec4 const& v);
+
+struct EditorEventBase
+{
+    bool is_saved = true;
+
+    virtual void apply_before() = 0;
+    virtual void apply_after() = 0;
+    virtual bool is_values_equal() = 0;
+    virtual std::string to_string() = 0;
+    virtual ~EditorEventBase() = default;
+};
+
+template<typename T>
+struct EditorEvent : EditorEventBase
+{
+    T* value_pointer;
+    T value_before;
+    T value_after;
+
+    void apply_before() override
+    {
+        *value_pointer = value_before;
+    }
+    void apply_after() override
+    {
+        *value_pointer = value_after;
+    }
+
+    bool is_values_equal() override
+    {
+        return value_before == value_after;
+    }
+
+    std::string to_string() override
+    {
+        return "Changed from " + event_value_to_string(value_before) + " to " + event_value_to_string(value_after);
+    }
+};
+
 class EditorWindow
 {
 public:
@@ -211,10 +264,57 @@ public:
     std::string get_component_custom_name(std::string const& guid);
     void set_component_custom_name(std::string const& guid, std::string const& custom_name);
 
+    bool does_edited_value_changed();
+
     static std::shared_ptr<Editor> get_instance()
     {
         return m_instance;
     }
+
+    template<typename T>
+    void begin_edit_value(T* value_pointer)
+    {
+        auto edited_value = std::make_shared<EditorEvent<T>>();
+        edited_value->value_pointer = value_pointer;
+        edited_value->value_before = *value_pointer;
+        edited_value->value_after = *value_pointer;
+        m_currently_edited_value = edited_value;
+        m_currently_edited_value->is_saved = false;
+    }
+
+    template<typename T>
+    void set_value_of_currently_edited_value(T value_before, T value_after)
+    {
+        auto edited_value = std::dynamic_pointer_cast<EditorEvent<T>>(m_currently_edited_value);
+        edited_value->value_before = value_before;
+        edited_value->value_after = value_after;
+    }
+
+    template<typename T>
+    void set_value_before_of_currently_edited_value(T value_before)
+    {
+        auto edited_value = std::dynamic_pointer_cast<EditorEvent<T>>(m_currently_edited_value);
+        edited_value->value_before = value_before;
+    }
+
+    template<typename T>
+    void set_value_after_of_currently_edited_value(T value_after)
+    {
+        auto edited_value = std::dynamic_pointer_cast<EditorEvent<T>>(m_currently_edited_value);
+        edited_value->value_after = value_after;
+    }
+
+    template<typename T>
+    void set_value_pointer_of_currently_edited_value(T* value_pointer)
+    {
+        auto edited_value = std::dynamic_pointer_cast<EditorEvent<T>>(m_currently_edited_value);
+        edited_value->value_pointer = value_pointer;
+    }
+    void add_action_to_history();
+    bool is_currently_edited_value_saved();
+    void set_currently_edited_value_saved(bool is_saved);
+    void undo();
+    void redo();
 
 private:
     void switch_rendering_to_editor();
@@ -352,6 +452,10 @@ private:
     bool m_is_scene_dirty = false;
 
     inline static std::shared_ptr<Editor> m_instance = nullptr;
+
+    std::vector<std::shared_ptr<EditorEventBase>> m_editor_history = {};
+    std::shared_ptr<EditorEventBase> m_currently_edited_value = nullptr;
+    u32 m_history_head = 0;
 
 #endif
 };
