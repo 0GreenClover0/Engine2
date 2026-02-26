@@ -63,3 +63,10 @@ void ShipEyes::draw_editor()
 
 }
 #endif
+
+#if EDITOR
+std::string ShipEyes::get_name()
+{
+    return "ShipEyes";
+}
+#endif

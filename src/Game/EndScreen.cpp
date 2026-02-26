@@ -249,3 +249,10 @@ void EndScreen::hide()
 
     m_appear_counter = 0.0f;
 }
+
+#if EDITOR
+std::string EndScreen::get_name()
+{
+    return "EndScreen";
+}
+#endif

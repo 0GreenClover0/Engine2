@@ -736,3 +736,10 @@ void Ship::set_glowing(bool const is_glowing) const
     auto const drawable = entity->get_component<Drawable>();
     drawable->set_glowing(is_glowing);
 }
+
+#if EDITOR
+std::string Ship::get_name()
+{
+    return "Ship";
+}
+#endif

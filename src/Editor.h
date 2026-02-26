@@ -5,6 +5,7 @@
 #include "Scene.h"
 #include "Texture.h"
 #include "Transform.h"
+#include "Entity.h"
 
 #include <array>
 
@@ -62,7 +63,7 @@ std::string event_value_to_string(glm::vec4 const& v);
 struct EditorEventBase
 {
     bool is_saved = true;
-    std::string entity = "";
+    std::weak_ptr<Entity> entity = {};
     std::string component = "";
     std::string label = "";
 
@@ -96,7 +97,8 @@ struct EditorEvent : EditorEventBase
 
     std::string to_string() override
     {
-        return "Changed " + label + " in " + entity + " " + component + " from " + event_value_to_string(value_before) + " to " + event_value_to_string(value_after);
+        return "Changed " + label + " in " + entity.lock()->name + " " + component + " from " + event_value_to_string(value_before) + " to "
+             + event_value_to_string(value_after);
     }
 };
 

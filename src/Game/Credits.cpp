@@ -61,3 +61,10 @@ void Credits::hide()
     entity->get_component<Popup>()->hide();
     FloeButton::are_credits_open = false;
 }
+
+#if EDITOR
+std::string Credits::get_name()
+{
+    return "Credits";
+}
+#endif

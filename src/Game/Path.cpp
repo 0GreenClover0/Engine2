@@ -116,3 +116,10 @@ void Path::shift_all_by(glm::vec2 const value)
         point += value;
     }
 }
+
+#if EDITOR
+std::string Path::get_name()
+{
+    return "Path";
+}
+#endif

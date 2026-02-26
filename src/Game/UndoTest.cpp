@@ -49,3 +49,10 @@ void UndoTest::draw_editor()
     vec4_draw_editor(" Vec4: ", _vec4);
 }
 #endif
+
+#if EDITOR
+std::string UndoTest::get_name()
+{
+    return "UndoTest";
+}
+#endif

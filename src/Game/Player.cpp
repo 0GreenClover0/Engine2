@@ -184,3 +184,10 @@ void Player::custom_draw_editor()
     }
 }
 #endif
+
+#if EDITOR
+std::string Player::get_name()
+{
+    return "Player";
+}
+#endif

@@ -219,3 +219,10 @@ void Jeep::find_new_target()
 
     m_target = entity->get_component<Path>()->get_point_at(m_point_on_path);
 }
+
+#if EDITOR
+std::string Jeep::get_name()
+{
+    return "Jeep";
+}
+#endif

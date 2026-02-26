@@ -154,3 +154,10 @@ i32 Factory::get_max_flash_count() const
 {
     return m_max_flash_count;
 }
+
+#if EDITOR
+std::string Factory::get_name()
+{
+    return "Factory";
+}
+#endif

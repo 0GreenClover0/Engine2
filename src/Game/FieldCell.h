@@ -7,6 +7,10 @@
 class FieldCell : public Component
 {
 public:
+#if EDITOR
+    virtual std::string get_name() override;
+#endif
+
     static std::shared_ptr<FieldCell> create();
     static std::shared_ptr<FieldCell> create(u32 id, float cell_size_and_offset);
     explicit FieldCell(AK::Badge<FieldCell>, u32 id, float cell_size_and_offset);

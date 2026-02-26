@@ -295,3 +295,10 @@ void GameController::restart_level()
 
     m_level_number++;
 }
+
+#if EDITOR
+std::string GameController::get_name()
+{
+    return "GameController";
+}
+#endif

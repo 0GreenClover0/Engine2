@@ -259,3 +259,10 @@ void Port::adjust_lights() const
         index++;
     }
 }
+
+#if EDITOR
+std::string Port::get_name()
+{
+    return "Port";
+}
+#endif

@@ -7,6 +7,10 @@
 class Truther final : public Component
 {
 public:
+#if EDITOR
+    virtual std::string get_name() override;
+#endif
+
     static std::shared_ptr<Truther> create();
 
     explicit Truther(AK::Badge<Truther>);

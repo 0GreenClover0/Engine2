@@ -16,6 +16,10 @@ enum class FactoryType
 class Factory final : public Component
 {
 public:
+#if EDITOR
+    virtual std::string get_name() override;
+#endif
+
     static std::shared_ptr<Factory> create();
 
     explicit Factory(AK::Badge<Factory>);

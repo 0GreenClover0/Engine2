@@ -73,3 +73,10 @@ void HovercraftWithoutKeeper::draw_editor()
 
 }
 #endif
+
+#if EDITOR
+std::string HovercraftWithoutKeeper::get_name()
+{
+    return "HovercraftWithoutKeeper";
+}
+#endif

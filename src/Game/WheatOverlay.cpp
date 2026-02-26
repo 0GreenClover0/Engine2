@@ -69,3 +69,10 @@ void WheatOverlay::draw_editor()
 
 }
 #endif
+
+#if EDITOR
+std::string WheatOverlay::get_name()
+{
+    return "WheatOverlay";
+}
+#endif

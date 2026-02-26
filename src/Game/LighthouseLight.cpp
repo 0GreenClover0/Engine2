@@ -103,3 +103,10 @@ void LighthouseLight::update_position()
     light_locked->outer_cut_off = cos(aperture);
     light_locked->entity->transform->orient_towards(glm::vec3(position.x, 0.0f, position.y));
 }
+
+#if EDITOR
+std::string LighthouseLight::get_name()
+{
+    return "LighthouseLight";
+}
+#endif

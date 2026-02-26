@@ -11,6 +11,10 @@ class PlayerInput final : public Component
 {
 public:
 #if EDITOR
+    virtual std::string get_name() override;
+#endif
+
+#if EDITOR
     virtual void draw_editor() override;
 #endif
 

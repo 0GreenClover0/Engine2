@@ -1207,3 +1207,10 @@ std::optional<std::weak_ptr<Ship>> ShipSpawner::find_nearest_ship_object(glm::ve
 
     return nearest;
 }
+
+#if EDITOR
+std::string ShipSpawner::get_name()
+{
+    return "ShipSpawner";
+}
+#endif

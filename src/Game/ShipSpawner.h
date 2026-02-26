@@ -24,6 +24,10 @@ class ShipSpawner final : public Component
 {
 
 public:
+#if EDITOR
+    virtual std::string get_name() override;
+#endif
+
     static std::shared_ptr<ShipSpawner> create();
     static std::shared_ptr<ShipSpawner> create(std::shared_ptr<LighthouseLight> const& light);
 

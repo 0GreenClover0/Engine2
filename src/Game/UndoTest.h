@@ -7,6 +7,10 @@
 class UndoTest final : public Component
 {
 public:
+#if EDITOR
+    virtual std::string get_name() override;
+#endif
+
     static std::shared_ptr<UndoTest> create();
 
     explicit UndoTest(AK::Badge<UndoTest>);

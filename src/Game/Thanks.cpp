@@ -64,3 +64,10 @@ void Thanks::hide()
     Engine::set_game_running(false);
     Engine::set_game_running(true);
 }
+
+#if EDITOR
+std::string Thanks::get_name()
+{
+    return "Thanks";
+}
+#endif

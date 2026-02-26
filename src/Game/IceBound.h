@@ -8,6 +8,10 @@
 class IceBound final : public Component
 {
 public:
+#if EDITOR
+    virtual std::string get_name() override;
+#endif
+
     static std::shared_ptr<IceBound> create();
 
     explicit IceBound(AK::Badge<IceBound>);

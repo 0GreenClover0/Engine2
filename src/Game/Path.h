@@ -7,6 +7,10 @@ CUSTOM_EDITOR_ONLY
 class Path final : public Curve
 {
 public:
+#if EDITOR
+    virtual std::string get_name() override;
+#endif
+
     static std::shared_ptr<Path> create();
 
     explicit Path(AK::Badge<Path>);

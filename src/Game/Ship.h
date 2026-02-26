@@ -153,6 +153,10 @@ CUSTOM_EDITOR_ONLY
 class Ship final : public Component
 {
 public:
+#if EDITOR
+    virtual std::string get_name() override;
+#endif
+
     static std::shared_ptr<Ship> create();
     static std::shared_ptr<Ship> create(std::shared_ptr<LighthouseLight> const& light, std::shared_ptr<ShipSpawner> const& spawner,
                                         std::shared_ptr<ShipEyes> const& eyes);

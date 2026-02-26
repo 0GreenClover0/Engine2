@@ -754,3 +754,10 @@ void LevelController::end_level()
         }
     }
 }
+
+#if EDITOR
+std::string LevelController::get_name()
+{
+    return "LevelController";
+}
+#endif

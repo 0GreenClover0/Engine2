@@ -158,3 +158,10 @@ void FieldGrid::generate_grid_colliders()
         }
     }
 }
+
+#if EDITOR
+std::string FieldGrid::get_name()
+{
+    return "FieldGrid";
+}
+#endif

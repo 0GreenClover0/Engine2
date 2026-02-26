@@ -98,3 +98,10 @@ void FieldCell::draw_editor()
 
 }
 #endif
+
+#if EDITOR
+std::string FieldCell::get_name()
+{
+    return "FieldCell";
+}
+#endif

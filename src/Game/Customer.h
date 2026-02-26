@@ -9,6 +9,10 @@ class Curve;
 class Customer final : public Component
 {
 public:
+#if EDITOR
+    virtual std::string get_name() override;
+#endif
+
     static std::shared_ptr<Customer> create();
 
     explicit Customer(AK::Badge<Customer>);

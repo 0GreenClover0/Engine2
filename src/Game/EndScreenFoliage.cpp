@@ -159,3 +159,10 @@ void EndScreenFoliage::hide()
 
     m_appear_counter = 0.0f;
 }
+
+#if EDITOR
+std::string EndScreenFoliage::get_name()
+{
+    return "EndScreenFoliage";
+}
+#endif

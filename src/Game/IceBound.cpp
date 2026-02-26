@@ -182,3 +182,10 @@ void IceBound::custom_draw_editor()
     }
 }
 #endif
+
+#if EDITOR
+std::string IceBound::get_name()
+{
+    return "IceBound";
+}
+#endif

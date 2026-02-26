@@ -7,6 +7,10 @@
 class Player final : public Component
 {
 public:
+#if EDITOR
+    virtual std::string get_name() override;
+#endif
+
     static std::shared_ptr<Player> create();
 
     static std::shared_ptr<Player> get_instance();

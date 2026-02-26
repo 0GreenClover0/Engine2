@@ -1207,40 +1207,40 @@ void Editor::draw_inspector(std::shared_ptr<EditorWindow> const& window)
     auto const camera = Camera::get_main_camera();
     auto const entity = current_entity.lock();
 
+    // TODO: When transform will be a component it should record it, until now changes in transform will be in history as last existed component in given entity
+    //m_selected_component = entity->transform;
+
     ImGui::Text("Transform");
     ImGui::Spacing();
 
-    glm::vec3 position = entity->transform->get_local_position();
-    ImGuiEx::InputFloat3("Position", glm::value_ptr(position));
+    glm::vec3& position = entity->transform->get_local_position_ref();
+    glm::vec3 position_before = position;
+    vec3_draw_editor("Position", position);
 
-    if (AK::are_not_equal(position, entity->transform->get_local_position()))
+    if (AK::are_not_equal(position_before, position))
     {
         m_is_scene_dirty = true;
+        entity->transform->set_dirty();
     }
 
     float const input_width = ImGui::CalcItemWidth() / 3.0f - ImGui::GetStyle().ItemSpacing.x * 0.66f;
-
     ImGui::SameLine();
     ImGui::Text(" | ");
     ImGui::SameLine();
-
     if (ImGui::Button("Copy##1"))
     {
-        std::string const cpy = glm::to_string(position);
-        ImGui::SetClipboardText(cpy.c_str());
+        ImGui::SetClipboardText(glm::to_string(position_before).c_str());
     }
 
-    entity->transform->set_local_position(position);
+    glm::vec3& rotation = entity->transform->get_euler_angles_ref();
+    glm::vec3 rotation_before = rotation;
+    vec3_draw_editor("Rotation", rotation);
 
-    glm::vec3 rotation = entity->transform->get_euler_angles();
-    ImGuiEx::InputFloat3("Rotation", glm::value_ptr(rotation));
-
-    if (AK::are_not_equal(rotation, entity->transform->get_euler_angles()))
+    if (AK::are_not_equal(rotation_before, rotation))
     {
         m_is_scene_dirty = true;
+        entity->transform->set_rotation(rotation);
     }
-
-    entity->transform->set_euler_angles(rotation);
 
     ImGui::SameLine();
     ImGui::Text(" | ");
@@ -1248,44 +1248,61 @@ void Editor::draw_inspector(std::shared_ptr<EditorWindow> const& window)
 
     if (ImGui::Button("Copy##2"))
     {
-        std::string const cpy = glm::to_string(rotation);
-        ImGui::SetClipboardText(cpy.c_str());
+        ImGui::SetClipboardText(glm::to_string(rotation).c_str());
     }
 
-    glm::vec3 scale = entity->transform->get_local_scale();
-    glm::vec3 old_scale = scale;
+    glm::vec3& scale = entity->transform->get_local_scale_ref();
+    glm::vec3 scale_before = scale;
+
+    bool is_changing_finished = false;
 
     ImGui::PushItemWidth(input_width);
 
     ImGui::BeginDisabled(m_lock_scale && m_disabled_scale.x);
     ImGuiEx::InputFloat("##x", &scale.x);
+    is_changing_finished |= ImGui::IsItemDeactivatedAfterEdit();
     ImGui::EndDisabled();
 
     ImGui::SameLine();
 
     ImGui::BeginDisabled(m_lock_scale && m_disabled_scale.y);
     ImGuiEx::InputFloat("##y", &scale.y);
+    is_changing_finished |= ImGui::IsItemDeactivatedAfterEdit();
     ImGui::EndDisabled();
 
     ImGui::SameLine();
 
     ImGui::BeginDisabled(m_lock_scale && m_disabled_scale.z);
     ImGuiEx::InputFloat("Scale##z", &scale.z);
+    is_changing_finished |= ImGui::IsItemDeactivatedAfterEdit();
     ImGui::EndDisabled();
 
     ImGui::PopItemWidth();
 
-    if (AK::are_not_equal(scale, old_scale))
+    if (AK::are_not_equal(scale_before, scale))
     {
         m_is_scene_dirty = true;
+        entity->transform->set_dirty();
+
+        if (m_lock_scale)
+        {
+            scale = update_locked_value(scale, scale_before);
+        }
+
+        entity->transform->set_local_scale(scale);
+
+        begin_edit_value(&scale);
+        set_currently_edited_value_label("Scale");
+        set_value_pointer_of_currently_edited_value(&entity->transform->get_local_scale_ref());
+        set_value_before_of_currently_edited_value(scale_before);
     }
 
-    if (scale != old_scale && m_lock_scale)
+    if (is_changing_finished)
     {
-        scale = update_locked_value(scale, old_scale);
+        set_value_after_of_currently_edited_value(scale);
+        add_action_to_history();
+        set_currently_edited_value_saved(true);
     }
-
-    entity->transform->set_local_scale(scale);
 
     ImGui::SameLine();
     ImGui::Text("    | ");
@@ -1293,8 +1310,7 @@ void Editor::draw_inspector(std::shared_ptr<EditorWindow> const& window)
 
     if (ImGui::Button("Copy##3"))
     {
-        std::string const cpy = glm::to_string(scale);
-        ImGui::SetClipboardText(cpy.c_str());
+        ImGui::SetClipboardText(glm::to_string(scale).c_str());
     }
 
     ImGui::SameLine();
@@ -2213,7 +2229,7 @@ void Editor::add_action_to_history()
         name += " " + custom_name->second;
     }
 
-    m_currently_edited_value->entity = m_selected_entity.lock()->name;
+    m_currently_edited_value->entity = m_selected_entity;
     m_currently_edited_value->component = name;
     m_editor_history.emplace_back(m_currently_edited_value);
 }
@@ -2245,6 +2261,10 @@ void Editor::undo()
     {
         m_editor_history[undoId]->apply_before();
         m_history_head = m_editor_history.size() - undoId;
+        m_editor_history[undoId]->entity.lock()->transform->set_dirty();
+        m_editor_history[undoId]->entity.lock()->transform->set_rotation(
+            m_editor_history[undoId]->entity.lock()->transform->get_euler_angles());
+        m_is_scene_dirty = true;
     }
 }
 
@@ -2255,6 +2275,10 @@ void Editor::redo()
     {
         m_editor_history[undoId]->apply_after();
         m_history_head = m_editor_history.size() - undoId - 1;
+        m_editor_history[undoId]->entity.lock()->transform->set_dirty();
+        m_editor_history[undoId]->entity.lock()->transform->set_rotation(
+            m_editor_history[undoId]->entity.lock()->transform->get_euler_angles());
+        m_is_scene_dirty = true;
     }
 }
 

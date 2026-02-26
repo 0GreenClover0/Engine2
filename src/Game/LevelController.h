@@ -34,6 +34,10 @@ enum class TutorialProgressAction
 class LevelController final : public Component
 {
 public:
+#if EDITOR
+    virtual std::string get_name() override;
+#endif
+
     static std::shared_ptr<LevelController> create();
 
     static std::shared_ptr<LevelController> get_instance();

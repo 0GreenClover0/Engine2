@@ -12,6 +12,10 @@ class Ship;
 class LighthouseLight final : public Component
 {
 public:
+#if EDITOR
+    virtual std::string get_name() override;
+#endif
+
     static std::shared_ptr<LighthouseLight> create();
 
     explicit LighthouseLight(AK::Badge<LighthouseLight>);

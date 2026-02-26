@@ -76,3 +76,10 @@ void Clock::update_visibility(bool const hide) const
         entity->transform->set_local_position({position.x, 0.80f, position.z});
     }
 }
+
+#if EDITOR
+std::string Clock::get_name()
+{
+    return "Clock";
+}
+#endif

@@ -122,3 +122,10 @@ float Popup::ease_out_elastic(float const x)
 
     return std::powf(2.0f, -10.0f * x) * std::sin((x * 10.0f - 0.75f) * c4) + 1.0f;
 }
+
+#if EDITOR
+std::string Popup::get_name()
+{
+    return "Popup";
+}
+#endif

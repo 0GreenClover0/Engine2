@@ -203,3 +203,10 @@ void Lighthouse::spawn_fake_packages(u32 const packages_count, std::shared_ptr<T
         }
     }
 }
+
+#if EDITOR
+std::string Lighthouse::get_name()
+{
+    return "Lighthouse";
+}
+#endif

@@ -8,6 +8,10 @@
 class Thanks final : public Component
 {
 public:
+#if EDITOR
+    virtual std::string get_name() override;
+#endif
+
     static std::shared_ptr<Thanks> create();
 
     explicit Thanks(AK::Badge<Thanks>);

@@ -8,6 +8,10 @@
 class Credits final : public Component
 {
 public:
+#if EDITOR
+    virtual std::string get_name() override;
+#endif
+
     static std::shared_ptr<Credits> create();
 
     explicit Credits(AK::Badge<Credits>);

@@ -218,3 +218,10 @@ void PlayerInput::custom_draw_editor()
     Component::draw_editor();
 }
 #endif
+
+#if EDITOR
+std::string PlayerInput::get_name()
+{
+    return "PlayerInput";
+}
+#endif

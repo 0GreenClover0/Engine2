@@ -487,3 +487,10 @@ void LighthouseKeeper::remove_package()
         Debug::log("Game wants to remove package but there is no package to remove!", DebugType::Warning);
     }
 }
+
+#if EDITOR
+std::string LighthouseKeeper::get_name()
+{
+    return "LighthouseKeeper";
+}
+#endif

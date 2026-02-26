@@ -137,3 +137,10 @@ float CustomerManager::get_percentage_of_line(u32 const index)
 {
     return static_cast<float>(index + 1) / static_cast<float>(LevelController::get_instance()->map_food);
 }
+
+#if EDITOR
+std::string CustomerManager::get_name()
+{
+    return "CustomerManager";
+}
+#endif

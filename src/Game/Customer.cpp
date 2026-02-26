@@ -237,3 +237,10 @@ void Customer::set_destination(glm::vec3 const& destination)
     m_destination = destination;
     m_destination.y = desired_height;
 }
+
+#if EDITOR
+std::string Customer::get_name()
+{
+    return "Customer";
+}
+#endif

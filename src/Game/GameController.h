@@ -11,6 +11,10 @@
 class GameController final : public Component
 {
 public:
+#if EDITOR
+    virtual std::string get_name() override;
+#endif
+
     static std::shared_ptr<GameController> create();
 
     explicit GameController(AK::Badge<GameController>);

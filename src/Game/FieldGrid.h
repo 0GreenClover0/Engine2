@@ -7,6 +7,10 @@
 class FieldGrid final : public Component
 {
 public:
+#if EDITOR
+    virtual std::string get_name() override;
+#endif
+
     static std::shared_ptr<FieldGrid> create();
     virtual void initialize() override;
     explicit FieldGrid(AK::Badge<FieldGrid>);

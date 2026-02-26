@@ -417,3 +417,10 @@ void Truther::stun()
 void Truther::handle_input()
 {
 }
+
+#if EDITOR
+std::string Truther::get_name()
+{
+    return "Truther";
+}
+#endif
