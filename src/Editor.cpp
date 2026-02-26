@@ -104,6 +104,7 @@ Editor::Editor(AK::Badge<Editor>)
     add_game();
     add_inspector();
     add_scene_hierarchy();
+    add_history();
 
     m_last_second = glfwGetTime();
 
@@ -162,6 +163,9 @@ void Editor::draw()
             break;
         case EditorWindowType::Inspector:
             draw_inspector(window);
+            break;
+        case EditorWindowType::History:
+            draw_history(window);
             break;
         case EditorWindowType::Custom:
             std::cout << "Custom Editor windows are currently not supported.\n";
@@ -808,6 +812,29 @@ void Editor::draw_scene_hierarchy(std::shared_ptr<EditorWindow> const& window)
     ImGui::End();
 }
 
+void Editor::draw_history(std::shared_ptr<EditorWindow> const& window)
+{
+    bool is_still_open = true;
+    bool const open = ImGui::Begin(window->get_name().c_str(), &is_still_open, window->flags);
+
+    if (!is_still_open)
+    {
+        remove_window(window);
+        ImGui::End();
+        return;
+    }
+
+    if (!open)
+    {
+        ImGui::End();
+        return;
+    }
+
+    draw_window_menu_bar(window);
+
+    ImGui::End();
+}
+
 void Editor::draw_entity_recursively(std::shared_ptr<Transform> const& transform)
 {
     if (transform == nullptr || transform->entity.expired())
@@ -1004,6 +1031,10 @@ void Editor::draw_window_menu_bar(std::shared_ptr<EditorWindow> const& window)
                 if (ImGui::MenuItem("Debug"))
                 {
                     add_debug_window();
+                }
+                if (ImGui::MenuItem("History"))
+                {
+                    add_history();
                 }
 
                 ImGui::EndMenu();
@@ -2057,6 +2088,12 @@ void Editor::add_scene_hierarchy()
 {
     auto hierarchy_window = std::make_shared<EditorWindow>(m_last_window_id, ImGuiWindowFlags_MenuBar, EditorWindowType::Hierarchy);
     m_editor_windows.emplace_back(hierarchy_window);
+}
+
+void Editor::add_history()
+{
+    auto history_window = std::make_shared<EditorWindow>(m_last_window_id, ImGuiWindowFlags_MenuBar, EditorWindowType::History);
+    m_editor_windows.emplace_back(history_window);
 }
 
 void Editor::remove_window(std::shared_ptr<EditorWindow> const& window)

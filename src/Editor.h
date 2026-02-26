@@ -30,6 +30,7 @@ enum class EditorWindowType
     Game,
     Inspector,
     Hierarchy,
+    History,
 };
 
 enum class AssetLoadType
@@ -69,6 +70,9 @@ public:
             break;
         case EditorWindowType::Inspector:
             m_name = "Inspector##" + std::to_string(m_id);
+            break;
+        case EditorWindowType::History:
+            m_name = "History##" + std::to_string(m_id);
             break;
         case EditorWindowType::Custom:
             m_name = "Custom##" + std::to_string(m_id);
@@ -220,6 +224,7 @@ private:
     void add_game();
     void add_inspector();
     void add_scene_hierarchy();
+    void add_history();
     void remove_window(std::shared_ptr<EditorWindow> const& window);
 
     void draw_debug_window(std::shared_ptr<EditorWindow> const& window);
@@ -227,6 +232,7 @@ private:
     void draw_game(std::shared_ptr<EditorWindow> const& window);
     void draw_inspector(std::shared_ptr<EditorWindow> const& window);
     void draw_scene_hierarchy(std::shared_ptr<EditorWindow> const& window);
+    void draw_history(std::shared_ptr<EditorWindow> const& window);
     void draw_scene_save();
 
     void draw_entity_recursively(std::shared_ptr<Transform> const& transform);
