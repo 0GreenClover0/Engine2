@@ -72,3 +72,10 @@ void FloatersManager::custom_draw_editor()
     ImGui::PopID();
 }
 #endif
+
+#if EDITOR
+std::string FloatersManager::get_name()
+{
+    return "FloatersManager";
+}
+#endif

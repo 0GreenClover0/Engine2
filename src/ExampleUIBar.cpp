@@ -59,3 +59,10 @@ void ExampleUIBar::custom_draw_editor()
     ImGui::SliderFloat("Value", &value, 0.0f, 1.0f);
 }
 #endif
+
+#if EDITOR
+std::string ExampleUIBar::get_name()
+{
+    return "ExampleUIBar";
+}
+#endif

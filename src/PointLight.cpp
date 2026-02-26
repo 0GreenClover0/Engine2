@@ -255,3 +255,10 @@ float PointLight::ease_in_back(float const x)
 
     return c3 * x * x * x - c1 * x * x;
 }
+
+#if EDITOR
+std::string PointLight::get_name()
+{
+    return "PointLight";
+}
+#endif

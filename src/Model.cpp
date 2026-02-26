@@ -298,3 +298,10 @@ std::vector<std::shared_ptr<Texture>> Model::load_material_textures(aiMaterial c
 
     return textures;
 }
+
+#if EDITOR
+std::string Model::get_name()
+{
+    return "Model";
+}
+#endif

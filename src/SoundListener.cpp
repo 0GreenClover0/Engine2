@@ -49,3 +49,10 @@ void SoundListener::draw_editor()
 
 }
 #endif
+
+#if EDITOR
+std::string SoundListener::get_name()
+{
+    return "SoundListener";
+}
+#endif

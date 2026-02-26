@@ -12,6 +12,10 @@ class Skybox : public Drawable
 {
 public:
 #if EDITOR
+    virtual std::string get_name() override;
+#endif
+
+#if EDITOR
     virtual void draw_editor() override;
 #endif
 

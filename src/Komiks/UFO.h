@@ -16,6 +16,10 @@ class Thruter;
 class UFO final : public Component
 {
 public:
+#if EDITOR
+    virtual std::string get_name() override;
+#endif
+
     static std::shared_ptr<UFO> create();
 
     explicit UFO(AK::Badge<UFO>);

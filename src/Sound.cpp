@@ -195,3 +195,10 @@ void Sound::update()
         entity->destroy_immediate();
     }
 }
+
+#if EDITOR
+std::string Sound::get_name()
+{
+    return "Sound";
+}
+#endif

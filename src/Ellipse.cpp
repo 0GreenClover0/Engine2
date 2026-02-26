@@ -82,3 +82,10 @@ void Ellipse::draw_editor()
     i32_draw_editor("Segment Count: ", segment_count);
 }
 #endif
+
+#if EDITOR
+std::string Ellipse::get_name()
+{
+    return "Ellipse";
+}
+#endif

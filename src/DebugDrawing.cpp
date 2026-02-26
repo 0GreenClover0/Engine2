@@ -321,3 +321,10 @@ void DebugDrawing::create_sphere(bool const is_reload)
         disable_drawing();
     }
 }
+
+#if EDITOR
+std::string DebugDrawing::get_name()
+{
+    return "DebugDrawing";
+}
+#endif

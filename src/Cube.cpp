@@ -123,3 +123,10 @@ void Cube::draw_editor()
     string_draw_editor("Specular Texture Path: ", specular_texture_path);
 }
 #endif
+
+#if EDITOR
+std::string Cube::get_name()
+{
+    return "Cube";
+}
+#endif

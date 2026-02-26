@@ -349,3 +349,10 @@ void Water::set_constant_buffer() const
     renderer->get_device_context()->Unmap(m_constant_buffer_water, 0);
     renderer->get_device_context()->PSSetConstantBuffers(4, 1, &m_constant_buffer_water);
 }
+
+#if EDITOR
+std::string Water::get_name()
+{
+    return "Water";
+}
+#endif

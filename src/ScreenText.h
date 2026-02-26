@@ -14,6 +14,10 @@ CUSTOM_EDITOR_ONLY
 class ScreenText final : public Drawable
 {
 public:
+#if EDITOR
+    virtual std::string get_name() override;
+#endif
+
     static std::shared_ptr<ScreenText> create();
     static std::shared_ptr<ScreenText> create(std::shared_ptr<Material> const& material, std::string const& content,
                                               glm::vec2 const& position, float const font_size, u32 const color, u16 const flags);

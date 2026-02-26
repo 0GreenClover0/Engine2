@@ -16,6 +16,10 @@ struct FloaterSettings
 class FloatersManager final : public Component
 {
 public:
+#if EDITOR
+    virtual std::string get_name() override;
+#endif
+
     static std::shared_ptr<FloatersManager> create();
     explicit FloatersManager(AK::Badge<FloatersManager>);
 

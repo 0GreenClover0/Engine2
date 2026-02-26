@@ -94,3 +94,10 @@ void DirectionalLight::set_render_target_for_shadow_mapping() const
     renderer->get_device_context()->OMSetRenderTargets(1, &renderer->g_emptyRenderTargetView, m_shadow_depth_stencil_view);
     renderer->get_device_context()->ClearDepthStencilView(m_shadow_depth_stencil_view, D3D11_CLEAR_DEPTH, 1.0f, 0);
 }
+
+#if EDITOR
+std::string DirectionalLight::get_name()
+{
+    return "DirectionalLight";
+}
+#endif

@@ -132,3 +132,10 @@ void FloeButton::custom_draw_editor()
     }
 }
 #endif
+
+#if EDITOR
+std::string FloeButton::get_name()
+{
+    return "FloeButton";
+}
+#endif

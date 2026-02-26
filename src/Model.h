@@ -16,6 +16,10 @@ struct aiNode;
 class Model : public Drawable
 {
 public:
+#if EDITOR
+    virtual std::string get_name() override;
+#endif
+
     static std::shared_ptr<Model> create();
     static std::shared_ptr<Model> create(std::string const& model_path, std::shared_ptr<Material> const& material);
     static std::shared_ptr<Model> create(std::shared_ptr<Mesh> mesh, std::shared_ptr<Material> const& material);

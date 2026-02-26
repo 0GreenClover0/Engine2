@@ -10,6 +10,10 @@ NON_SERIALIZED
 class Particle final : public Drawable
 {
 public:
+#if EDITOR
+    virtual std::string get_name() override;
+#endif
+
     static std::shared_ptr<Particle> create();
     static std::shared_ptr<Particle> create(ParticleSpawnData const& data, float spawn_bounds, std::string const& sprite_path,
                                             bool const rotate_particle);

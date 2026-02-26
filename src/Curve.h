@@ -30,6 +30,10 @@ enum class EaseTypes
 class Curve : public Component
 {
 public:
+#if EDITOR
+    virtual std::string get_name() override;
+#endif
+
     static std::shared_ptr<Curve> create();
 
     explicit Curve(AK::Badge<Curve>);

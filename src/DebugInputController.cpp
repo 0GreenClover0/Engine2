@@ -75,3 +75,10 @@ void DebugInputController::draw_editor()
     float_draw_editor("Exposure: ", exposure);
 }
 #endif
+
+#if EDITOR
+std::string DebugInputController::get_name()
+{
+    return "DebugInputController";
+}
+#endif

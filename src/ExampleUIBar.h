@@ -7,6 +7,10 @@
 class ExampleUIBar final : public Component
 {
 public:
+#if EDITOR
+    virtual std::string get_name() override;
+#endif
+
     static std::shared_ptr<ExampleUIBar> create();
 
     virtual void awake() override;

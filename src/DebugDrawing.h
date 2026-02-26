@@ -15,6 +15,10 @@ NON_SERIALIZED
 class DebugDrawing final : public Component
 {
 public:
+#if EDITOR
+    virtual std::string get_name() override;
+#endif
+
     // Default (simple sphere)
     explicit DebugDrawing(AK::Badge<DebugDrawing>);
     static std::shared_ptr<DebugDrawing> create();

@@ -181,3 +181,10 @@ void ParticleSystem::spawn_calculations()
 
     m_time_counter = 0.0;
 }
+
+#if EDITOR
+std::string ParticleSystem::get_name()
+{
+    return "ParticleSystem";
+}
+#endif

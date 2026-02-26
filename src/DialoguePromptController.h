@@ -15,6 +15,10 @@ enum class InterpolationMode
 class DialoguePromptController : public Component
 {
 public:
+#if EDITOR
+    virtual std::string get_name() override;
+#endif
+
     static std::shared_ptr<DialoguePromptController> create();
     explicit DialoguePromptController(AK::Badge<DialoguePromptController>);
 

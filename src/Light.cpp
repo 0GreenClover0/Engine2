@@ -101,3 +101,10 @@ ID3D11ShaderResourceView* Light::get_shadow_shader_resource_view() const
 {
     return m_shadow_shader_resource_view;
 }
+
+#if EDITOR
+std::string Light::get_name()
+{
+    return "Light";
+}
+#endif

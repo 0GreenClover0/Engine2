@@ -95,3 +95,10 @@ void JeepReflector::set_destination(glm::vec2 destination)
     float angle_rad = glm::radians(angle_deg);
     m_target_rot = glm::angleAxis(angle_rad, axis);
 }
+
+#if EDITOR
+std::string JeepReflector::get_name()
+{
+    return "JeepReflector";
+}
+#endif

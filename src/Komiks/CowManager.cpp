@@ -424,3 +424,10 @@ void CowManager::set_pattern(u32 id)
 
     field_grid.lock()->set_pattern(id);
 }
+
+#if EDITOR
+std::string CowManager::get_name()
+{
+    return "CowManager";
+}
+#endif

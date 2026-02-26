@@ -343,3 +343,10 @@ std::shared_ptr<Mesh> Particle::create_sprite() const
 
     return ResourceManager::get_instance().load_mesh(0, path, vertices, indices, textures, DrawType::Triangles, material);
 }
+
+#if EDITOR
+std::string Particle::get_name()
+{
+    return "Particle";
+}
+#endif

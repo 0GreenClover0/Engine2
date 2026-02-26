@@ -110,3 +110,10 @@ void Wheat::draw_editor()
 
 }
 #endif
+
+#if EDITOR
+std::string Wheat::get_name()
+{
+    return "Wheat";
+}
+#endif

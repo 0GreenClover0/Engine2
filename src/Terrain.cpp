@@ -203,3 +203,10 @@ void Terrain::draw_editor()
 
 }
 #endif
+
+#if EDITOR
+std::string Terrain::get_name()
+{
+    return "Terrain";
+}
+#endif

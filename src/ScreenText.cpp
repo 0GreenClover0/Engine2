@@ -305,3 +305,10 @@ void ScreenText::refresh_layout()
 
     realign_text(m_align_to_center);
 }
+
+#if EDITOR
+std::string ScreenText::get_name()
+{
+    return "ScreenText";
+}
+#endif

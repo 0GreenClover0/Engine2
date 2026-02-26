@@ -85,3 +85,10 @@ void Floater::update()
 
     entity->transform->set_euler_angles(glm::vec3(euler.x, current_rotation.y, euler.z));
 }
+
+#if EDITOR
+std::string Floater::get_name()
+{
+    return "Floater";
+}
+#endif

@@ -175,3 +175,10 @@ void UFO::choose_position()
 
     m_destination = {target.x, 2.0f, target.z};
 }
+
+#if EDITOR
+std::string UFO::get_name()
+{
+    return "UFO";
+}
+#endif

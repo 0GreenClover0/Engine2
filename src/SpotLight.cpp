@@ -147,3 +147,10 @@ void SpotLight::set_up_shadow_mapping()
                                                           &m_shadow_shader_resource_view);
     assert(SUCCEEDED(hr));
 }
+
+#if EDITOR
+std::string SpotLight::get_name()
+{
+    return "SpotLight";
+}
+#endif

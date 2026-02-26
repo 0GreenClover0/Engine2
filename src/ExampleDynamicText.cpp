@@ -43,3 +43,10 @@ void ExampleDynamicText::draw_editor()
 
 }
 #endif
+
+#if EDITOR
+std::string ExampleDynamicText::get_name()
+{
+    return "ExampleDynamicText";
+}
+#endif

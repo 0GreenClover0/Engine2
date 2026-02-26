@@ -10,6 +10,10 @@
 class Light : public Component
 {
 public:
+#if EDITOR
+    virtual std::string get_name() override;
+#endif
+
     ~Light() override = 0;
 
 #if EDITOR

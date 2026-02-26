@@ -62,3 +62,10 @@ void NowPromptTrigger::draw_editor()
 
 }
 #endif
+
+#if EDITOR
+std::string NowPromptTrigger::get_name()
+{
+    return "NowPromptTrigger";
+}
+#endif

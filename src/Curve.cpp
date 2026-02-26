@@ -762,3 +762,10 @@ void Curve::reset()
     m_playback_position = 0.0f;
     update_link_value();
 }
+
+#if EDITOR
+std::string Curve::get_name()
+{
+    return "Curve";
+}
+#endif

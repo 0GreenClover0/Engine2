@@ -108,3 +108,10 @@ std::shared_ptr<Mesh> Panel::create_sprite() const
 
     return ResourceManager::get_instance().load_mesh(0, background_path, vertices, indices, textures, DrawType::Triangles, material);
 }
+
+#if EDITOR
+std::string Panel::get_name()
+{
+    return "Panel";
+}
+#endif

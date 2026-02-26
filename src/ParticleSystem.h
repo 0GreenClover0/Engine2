@@ -34,6 +34,10 @@ CUSTOM_EDITOR_ONLY
 class ParticleSystem final : public Component
 {
 public:
+#if EDITOR
+    virtual std::string get_name() override;
+#endif
+
     static std::shared_ptr<ParticleSystem> create();
     explicit ParticleSystem(AK::Badge<ParticleSystem>);
 

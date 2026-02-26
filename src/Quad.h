@@ -9,6 +9,10 @@ class Mesh;
 class Quad final : public Drawable
 {
 public:
+#if EDITOR
+    virtual std::string get_name() override;
+#endif
+
     static std::shared_ptr<Quad> create();
 
     explicit Quad(AK::Badge<Quad>, std::string const& sprite_path, std::shared_ptr<Material> const& mat);

@@ -11,6 +11,10 @@
 class Camera final : public Component
 {
 public:
+#if EDITOR
+    virtual std::string get_name() override;
+#endif
+
     static void set_main_camera(std::shared_ptr<Camera> const& camera);
 
     static std::shared_ptr<Camera> get_main_camera();

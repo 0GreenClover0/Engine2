@@ -420,3 +420,10 @@ void Collider2D::compute_axes(glm::vec2 const& center, glm::quat const& rotation
     m_debug_drawing_entity->transform->set_position(AK::convert_2d_to_3d(center));
     m_debug_drawing->set_extents({width, 0.25f, height});
 }
+
+#if EDITOR
+std::string Collider2D::get_name()
+{
+    return "Collider2D";
+}
+#endif

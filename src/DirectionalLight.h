@@ -8,6 +8,10 @@
 class DirectionalLight final : public Light
 {
 public:
+#if EDITOR
+    virtual std::string get_name() override;
+#endif
+
     static std::shared_ptr<DirectionalLight> create();
 
     virtual void on_destroyed() override;

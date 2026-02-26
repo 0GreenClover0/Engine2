@@ -236,3 +236,10 @@ void Camera::custom_draw_editor()
     }
 }
 #endif
+
+#if EDITOR
+std::string Camera::get_name()
+{
+    return "Camera";
+}
+#endif

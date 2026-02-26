@@ -127,3 +127,10 @@ void SkyboxDX11::draw_editor()
 
 }
 #endif
+
+#if EDITOR
+std::string SkyboxDX11::get_name()
+{
+    return "SkyboxDX11";
+}
+#endif

@@ -6,6 +6,10 @@
 class Panel : public Drawable
 {
 public:
+#if EDITOR
+    virtual std::string get_name() override;
+#endif
+
     static std::shared_ptr<Panel> create();
     explicit Panel(AK::Badge<Panel>, std::shared_ptr<Material> const& material);
 

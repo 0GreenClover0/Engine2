@@ -11,6 +11,10 @@ CUSTOM_EDITOR_ONLY
 class Sound final : public Component
 {
 public:
+#if EDITOR
+    virtual std::string get_name() override;
+#endif
+
     static std::shared_ptr<Sound> create();
     static std::shared_ptr<Sound> create(std::string const& path);
     static std::shared_ptr<Sound> create(std::string const& path, glm::vec3 const direction, float const rolloff = 0.5f,

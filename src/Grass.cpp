@@ -92,3 +92,10 @@ void Grass::draw_editor()
 
 }
 #endif
+
+#if EDITOR
+std::string Grass::get_name()
+{
+    return "Grass";
+}
+#endif

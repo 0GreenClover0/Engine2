@@ -26,6 +26,10 @@ enum class ColliderType2D
 class Collider2D final : public Component
 {
 public:
+#if EDITOR
+    virtual std::string get_name() override;
+#endif
+
     static std::shared_ptr<Collider2D> create();
     static std::shared_ptr<Collider2D> create(float const radius, bool const is_static = false);
     static std::shared_ptr<Collider2D> create(glm::vec2 const bounds_dimensions, bool const is_static = false);

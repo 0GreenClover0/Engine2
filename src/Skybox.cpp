@@ -78,3 +78,10 @@ void Skybox::draw_editor()
 
 }
 #endif
+
+#if EDITOR
+std::string Skybox::get_name()
+{
+    return "Skybox";
+}
+#endif

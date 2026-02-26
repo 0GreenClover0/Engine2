@@ -100,3 +100,10 @@ void Drawable::draw_editor()
 
 }
 #endif
+
+#if EDITOR
+std::string Drawable::get_name()
+{
+    return "Drawable";
+}
+#endif

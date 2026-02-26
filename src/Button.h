@@ -8,6 +8,10 @@
 class Button : public Drawable
 {
 public:
+#if EDITOR
+    virtual std::string get_name() override;
+#endif
+
     // To attach a function somewhere in the code (eg. in GameController) to an event of the button
     // (you want to make something happen on button press, for example) just make a weak_ptr reference to a button
     // in this component and on object on_enabled() inside this component ATTACH to the on_clicked event of the referenced button.

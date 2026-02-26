@@ -167,3 +167,10 @@ void Sphere::draw_editor()
     float_draw_editor("Radius: ", radius);
 }
 #endif
+
+#if EDITOR
+std::string Sphere::get_name()
+{
+    return "Sphere";
+}
+#endif

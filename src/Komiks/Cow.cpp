@@ -243,3 +243,10 @@ void Cow::draw_editor()
 
 }
 #endif
+
+#if EDITOR
+std::string Cow::get_name()
+{
+    return "Cow";
+}
+#endif

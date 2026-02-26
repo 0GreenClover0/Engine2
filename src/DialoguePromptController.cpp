@@ -307,3 +307,10 @@ void DialoguePromptController::flip(bool value)
     position = panel_parent.lock()->transform->get_local_position();
     panel_parent.lock()->transform->set_local_position({-position.x, position.y, position.z});
 }
+
+#if EDITOR
+std::string DialoguePromptController::get_name()
+{
+    return "DialoguePromptController";
+}
+#endif

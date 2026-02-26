@@ -87,3 +87,10 @@ void SkyboxGL::draw_editor()
 
 }
 #endif
+
+#if EDITOR
+std::string SkyboxGL::get_name()
+{
+    return "SkyboxGL";
+}
+#endif

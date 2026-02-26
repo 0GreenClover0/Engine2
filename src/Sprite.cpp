@@ -93,3 +93,10 @@ void Sprite::draw_editor()
     string_draw_editor("Diffuse Texture Path: ", diffuse_texture_path);
 }
 #endif
+
+#if EDITOR
+std::string Sprite::get_name()
+{
+    return "Sprite";
+}
+#endif

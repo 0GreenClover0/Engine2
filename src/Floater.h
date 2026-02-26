@@ -7,6 +7,10 @@
 class Floater final : public Component
 {
 public:
+#if EDITOR
+    virtual std::string get_name() override;
+#endif
+
     static std::shared_ptr<Floater> create();
     static std::shared_ptr<Floater> create(std::weak_ptr<Water> const& water, float const sink, float const side_floaters_offset,
                                            float const side_rotation_strength, float const forward_rotation_strength,

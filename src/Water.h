@@ -9,6 +9,10 @@ CUSTOM_EDITOR_ONLY
 class Water final : public Model
 {
 public:
+#if EDITOR
+    virtual std::string get_name() override;
+#endif
+
     static std::shared_ptr<Water> create();
     static std::shared_ptr<Water> create(u32 tesselation_level, std::shared_ptr<Material> const& material);
 
