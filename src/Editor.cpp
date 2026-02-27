@@ -1244,7 +1244,6 @@ void Editor::draw_inspector(std::shared_ptr<EditorWindow> const& window)
     for (auto const& component : components_copy)
     {
         ImGui::Spacing();
-        std::string guid = "##" + component->guid;
 
         // NOTE: This only returns unmangled name while using the MSVC compiler
         std::string const typeid_name = typeid(*component).name();
@@ -1256,9 +1255,10 @@ void Editor::draw_inspector(std::shared_ptr<EditorWindow> const& window)
             full_name += " " + custom_name->second;
         }
 
-        bool const component_open = ImGui::TreeNode((full_name + guid).c_str());
+        std::string guid_id = "###" + component->guid;
+        bool const component_open = ImGui::TreeNode((full_name + guid_id + "Component").c_str());
 
-        std::string popup = "ComponentPopup##" + (name + guid);
+        std::string popup = "ComponentPopup" + (guid_id + "ComponentPopup");
         if (ImGui::IsItemClicked(ImGuiMouseButton_Right))
         {
             ImGui::OpenPopup(popup.c_str());
@@ -1266,7 +1266,7 @@ void Editor::draw_inspector(std::shared_ptr<EditorWindow> const& window)
 
         if (ImGui::BeginPopup(popup.c_str(), ImGuiPopupFlags_MouseButtonRight))
         {
-            if (ImGui::Button("RenameComponent"))
+            if (ImGui::Button("Rename"))
             {
                 ImGui::OpenPopup("RenameComponentPopup");
             }
