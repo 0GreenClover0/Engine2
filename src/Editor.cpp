@@ -1429,17 +1429,19 @@ void Editor::draw_inspector(std::shared_ptr<EditorWindow> const& window)
 
         ImGui::Spacing();
         std::string guid = "##" + component->guid;
-        
+
         std::string name = component->get_name();
         std::string full_name = name;
 
-        if (auto custom_name = m_component_custom_names.find(component->guid); custom_name != m_component_custom_names.end())
+        auto custom_name = m_component_custom_names.find(component->guid);
+
+        if (custom_name != m_component_custom_names.end())
         {
             full_name += " " + custom_name->second;
         }
 
         std::string guid_id = "###" + component->guid;
-        bool const component_open = ImGui::TreeNode((full_name + guid_id + "Component").c_str());
+        bool const component_open = ImGui::TreeNodeEx((name + guid_id + "Component").c_str(), ImGuiTreeNodeFlags_SpanAvailWidth);
 
         std::string popup = "ComponentPopup" + (guid_id + "ComponentPopup");
         if (ImGui::IsItemClicked(ImGuiMouseButton_Right))
@@ -1451,25 +1453,8 @@ void Editor::draw_inspector(std::shared_ptr<EditorWindow> const& window)
         {
             if (ImGui::Button("Rename"))
             {
-                ImGui::OpenPopup("RenameComponentPopup");
-            }
-
-            bool should_close_outer_popup = false;
-
-            if (ImGui::BeginPopup("RenameComponentPopup"))
-            {
-                if (ImGui::InputText("##empty", get_component_custom_name_by_ptr(component->guid), ImGuiInputTextFlags_EnterReturnsTrue))
-                {
-                    should_close_outer_popup = true;
-                    ImGui::CloseCurrentPopup();
-                }
-
-                ImGui::EndPopup();
-            }
-
-            if (should_close_outer_popup)
-            {
                 ImGui::CloseCurrentPopup();
+                m_guid_of_component_that_is_being_renamed = component->guid;
             }
 
             ImGui::EndPopup();
@@ -1483,6 +1468,29 @@ void Editor::draw_inspector(std::shared_ptr<EditorWindow> const& window)
             ImGui::Text((entity->name + " : " + name).c_str());
             ImGui::SetDragDropPayload("guid", component->guid.data(), sizeof(i64) * 8);
             ImGui::EndDragDropSource();
+        }
+
+        ImGui::SameLine();
+        if (m_guid_of_component_that_is_being_renamed == component->guid)
+        {
+            ImGui::SetKeyboardFocusHere();
+            if (rename_component_draw_editor("##ComponentName" + guid_id, *get_component_custom_name_by_ptr(component->guid)))
+            {
+                m_guid_of_component_that_is_being_renamed = "";
+            }
+
+            if (m_is_renaming_close_by_esc)
+            {
+                m_guid_of_component_that_is_being_renamed = "";
+                m_is_renaming_close_by_esc = false;
+            }
+        }
+        else
+        {
+            if (custom_name != m_component_custom_names.end())
+            {
+                ImGui::Text((custom_name->second).c_str());
+            }
         }
 
         ImGui::Spacing();

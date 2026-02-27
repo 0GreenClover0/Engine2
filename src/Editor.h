@@ -403,6 +403,7 @@ private:
     std::weak_ptr<Component> m_selected_component;
     std::shared_ptr<Scene> m_open_scene;
     bool m_is_selected_entity_being_renamed = false;
+    std::string m_guid_of_component_that_is_being_renamed = "";
     bool m_is_renaming_close_by_esc = false;
 
     std::vector<std::shared_ptr<EditorWindow>> m_editor_windows = {};

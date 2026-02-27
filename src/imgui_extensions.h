@@ -195,6 +195,13 @@ inline bool rename_entity_draw_editor(std::string const& label, std::string& val
     return is_changed;
 }
 
+inline bool rename_component_draw_editor(std::string const& label, std::string& value)
+{
+    bool is_changed = ImGui::InputText(label.c_str(), &value, ImGuiInputTextFlags_EnterReturnsTrue);
+    register_data_for_undo(&value, "Custom name");
+    return is_changed;
+}
+
 inline bool bool_draw_editor(std::string const& label, bool& value)
 {
     bool is_changed = ImGui::Checkbox(label.c_str(), &value);
