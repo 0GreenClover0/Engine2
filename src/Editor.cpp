@@ -965,9 +965,15 @@ void Editor::draw_entity_recursively(std::shared_ptr<Transform> const& transform
         if (m_is_selected_entity_being_renamed && entity == m_selected_entity.lock())
         {
             ImGui::SetKeyboardFocusHere();
-            if (ImGui::InputText("##empty", &entity->name, ImGuiInputTextFlags_EnterReturnsTrue))
+            if (ImGui::InputText("##EntityName", &entity->name, ImGuiInputTextFlags_EnterReturnsTrue))
             {
                 m_is_selected_entity_being_renamed = false;
+            }
+
+            if (m_is_renaming_close_by_esc)
+            {
+                m_is_selected_entity_being_renamed = false;
+                m_is_renaming_close_by_esc = false;
             }
         }
         else
@@ -996,9 +1002,15 @@ void Editor::draw_entity_recursively(std::shared_ptr<Transform> const& transform
     if (m_is_selected_entity_being_renamed && entity == m_selected_entity.lock())
     {
         ImGui::SetKeyboardFocusHere();
-        if (ImGui::InputText("##empty", &entity->name, ImGuiInputTextFlags_EnterReturnsTrue))
+        if (ImGui::InputText("##EntityName", &entity->name, ImGuiInputTextFlags_EnterReturnsTrue))
         {
             m_is_selected_entity_being_renamed = false;
+        }
+
+        if (m_is_renaming_close_by_esc)
+        {
+            m_is_selected_entity_being_renamed = false;
+            m_is_renaming_close_by_esc = false;
         }
     }
     else
@@ -2109,6 +2121,14 @@ void Editor::handle_input()
         if (!ImGui::IsAnyItemActive() && !m_selected_entity.expired())
         {
             m_is_selected_entity_being_renamed = true;
+        }
+    }
+
+    if (input->get_key_down(GLFW_KEY_ESCAPE))
+    {
+        if (m_is_selected_entity_being_renamed)
+        {
+            m_is_renaming_close_by_esc = true;
         }
     }
 
