@@ -965,7 +965,7 @@ void Editor::draw_entity_recursively(std::shared_ptr<Transform> const& transform
         if (m_is_selected_entity_being_renamed && entity == m_selected_entity.lock())
         {
             ImGui::SetKeyboardFocusHere();
-            if (ImGui::InputText("##EntityName", &entity->name, ImGuiInputTextFlags_EnterReturnsTrue))
+            if (rename_entity_draw_editor("##EntityName", entity->name))
             {
                 m_is_selected_entity_being_renamed = false;
             }
@@ -1002,7 +1002,7 @@ void Editor::draw_entity_recursively(std::shared_ptr<Transform> const& transform
     if (m_is_selected_entity_being_renamed && entity == m_selected_entity.lock())
     {
         ImGui::SetKeyboardFocusHere();
-        if (ImGui::InputText("##EntityName", &entity->name, ImGuiInputTextFlags_EnterReturnsTrue))
+        if (rename_entity_draw_editor("##EntityName", entity->name))
         {
             m_is_selected_entity_being_renamed = false;
         }
@@ -2307,13 +2307,18 @@ bool Editor::does_edited_value_changed()
     return !m_currently_edited_value->is_values_equal();
 }
 
-void Editor::add_action_to_history()
+void Editor::add_action_to_history(std::string componentName)
 {
-    std::string name = m_selected_component.lock()->get_name();
-
-    if (auto custom_name = m_component_custom_names.find(m_selected_component.lock()->guid); custom_name != m_component_custom_names.end())
+    std::string name = componentName;
+    if (componentName == "")
     {
-        name += " " + custom_name->second;
+        name = m_selected_component.lock()->get_name();
+
+        if (auto custom_name = m_component_custom_names.find(m_selected_component.lock()->guid);
+            custom_name != m_component_custom_names.end())
+        {
+            name += " " + custom_name->second;
+        }
     }
 
     m_currently_edited_value->entity = m_selected_entity;

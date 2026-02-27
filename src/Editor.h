@@ -315,7 +315,7 @@ public:
         auto edited_value = std::dynamic_pointer_cast<EditorEvent<T>>(m_currently_edited_value);
         edited_value->value_pointer = value_pointer;
     }
-    void add_action_to_history();
+    void add_action_to_history(std::string componentName = "");
     bool is_currently_edited_value_saved();
     void set_currently_edited_value_saved(bool is_saved);
     void set_currently_edited_value_label(std::string label);

@@ -89,7 +89,7 @@ inline bool InputFloat4(char const* label, float v[4])
 }
 
 template<typename T>
-inline void register_data_for_undo(T* v, std::string label)
+inline void register_data_for_undo(T* v, std::string label, std::string componentName = "")
 {
     if (ImGui::IsItemActive() and Editor::Editor::get_instance()->is_currently_edited_value_saved())
     {
@@ -104,7 +104,7 @@ inline void register_data_for_undo(T* v, std::string label)
         {
             Editor::Editor::get_instance()->set_value_pointer_of_currently_edited_value(v);
             Editor::Editor::get_instance()->set_currently_edited_value_label(label);
-            Editor::Editor::get_instance()->add_action_to_history();
+            Editor::Editor::get_instance()->add_action_to_history(componentName);
         }
         
         Editor::Editor::get_instance()->set_currently_edited_value_saved(true);
@@ -185,6 +185,13 @@ inline bool string_draw_editor(std::string const& label, std::string& value)
 {
     bool is_changed = ImGui::InputText(label.c_str(), &value);
     register_data_for_undo(&value, label);
+    return is_changed;
+}
+
+inline bool rename_entity_draw_editor(std::string const& label, std::string& value)
+{
+    bool is_changed = ImGui::InputText(label.c_str(), &value, ImGuiInputTextFlags_EnterReturnsTrue);
+    register_data_for_undo(&value, "Name", "entity");
     return is_changed;
 }
 
