@@ -421,6 +421,7 @@ private:
     glm::bvec3 m_disabled_scale = {};
 
     GuizmoOperationType m_operation_type = GuizmoOperationType::Translate;
+    bool m_is_guizmo_in_use = false;
 
     glm::vec3 const m_scale_snap = {0.1f, 0.1f, 0.1f};
     glm::vec3 const m_rotation_snap = {1.0f, 1.0f, 1.0f};

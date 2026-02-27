@@ -735,6 +735,60 @@ void Editor::draw_game(std::shared_ptr<EditorWindow> const& window)
         m_is_scene_dirty = true;
     }
 
+    if (ImGuizmo::IsUsingAny() != m_is_guizmo_in_use)
+    {
+        if (!m_is_guizmo_in_use)
+        {
+            switch (m_operation_type)
+            {
+            case GuizmoOperationType::Translate:
+                begin_edit_value(&entity->transform->get_local_position_ref());
+                set_currently_edited_value_label("Position");
+                set_value_pointer_of_currently_edited_value(&entity->transform->get_local_position_ref());
+                set_value_before_of_currently_edited_value(entity->transform->get_local_position());
+                break;
+            case GuizmoOperationType::Scale:
+                begin_edit_value(&entity->transform->get_local_scale_ref());
+                set_currently_edited_value_label("Scale");
+                set_value_pointer_of_currently_edited_value(&entity->transform->get_local_scale_ref());
+                set_value_before_of_currently_edited_value(entity->transform->get_local_scale());
+                break;
+            case GuizmoOperationType::Rotate:
+                begin_edit_value(&entity->transform->get_euler_angles_ref());
+                set_currently_edited_value_label("Rotation");
+                set_value_pointer_of_currently_edited_value(&entity->transform->get_euler_angles_ref());
+                set_value_before_of_currently_edited_value(entity->transform->get_euler_angles());
+                break;
+            case GuizmoOperationType::None:
+            default:
+                break;
+            }
+        }
+        else
+        {
+            switch (m_operation_type)
+            {
+            case GuizmoOperationType::Translate:
+                set_value_after_of_currently_edited_value(entity->transform->get_local_position());
+                break;
+            case GuizmoOperationType::Scale:
+                set_value_after_of_currently_edited_value(entity->transform->get_local_scale());
+                break;
+            case GuizmoOperationType::Rotate:
+                set_value_after_of_currently_edited_value(entity->transform->get_euler_angles());
+                break;
+            case GuizmoOperationType::None:
+            default:
+                break;
+            }
+
+            add_action_to_history();
+            set_currently_edited_value_saved(true);
+        }
+
+        m_is_guizmo_in_use = ImGuizmo::IsUsingAny();
+    }
+
     ImGui::End();
 }
 
