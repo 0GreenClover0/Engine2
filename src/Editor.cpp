@@ -1248,35 +1248,45 @@ void Editor::draw_inspector(std::shared_ptr<EditorWindow> const& window)
 
         // NOTE: This only returns unmangled name while using the MSVC compiler
         std::string const typeid_name = typeid(*component).name();
-        std::string name = typeid_name.substr(6);
+        std::string const name = typeid_name.substr(6);
+        std::string full_name = name;
 
         if (auto custom_name = m_component_custom_names.find(component->guid); custom_name != m_component_custom_names.end())
         {
-            name += " " + custom_name->second;
+            full_name += " " + custom_name->second;
         }
 
-        bool const component_open = ImGui::TreeNode((name + guid).c_str());
+        bool const component_open = ImGui::TreeNode((full_name + guid).c_str());
 
+        std::string popup = "ComponentPopup##" + (name + guid);
         if (ImGui::IsItemClicked(ImGuiMouseButton_Right))
         {
-            ImGui::OpenPopup("ComponentPopup");
+            ImGui::OpenPopup(popup.c_str());
         }
 
-        if (ImGui::BeginPopup("ComponentPopup", ImGuiPopupFlags_MouseButtonRight))
+        if (ImGui::BeginPopup(popup.c_str(), ImGuiPopupFlags_MouseButtonRight))
         {
-            if (ImGui::Button("Rename"))
+            if (ImGui::Button("RenameComponent"))
             {
                 ImGui::OpenPopup("RenameComponentPopup");
             }
+
+            bool should_close_outer_popup = false;
 
             if (ImGui::BeginPopup("RenameComponentPopup"))
             {
                 if (ImGui::InputText("##empty", get_component_custom_name_by_ptr(component->guid), ImGuiInputTextFlags_EnterReturnsTrue))
                 {
+                    should_close_outer_popup = true;
                     ImGui::CloseCurrentPopup();
                 }
 
                 ImGui::EndPopup();
+            }
+
+            if (should_close_outer_popup)
+            {
+                ImGui::CloseCurrentPopup();
             }
 
             ImGui::EndPopup();
