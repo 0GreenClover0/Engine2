@@ -944,13 +944,14 @@ void Editor::draw_entity_recursively(std::shared_ptr<Transform> const& transform
     ImGuiTreeNodeFlags const node_flags =
         (!m_selected_entity.expired() && m_selected_entity.lock()->hashed_guid == entity->hashed_guid ? ImGuiTreeNodeFlags_Selected : 0)
         | (transform->children.empty() ? ImGuiTreeNodeFlags_Leaf : 0) | ImGuiTreeNodeFlags_OpenOnDoubleClick
-        | ImGuiTreeNodeFlags_OpenOnArrow;
+        | ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_SpanAvailWidth;
 
-    if (!ImGui::TreeNodeEx(reinterpret_cast<void*>(static_cast<intptr_t>(entity->hashed_guid)), node_flags, "%s", entity->name.c_str()))
+    if (!ImGui::TreeNodeEx(reinterpret_cast<void*>(static_cast<intptr_t>(entity->hashed_guid)), node_flags, "%s", ""))
     {
         if (ImGui::IsItemClicked() || ImGui::IsItemClicked(ImGuiMouseButton_Right))
         {
             m_selected_entity = entity;
+            m_is_selected_entity_being_renamed = false;
         }
 
         if (!draw_entity_popup(entity))
@@ -960,6 +961,20 @@ void Editor::draw_entity_recursively(std::shared_ptr<Transform> const& transform
 
         entity_drag(entity);
 
+        ImGui::SameLine();
+        if (m_is_selected_entity_being_renamed && entity == m_selected_entity.lock())
+        {
+            ImGui::SetKeyboardFocusHere();
+            if (ImGui::InputText("##empty", &entity->name, ImGuiInputTextFlags_EnterReturnsTrue))
+            {
+                m_is_selected_entity_being_renamed = false;
+            }
+        }
+        else
+        {
+            ImGui::Text(entity->name.c_str());
+        }
+
         return;
     }
 
@@ -968,12 +983,27 @@ void Editor::draw_entity_recursively(std::shared_ptr<Transform> const& transform
     if (ImGui::IsItemClicked() || ImGui::IsItemClicked(ImGuiMouseButton_Right))
     {
         m_selected_entity = entity;
+        m_is_selected_entity_being_renamed = false;
     }
 
     if (!draw_entity_popup(entity))
     {
         ImGui::TreePop();
         return;
+    }
+
+    ImGui::SameLine();
+    if (m_is_selected_entity_being_renamed && entity == m_selected_entity.lock())
+    {
+        ImGui::SetKeyboardFocusHere();
+        if (ImGui::InputText("##empty", &entity->name, ImGuiInputTextFlags_EnterReturnsTrue))
+        {
+            m_is_selected_entity_being_renamed = false;
+        }
+    }
+    else
+    {
+        ImGui::Text(entity->name.c_str());
     }
 
     for (auto const& child : transform->children)
@@ -1044,17 +1074,10 @@ bool Editor::draw_entity_popup(std::shared_ptr<Entity> const& entity)
 
         if (ImGui::Button("Rename"))
         {
-            ImGui::OpenPopup("RenamePopup");
-        }
-
-        if (ImGui::BeginPopup("RenamePopup"))
-        {
-            if (ImGui::InputText("##empty", &entity->name, ImGuiInputTextFlags_EnterReturnsTrue))
-            {
-                ImGui::CloseCurrentPopup();
-            }
-
+            m_is_selected_entity_being_renamed = true;
+            ImGui::CloseCurrentPopup();
             ImGui::EndPopup();
+            return true;
         }
 
         if (ImGui::Button("Delete"))
@@ -2085,18 +2108,8 @@ void Editor::handle_input()
     {
         if (!ImGui::IsAnyItemActive() && !m_selected_entity.expired())
         {
-            ImGui::OpenPopup("RenamePopup");
+            m_is_selected_entity_being_renamed = true;
         }
-    }
-
-    if (ImGui::BeginPopup("RenamePopup"))
-    {
-        if (ImGui::InputText("##empty", &m_selected_entity.lock()->name, ImGuiInputTextFlags_EnterReturnsTrue))
-        {
-            ImGui::CloseCurrentPopup();
-        }
-
-        ImGui::EndPopup();
     }
 
     if (ImGui::GetIO().KeyCtrl && input->get_key_down(GLFW_KEY_D))

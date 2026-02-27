@@ -402,6 +402,7 @@ private:
     std::weak_ptr<Entity> m_selected_entity;
     std::weak_ptr<Component> m_selected_component;
     std::shared_ptr<Scene> m_open_scene;
+    bool m_is_selected_entity_being_renamed = false;
 
     std::vector<std::shared_ptr<EditorWindow>> m_editor_windows = {};
     i32 m_last_window_id = 0;
