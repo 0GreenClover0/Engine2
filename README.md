@@ -17,6 +17,25 @@ However, not everyone is happy with it. Some **suspicious cows** or **a farm own
   <img src="readme_files/foilage.gif" width = "500"/>
 </p>
 
+## How do I build and run this?
+Run the following command to generate the build system:
+```
+cmake -B build
+```
+or use the `build.bat` which does the same.
+
+Install the required Python packages specified in the `requirements.txt` file in the EngineHeaderTool directory.
+You can install them with `pip` using this command:
+
+`py -m pip install -r .\requirements.txt`
+
+You will also need to have Developer mode in Windows activated, since the build system needs to have permissions to create symlinks.
+
+To compile and run, C++ compiler with C++23 support is required. MSVC 14.50 has been tested.
+
+`.slnx` file is located in the generated `/build` directory.
+You can open it in Visual Studio, choose the desired build configuration (`Debug` is the default), and simply run it.
+
 ## Game Creators
 | Name | Link | Role |
 |------|--------|--------|
