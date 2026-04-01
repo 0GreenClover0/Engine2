@@ -2006,7 +2006,7 @@ void Editor::run()
 
 void Editor::set_docking_space() const
 {
-    ImGui::DockSpaceOverViewport(ImGui::GetMainViewport(), ImGuiDockNodeFlags_PassthruCentralNode);
+    ImGui::DockSpaceOverViewport(ImGui::GetMainViewport()->ID, ImGui::GetMainViewport(), ImGuiDockNodeFlags_PassthruCentralNode);
 }
 
 void Editor::switch_rendering_to_editor()

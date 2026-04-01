@@ -104,7 +104,8 @@ void Curve::custom_draw_editor()
     if (ImPlot::BeginPlot("Path visualised", nullptr, nullptr, ImVec2(-1, 0), ImPlotFlags_CanvasOnly))
     {
         ImPlot::SetupAxisLimits(ImAxis_X1, 0.0f, 1.0f, ImGuiCond_Always);
-        ImPlot::PushStyleVar(ImPlotStyleVar_LineWeight, 2.0f);
+        ImPlotSpec spec;
+        spec.LineWeight = 2.0f;
         ImPlot::SetupLegend(ImPlotFlags_NoLegend);
 
         if (ImGui::IsMouseClicked(2))
@@ -128,11 +129,11 @@ void Curve::custom_draw_editor()
                 yss.push_back(p.y);
             }
 
-            ImPlot::PlotLine("##Smooth Line", xss.data(), yss.data(), m_smooth_points.size());
+            ImPlot::PlotLine("##Smooth Line", xss.data(), yss.data(), m_smooth_points.size(), spec);
         }
         else
         {
-            ImPlot::PlotLine("##Line", xs.data(), ys.data(), points.size());
+            ImPlot::PlotLine("##Line", xs.data(), ys.data(), points.size(), spec);
         }
 
         bool is_any_grabbed = false;
@@ -207,7 +208,7 @@ void Curve::custom_draw_editor()
         std::vector<float> ppxs, ppys;
         ppxs.push_back(m_playback_position);
         ppys.push_back(get_y_at(m_playback_position));
-        ImPlot::PlotScatter("##Playback Point", ppxs.data(), ppys.data(), 1);
+        ImPlot::PlotScatter("##Playback Point", ppxs.data(), ppys.data(), 1, spec);
 
         if (easing_type == EaseTypes::EaseInOut)
         {

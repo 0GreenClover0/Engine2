@@ -118,7 +118,7 @@ SET (ASSIMP_BUILD_ZLIB ON)
 CPMAddPackage("gh:assimp/assimp@6.0.4")
 CPMAddPackage("gh:glfw/glfw#3.4")
 CPMAddPackage("gh:g-truc/glm#1.0.3")
-CPMAddPackage("gh:ocornut/imgui#v1.90.4-docking")
+CPMAddPackage("gh:ocornut/imgui#v1.92.6-docking")
 CPMAddPackage("gh:jbeder/yaml-cpp#yaml-cpp-0.9.0")
 
 set(imgui_SOURCE_DIR ${imgui_SOURCE_DIR} CACHE INTERNAL "")
