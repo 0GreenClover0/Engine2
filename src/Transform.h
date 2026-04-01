@@ -73,7 +73,7 @@ protected:
     glm::vec3 m_up = {};
 
     glm::vec3 m_skew = {};
-    glm::vec4 m_perpective = {};
+    glm::vec4 m_perspective = {};
 
     glm::mat4 m_model_matrix = glm::mat4(1.0f);
     glm::mat4 m_local_model_matrix = glm::mat4(1.0f);
