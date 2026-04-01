@@ -112,8 +112,10 @@ SET (ASSIMP_BUILD_PBRT_EXPORTER OFF)
 SET (ASSIMP_BUILD_ASSJSON_EXPORTER OFF)
 SET (ASSIMP_BUILD_STEP_EXPORTER OFF)
 
+SET (ASSIMP_BUILD_ZLIB ON)
+
 # other
-CPMAddPackage("gh:assimp/assimp@5.2.5")
+CPMAddPackage("gh:assimp/assimp@6.0.4")
 CPMAddPackage("gh:glfw/glfw#3.4")
 CPMAddPackage("gh:g-truc/glm#1.0.1")
 CPMAddPackage("gh:ocornut/imgui#v1.90.4-docking")
