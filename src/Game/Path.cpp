@@ -41,7 +41,8 @@ void Path::custom_draw_editor()
 
     if (ImPlot::BeginPlot("Path visualised"))
     {
-        ImPlot::PushStyleVar(ImPlotStyleVar_LineWeight, 2.0f);
+        ImPlotSpec spec;
+        spec.LineWeight = 2.0f;
         ImPlot::SetupLegend(ImPlotFlags_NoLegend);
 
         if (LevelController::get_instance() != nullptr)
@@ -60,7 +61,7 @@ void Path::custom_draw_editor()
             m_reverse_y ? ys.push_back(-p.y) : ys.push_back(p.y);
         }
 
-        ImPlot::PlotLine("##Line", xs.data(), ys.data(), points.size());
+        ImPlot::PlotLine("##Line", xs.data(), ys.data(), points.size(), spec);
 
         for (u32 i = 0; i < points.size(); i++)
         {
