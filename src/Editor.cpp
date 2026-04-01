@@ -697,7 +697,14 @@ void Editor::draw_game(std::shared_ptr<EditorWindow> const& window)
 
     ImGuizmo::SetDrawlist();
 
-    ImGuizmo::SetRect(m_game_position.x, m_game_position.y, m_game_size.x, m_game_size.y);
+    ImVec2 window_pos = ImGui::GetWindowPos();
+
+    ImGuizmo::SetRect(
+        window_pos.x + m_game_position.x,
+        window_pos.y + m_game_position.y,
+        m_game_size.x,
+        m_game_size.y
+    );
 
     bool was_transform_changed = false;
     glm::mat4 global_model = entity->transform->get_model_matrix();
