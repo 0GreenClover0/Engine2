@@ -40,7 +40,6 @@ void FieldGrid::draw_editor()
 #if EDITOR
 void FieldGrid::custom_draw_editor()
 {
-    Component::draw_editor();
     ImGui::SliderInt("Rows", &rows_number, 1, 99);
     ImGui::DragFloat("Punishment multiplier", &punishment_multiplier, 0.001f, 0.0f, 0.1f);
     ImGui::DragFloat("Punishment power", &punishment_power, 0.01f, 0.0f, 3.0f);
