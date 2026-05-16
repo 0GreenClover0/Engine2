@@ -143,6 +143,6 @@ void initialize()
 
 void initialize_default_material()
 {
-    default_shader = ResourceManager::get_instance().load_shader("./res/shaders/lit.hlsl", "./res/shaders/lit.hlsl");
+    default_shader = ResourceManager::get_instance().load_shader(default_shader_path, default_shader_path);
     default_material = Material::create(default_shader);
 }

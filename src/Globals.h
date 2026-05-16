@@ -15,6 +15,7 @@ inline i32 constexpr PBR_texture_count = 5;
 
 inline i32 SKYBOX_RENDER_ORDER = 100;
 
+inline std::string default_shader_path = "./res/shaders/lit.hlsl";
 inline std::shared_ptr<Shader> default_shader;
 inline std::shared_ptr<Material> default_material;
 

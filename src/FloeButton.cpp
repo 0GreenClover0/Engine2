@@ -7,6 +7,7 @@
 #include "Game/GameController.h"
 #include "Game/LevelController.h"
 #include "Game/LighthouseLight.h"
+#include "Globals.h"
 #include "ResourceManager.h"
 #include "SceneSerializer.h"
 
@@ -125,7 +126,7 @@ void FloeButton::custom_draw_editor()
 
     if (ImGui::Button("Add cube"))
     {
-        auto const standard_shader = ResourceManager::get_instance().load_shader("./res/shaders/lit.hlsl", "./res/shaders/lit.hlsl");
+        auto const standard_shader = ResourceManager::get_instance().load_shader(default_shader_path, default_shader_path);
         auto const standard_material = Material::create(standard_shader);
 
         CommonEntities::create_cube("kuba", "./res/textures/color.jpg", standard_material);

@@ -7,6 +7,7 @@
 #include "Game/LighthouseKeeper.h"
 #include "Game/LighthouseLight.h"
 #include "GameController.h"
+#include "Globals.h"
 #include "HovercraftWithoutKeeper.h"
 #include "LevelController.h"
 #include "Model.h"
@@ -179,7 +180,7 @@ void Lighthouse::despawn_hovercraft()
 
 void Lighthouse::spawn_fake_packages(u32 const packages_count, std::shared_ptr<Transform> const& parent) const
 {
-    auto const standard_shader = ResourceManager::get_instance().load_shader("./res/shaders/lit.hlsl", "./res/shaders/lit.hlsl");
+    auto const standard_shader = ResourceManager::get_instance().load_shader(default_shader_path, default_shader_path);
     auto const standard_material = Material::create(standard_shader);
 
     std::shared_ptr<Transform> last_package = {};

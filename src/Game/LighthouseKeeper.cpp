@@ -456,7 +456,7 @@ void LighthouseKeeper::add_package()
 {
     auto const& package = Entity::create("Package");
 
-    auto const standard_shader = ResourceManager::get_instance().load_shader("./res/shaders/lit.hlsl", "./res/shaders/lit.hlsl");
+    auto const standard_shader = ResourceManager::get_instance().load_shader(default_shader_path, default_shader_path);
     auto const standard_material = Material::create(standard_shader);
 
     package->add_component(Model::create("./res/models/package/package.gltf", standard_material));

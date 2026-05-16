@@ -2,6 +2,7 @@
 
 #include "Entity.h"
 #include "Game/LevelController.h"
+#include "Globals.h"
 #include "Model.h"
 #include "Player.h"
 #include "ResourceManager.h"
@@ -95,7 +96,7 @@ void Factory::set_type(FactoryType const type)
         model.lock()->destroy_immediate();
     }
 
-    auto const standard_shader = ResourceManager::get_instance().load_shader("./res/shaders/lit.hlsl", "./res/shaders/lit.hlsl");
+    auto const standard_shader = ResourceManager::get_instance().load_shader(default_shader_path, default_shader_path);
     auto const standard_material = Material::create(standard_shader);
 
     if (type == FactoryType::Generator)

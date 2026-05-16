@@ -170,7 +170,7 @@ void IceBound::custom_draw_editor()
     {
         if (ImGui::Button("Add components"))
         {
-            auto const standard_shader = ResourceManager::get_instance().load_shader("./res/shaders/lit.hlsl", "./res/shaders/lit.hlsl");
+            auto const standard_shader = ResourceManager::get_instance().load_shader(default_shader_path, default_shader_path);
             auto const standard_material = Material::create(standard_shader);
 
             entity->add_component(Collider2D::create(glm::vec2(0.4f, 0.4f), false));
