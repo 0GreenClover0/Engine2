@@ -106,6 +106,11 @@ struct ConstantBufferPerObject
     i32 is_glowing;
 };
 
+struct ConstantBufferMesh
+{
+    glm::vec4 color;
+};
+
 struct ConstantBufferParticle
 {
     glm::vec4 color;

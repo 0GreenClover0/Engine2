@@ -119,6 +119,8 @@ void MeshDX11::bind_textures() const
 {
     auto const device_context = RendererDX11::get_instance_dx11()->get_device_context();
 
+    RendererDX11::get_instance_dx11()->bind_mesh_constant_buffer({m_color});
+
     // TODO: Don't assume 1st texture is always albedo, 2nd is normal, etc.
     for (i32 i = 0; i < m_textures.size(); ++i)
     {

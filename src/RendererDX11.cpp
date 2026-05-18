@@ -61,6 +61,18 @@ std::shared_ptr<RendererDX11> RendererDX11::create()
 
     assert(SUCCEEDED(hr));
 
+    D3D11_BUFFER_DESC mesh_desc = {};
+    mesh_desc.Usage = D3D11_USAGE_DYNAMIC;
+    mesh_desc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
+    mesh_desc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
+    mesh_desc.MiscFlags = 0;
+    mesh_desc.ByteWidth = static_cast<UINT>(sizeof(ConstantBufferMesh) + (16 - (sizeof(ConstantBufferMesh) % 16)));
+    mesh_desc.StructureByteStride = 0;
+
+    hr = renderer->get_device()->CreateBuffer(&mesh_desc, nullptr, &renderer->m_constant_buffer_mesh);
+
+    assert(SUCCEEDED(hr));
+
     D3D11_BUFFER_DESC particle_desc = {};
     particle_desc.Usage = D3D11_USAGE_DYNAMIC;
     particle_desc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
@@ -370,6 +382,20 @@ void RendererDX11::set_rasterizer_draw_type(RasterizerDrawType const rasterizer_
 void RendererDX11::restore_default_rasterizer_draw_type()
 {
     g_pd3dDeviceContext->RSSetState(g_rasterizer_state);
+}
+
+void RendererDX11::bind_mesh_constant_buffer(ConstantBufferMesh const mesh_constant_buffer) const
+{
+    auto const device_context = get_device_context();
+
+    D3D11_MAPPED_SUBRESOURCE mesh_mapped_resource = {};
+    HRESULT const hr = device_context->Map(m_constant_buffer_mesh, 0, D3D11_MAP_WRITE_DISCARD, 0, &mesh_mapped_resource);
+    assert(SUCCEEDED(hr));
+
+    CopyMemory(mesh_mapped_resource.pData, &mesh_constant_buffer, sizeof(ConstantBufferMesh));
+
+    device_context->Unmap(m_constant_buffer_mesh, 0);
+    device_context->PSSetConstantBuffers(5, 1, &m_constant_buffer_mesh);
 }
 
 ID3D11DepthStencilState* RendererDX11::get_depth_stencil_state() const
