@@ -57,6 +57,11 @@ BoundingBox Mesh::get_adjusted_bounding_box(glm::mat4 const& model_matrix) const
     return calculate_adjusted_bounding_box(model_matrix);
 }
 
+void Mesh::set_color(glm::vec4 const& color)
+{
+    m_color = color;
+}
+
 BoundingBox Mesh::calculate_adjusted_bounding_box(glm::mat4 const& model_matrix) const
 {
     // OPTIMIZATION: For uniformly scaled objects we can perform only 2 multiplications instead of a full matrix one

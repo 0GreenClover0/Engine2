@@ -14,6 +14,7 @@
 #include <iostream>
 
 #include <assimp/Importer.hpp>
+#include <assimp/pbrmaterial.h>
 #include <assimp/postprocess.h>
 #include <assimp/scene.h>
 
@@ -189,6 +190,8 @@ void Model::load_model(std::string const& path)
     std::filesystem::path const filesystem_path = path;
     m_directory = filesystem_path.parent_path().string();
 
+    std::unordered_map<i32, std::shared_ptr<Material>> loaded_materials = {};
+
     proccess_node(scene->mRootNode, scene);
 }
 
@@ -254,7 +257,14 @@ std::shared_ptr<Mesh> Model::proccess_mesh(aiMesh const* mesh, aiScene const* sc
         load_material_textures(assimp_material, aiTextureType_SPECULAR, TextureType::Specular);
     textures.insert(textures.end(), specular_maps.begin(), specular_maps.end());
 
-    return ResourceManager::get_instance().load_mesh(m_meshes.size(), model_path, vertices, indices, textures, m_draw_type, material);
+    std::shared_ptr<Mesh> loaded_mesh =
+        ResourceManager::get_instance().load_mesh(m_meshes.size(), model_path, vertices, indices, textures, m_draw_type, material);
+
+    aiColor4D diffuse_color = {1.0f, 1.0f, 1.0f, 1.0f};
+    aiGetMaterialColor(assimp_material, AI_MATKEY_GLTF_PBRMETALLICROUGHNESS_BASE_COLOR_FACTOR, &diffuse_color);
+    loaded_mesh->set_color({diffuse_color.r, diffuse_color.g, diffuse_color.b, diffuse_color.a});
+
+    return loaded_mesh;
 }
 
 std::vector<std::shared_ptr<Texture>> Model::load_material_textures(aiMaterial const* material, aiTextureType const type,

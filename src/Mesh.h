@@ -25,6 +25,8 @@ public:
     void adjust_bounding_box(glm::mat4 const& model_matrix);
     [[nodiscard]] BoundingBox get_adjusted_bounding_box(glm::mat4 const& model_matrix) const;
 
+    void set_color(glm::vec4 const& color);
+
     BoundingBox bounds = {};
 
     std::shared_ptr<Material> material;
@@ -35,10 +37,12 @@ protected:
 
     [[nodiscard]] BoundingBox calculate_adjusted_bounding_box(glm::mat4 const& model_matrix) const;
 
-    std::vector<Vertex> m_vertices;
-    std::vector<u32> m_indices;
-    std::vector<std::shared_ptr<Texture>> m_textures;
+    // FIXME: Maybe each Mesh should have its own Material instead?
+    std::vector<Vertex> m_vertices = {};
+    std::vector<u32> m_indices = {};
+    std::vector<std::shared_ptr<Texture>> m_textures = {};
+    glm::vec4 m_color = {1.0f, 1.0f, 1.0f, 1.0f};
 
-    DrawType m_draw_type;
-    DrawFunctionType m_draw_function;
+    DrawType m_draw_type = {};
+    DrawFunctionType m_draw_function = {};
 };
