@@ -65,8 +65,6 @@ MeshDX11::MeshDX11(MeshDX11&& mesh) noexcept
 
 void MeshDX11::draw() const
 {
-    bind_textures();
-
     auto const device_context = RendererDX11::get_instance_dx11()->get_device_context();
 
     u32 constexpr offset = 0;
@@ -74,8 +72,6 @@ void MeshDX11::draw() const
     device_context->IASetVertexBuffers(0, 1, m_vertex_buffer->get_address_of(), m_vertex_buffer->stride_ptr(), &offset);
     device_context->IASetIndexBuffer(m_index_buffer->get(), DXGI_FORMAT_R32_UINT, 0);
     device_context->DrawIndexed(m_index_buffer->buffer_size(), 0, 0);
-
-    unbind_textures();
 }
 
 void MeshDX11::draw(u32 const size, void const* offset) const
@@ -88,71 +84,8 @@ void MeshDX11::draw_instanced(i32 const size) const
 
 void MeshDX11::bind_textures() const
 {
-    auto const device_context = RendererDX11::get_instance_dx11()->get_device_context();
-
-    RendererDX11::get_instance_dx11()->bind_mesh_constant_buffer({m_color});
-
-    // TODO: Don't assume 1st texture is always albedo, 2nd is normal, etc.
-    for (i32 i = 0; i < material->textures.size(); ++i)
-    {
-        device_context->PSSetShaderResources(i, 1, &material->textures[i]->shader_resource_view);
-        device_context->PSSetSamplers(i, 1, &material->textures[i]->image_sampler_state);
-    }
-
-    // NOTE: We always pass all 5 PBR textures. If the texture is not present in the model,
-    //       we pass a 1x1 white texture instead.
-    for (i32 i = material->textures.size(); i < PBR_texture_count; ++i)
-    {
-        switch (static_cast<TextureTypePBR>(i))
-        {
-        case TextureTypePBR::Albedo:
-        {
-            device_context->PSSetShaderResources(i, 1, &InternalMeshData::white_texture->shader_resource_view);
-            device_context->PSSetSamplers(i, 1, &InternalMeshData::white_texture->image_sampler_state);
-            break;
-        }
-        case TextureTypePBR::Normal:
-        {
-            device_context->PSSetShaderResources(i, 1, &InternalMeshData::normal_texture->shader_resource_view);
-            device_context->PSSetSamplers(i, 1, &InternalMeshData::normal_texture->image_sampler_state);
-            break;
-        }
-        case TextureTypePBR::Metallic:
-        {
-            device_context->PSSetShaderResources(i, 1, &InternalMeshData::black_texture->shader_resource_view);
-            device_context->PSSetSamplers(i, 1, &InternalMeshData::black_texture->image_sampler_state);
-            break;
-        }
-        case TextureTypePBR::Roughness:
-        {
-            device_context->PSSetShaderResources(i, 1, &InternalMeshData::white_texture->shader_resource_view);
-            device_context->PSSetSamplers(i, 1, &InternalMeshData::white_texture->image_sampler_state);
-            break;
-        }
-        case TextureTypePBR::AmbientOcclusion:
-        {
-            device_context->PSSetShaderResources(i, 1, &InternalMeshData::white_texture->shader_resource_view);
-            device_context->PSSetSamplers(i, 1, &InternalMeshData::white_texture->image_sampler_state);
-            break;
-        }
-        case TextureTypePBR::None:
-        {
-            break;
-        }
-        }
-    }
 }
 
 void MeshDX11::unbind_textures() const
 {
-    auto const device_context = RendererDX11::get_instance_dx11()->get_device_context();
-
-    ID3D11ShaderResourceView* null_shader_resource_view = nullptr;
-    ID3D11SamplerState* null_sampler_state = nullptr;
-
-    for (i32 i = 0; i < PBR_texture_count; ++i)
-    {
-        device_context->PSSetShaderResources(i, 1, &null_shader_resource_view);
-        device_context->PSSetSamplers(i, 1, &null_sampler_state);
-    }
 }

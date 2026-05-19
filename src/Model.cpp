@@ -139,6 +139,18 @@ void Model::draw() const
     // Either wireframe or solid for individual model
     Renderer::get_instance()->set_rasterizer_draw_type(m_rasterizer_draw_type);
 
+    // NOTE: Fast path for 1 material models.
+    if (materials.size() == 1)
+    {
+        for (auto const& mesh : m_meshes)
+        {
+            mesh->draw();
+        }
+
+        Renderer::get_instance()->restore_default_rasterizer_draw_type();
+        return;
+    }
+
     for (auto const& mesh : m_meshes)
     {
         if (mesh->material == Renderer::active_material)
@@ -266,15 +278,15 @@ std::shared_ptr<Mesh> Model::process_mesh(aiMesh const* mesh, aiScene const* sce
             load_material_textures(assimp_material, aiTextureType_SPECULAR, TextureType::Specular);
         material->textures.insert(material->textures.end(), specular_maps.begin(), specular_maps.end());
 
+        aiColor4D diffuse_color = {1.0f, 1.0f, 1.0f, 1.0f};
+        aiGetMaterialColor(assimp_material, AI_MATKEY_GLTF_PBRMETALLICROUGHNESS_BASE_COLOR_FACTOR, &diffuse_color);
+        material->color = {diffuse_color.r, diffuse_color.g, diffuse_color.b, diffuse_color.a};
+
         loaded_materials.insert({mesh->mMaterialIndex, material});
     }
 
     std::shared_ptr<Mesh> loaded_mesh =
         ResourceManager::get_instance().load_mesh(m_meshes.size(), model_path, vertices, indices, m_draw_type, material);
-
-    aiColor4D diffuse_color = {1.0f, 1.0f, 1.0f, 1.0f};
-    aiGetMaterialColor(assimp_material, AI_MATKEY_GLTF_PBRMETALLICROUGHNESS_BASE_COLOR_FACTOR, &diffuse_color);
-    loaded_mesh->set_color({diffuse_color.r, diffuse_color.g, diffuse_color.b, diffuse_color.a});
 
     return loaded_mesh;
 }

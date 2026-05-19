@@ -135,7 +135,7 @@ void RendererGL::update_shader(std::shared_ptr<Shader> const& shader, glm::mat4 
     shader->set_bool("directionalLightOn", directional_light_on);
 }
 
-void RendererGL::update_material(std::shared_ptr<Material> const& material) const
+void RendererGL::bind_material(std::shared_ptr<Material> const& material) const
 {
     material->shader->set_vec3("material.color", glm::vec3(material->color.x, material->color.y, material->color.z));
     material->shader->set_float("material.specular", material->specular);

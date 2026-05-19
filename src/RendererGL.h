@@ -22,7 +22,7 @@ public:
 protected:
     virtual void update_shader(std::shared_ptr<Shader> const& shader, glm::mat4 const& projection_view,
                                glm::mat4 const& projection_view_no_translation) const override;
-    virtual void update_material(std::shared_ptr<Material> const& material) const override;
+    virtual void bind_material(std::shared_ptr<Material> const& material) const override;
     virtual void update_object(std::shared_ptr<Drawable> const& drawable, std::shared_ptr<Material> const& material,
                                glm::mat4 const& projection_view) const override;
 

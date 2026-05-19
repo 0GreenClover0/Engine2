@@ -9,6 +9,7 @@
 #include "Entity.h"
 #include "FullscreenQuad.h"
 #include "GBuffer.h"
+#include "Globals.h"
 #include "Game/LevelController.h"
 #include "Game/Player.h"
 #include "Input.h"
@@ -66,10 +67,10 @@ std::shared_ptr<RendererDX11> RendererDX11::create()
     mesh_desc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
     mesh_desc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
     mesh_desc.MiscFlags = 0;
-    mesh_desc.ByteWidth = static_cast<UINT>(sizeof(ConstantBufferMesh) + (16 - (sizeof(ConstantBufferMesh) % 16)));
+    mesh_desc.ByteWidth = static_cast<UINT>(sizeof(ConstantBufferMaterial) + (16 - (sizeof(ConstantBufferMaterial) % 16)));
     mesh_desc.StructureByteStride = 0;
 
-    hr = renderer->get_device()->CreateBuffer(&mesh_desc, nullptr, &renderer->m_constant_buffer_mesh);
+    hr = renderer->get_device()->CreateBuffer(&mesh_desc, nullptr, &renderer->m_constant_buffer_material);
 
     assert(SUCCEEDED(hr));
 
@@ -384,18 +385,18 @@ void RendererDX11::restore_default_rasterizer_draw_type()
     g_pd3dDeviceContext->RSSetState(g_rasterizer_state);
 }
 
-void RendererDX11::bind_mesh_constant_buffer(ConstantBufferMesh const mesh_constant_buffer) const
+void RendererDX11::bind_material_constant_buffer(ConstantBufferMaterial const material_constant_buffer) const
 {
     auto const device_context = get_device_context();
 
-    D3D11_MAPPED_SUBRESOURCE mesh_mapped_resource = {};
-    HRESULT const hr = device_context->Map(m_constant_buffer_mesh, 0, D3D11_MAP_WRITE_DISCARD, 0, &mesh_mapped_resource);
+    D3D11_MAPPED_SUBRESOURCE material_mapped_resource = {};
+    HRESULT const hr = device_context->Map(m_constant_buffer_material, 0, D3D11_MAP_WRITE_DISCARD, 0, &material_mapped_resource);
     assert(SUCCEEDED(hr));
 
-    CopyMemory(mesh_mapped_resource.pData, &mesh_constant_buffer, sizeof(ConstantBufferMesh));
+    CopyMemory(material_mapped_resource.pData, &material_constant_buffer, sizeof(ConstantBufferMaterial));
 
-    device_context->Unmap(m_constant_buffer_mesh, 0);
-    device_context->PSSetConstantBuffers(5, 1, &m_constant_buffer_mesh);
+    device_context->Unmap(m_constant_buffer_material, 0);
+    device_context->PSSetConstantBuffers(5, 1, &m_constant_buffer_material);
 }
 
 ID3D11DepthStencilState* RendererDX11::get_depth_stencil_state() const
@@ -604,12 +605,68 @@ void RendererDX11::update_shader(std::shared_ptr<Shader> const& shader, glm::mat
     g_pd3dDeviceContext->PSSetSamplers(1, 1, &m_shadow_sampler_state);
 }
 
-void RendererDX11::update_material(std::shared_ptr<Material> const& material) const
+void RendererDX11::bind_material(std::shared_ptr<Material> const& material) const
 {
-    if (Skybox::get_instance() != nullptr && material->needs_skybox)
-        Skybox::get_instance()->bind();
-
     active_material = material;
+
+    auto const device_context = get_device_context();
+
+    if (material->needs_skybox && Skybox::get_instance() != nullptr)
+    {
+        Skybox::get_instance()->bind();
+    }
+
+    RendererDX11::get_instance_dx11()->bind_material_constant_buffer({material->color});
+
+    // TODO: Don't assume 1st texture is always albedo, 2nd is normal, etc.
+    for (i32 i = 0; i < material->textures.size(); ++i)
+    {
+        device_context->PSSetShaderResources(i, 1, &material->textures[i]->shader_resource_view);
+        device_context->PSSetSamplers(i, 1, &material->textures[i]->image_sampler_state);
+    }
+
+    // NOTE: We always pass all 5 PBR textures. If the texture is not present in the model,
+    //       we pass a 1x1 default texture instead.
+    for (i32 i = material->textures.size(); i < PBR_texture_count; ++i)
+    {
+        switch (static_cast<TextureTypePBR>(i))
+        {
+        case TextureTypePBR::Albedo:
+        {
+            device_context->PSSetShaderResources(i, 1, &InternalMeshData::white_texture->shader_resource_view);
+            device_context->PSSetSamplers(i, 1, &InternalMeshData::white_texture->image_sampler_state);
+            break;
+        }
+        case TextureTypePBR::Normal:
+        {
+            device_context->PSSetShaderResources(i, 1, &InternalMeshData::normal_texture->shader_resource_view);
+            device_context->PSSetSamplers(i, 1, &InternalMeshData::normal_texture->image_sampler_state);
+            break;
+        }
+        case TextureTypePBR::Metallic:
+        {
+            device_context->PSSetShaderResources(i, 1, &InternalMeshData::black_texture->shader_resource_view);
+            device_context->PSSetSamplers(i, 1, &InternalMeshData::black_texture->image_sampler_state);
+            break;
+        }
+        case TextureTypePBR::Roughness:
+        {
+            device_context->PSSetShaderResources(i, 1, &InternalMeshData::white_texture->shader_resource_view);
+            device_context->PSSetSamplers(i, 1, &InternalMeshData::white_texture->image_sampler_state);
+            break;
+        }
+        case TextureTypePBR::AmbientOcclusion:
+        {
+            device_context->PSSetShaderResources(i, 1, &InternalMeshData::white_texture->shader_resource_view);
+            device_context->PSSetSamplers(i, 1, &InternalMeshData::white_texture->image_sampler_state);
+            break;
+        }
+        case TextureTypePBR::None:
+        {
+            break;
+        }
+        }
+    }
 }
 
 void RendererDX11::update_object(std::shared_ptr<Drawable> const& drawable, std::shared_ptr<Material> const& material,
@@ -643,8 +700,25 @@ void RendererDX11::update_object(std::shared_ptr<Drawable> const& drawable, std:
 
 void RendererDX11::unbind_material(std::shared_ptr<Material> const& material) const
 {
-    if (Skybox::get_instance() != nullptr && material->needs_skybox)
+    active_material = nullptr;
+
+    auto const device_context = RendererDX11::get_instance_dx11()->get_device_context();
+
+    if (material->needs_skybox && Skybox::get_instance() != nullptr)
+    {
         Skybox::get_instance()->unbind();
+    }
+
+    ID3D11ShaderResourceView* null_shader_resource_view = nullptr;
+    ID3D11SamplerState* null_sampler_state = nullptr;
+
+    i32 const texture_count = glm::max(PBR_texture_count, static_cast<i32>(material->textures.size()));
+
+    for (i32 i = 0; i < texture_count; ++i)
+    {
+        device_context->PSSetShaderResources(i, 1, &null_shader_resource_view);
+        device_context->PSSetSamplers(i, 1, &null_sampler_state);
+    }
 }
 
 void RendererDX11::bind_universal_resources() const

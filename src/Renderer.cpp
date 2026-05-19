@@ -338,12 +338,16 @@ void Renderer::render_custom_render_order_before_aa(glm::mat4 const& projection_
 
         material->shader->use();
 
+        bind_material(material);
+
         update_shader(material->shader, projection_view, projection_view_no_translation);
 
         if (material->is_gpu_instanced)
             draw_instanced(material, projection_view, projection_view_no_translation);
         else
             draw(material, projection_view);
+
+        unbind_material(material);
     }
 }
 
@@ -355,10 +359,14 @@ void Renderer::render_custom_render_order_after_aa(glm::mat4 const& projection_v
 
         update_shader(material->shader, projection_view, projection_view_no_translation);
 
+        bind_material(material);
+
         if (material->is_gpu_instanced)
             draw_instanced(material, projection_view, projection_view_no_translation);
         else
             draw(material, projection_view);
+
+        unbind_material(material);
     }
 }
 
@@ -384,10 +392,14 @@ void Renderer::render_forward_pass(glm::mat4 const& projection_view, glm::mat4 c
             if (material->has_custom_render_order())
                 continue;
 
+            bind_material(material);
+
             if (material->is_gpu_instanced)
                 draw_instanced(material, projection_view, projection_view_no_translation);
             else
                 draw(material, projection_view);
+
+            unbind_material(material);
         }
     }
 }
@@ -459,8 +471,7 @@ void Renderer::bind_for_render_frame() const
 
 void Renderer::draw(std::shared_ptr<Material> const& material, glm::mat4 const& projection_view) const
 {
-    update_material(material);
-    active_material = material;
+    bind_material(material);
 
     for (auto const& drawable : material->drawables)
     {
@@ -474,7 +485,6 @@ void Renderer::draw(std::shared_ptr<Material> const& material, glm::mat4 const& 
         drawable->draw();
     }
 
-    active_material = nullptr;
     unbind_material(material);
 }
 
@@ -556,7 +566,7 @@ void Renderer::draw_transparent(glm::mat4 const& projection_view, glm::mat4 cons
         }
 #endif
 
-        update_material(drawable->first_material());
+        bind_material(drawable->first_material());
 
         update_object(drawable, drawable->first_material(), projection_view);
 

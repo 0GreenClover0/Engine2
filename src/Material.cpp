@@ -1,5 +1,6 @@
 #include "Material.h"
 
+#include "Globals.h"
 #include "Renderer.h"
 
 std::shared_ptr<Material> Material::create(std::shared_ptr<Shader> const& shader, i32 const render_order, bool const is_gpu_instanced,

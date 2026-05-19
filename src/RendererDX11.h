@@ -42,15 +42,15 @@ public:
     virtual void set_rasterizer_draw_type(RasterizerDrawType const rasterizer_draw_type) override;
     virtual void restore_default_rasterizer_draw_type() override;
 
-    void bind_mesh_constant_buffer(ConstantBufferMesh const mesh_constant_buffer) const;
+    void bind_material_constant_buffer(ConstantBufferMaterial const material_constant_buffer) const;
 
 protected:
     virtual void update_shader(std::shared_ptr<Shader> const& shader, glm::mat4 const& projection_view,
                                glm::mat4 const& projection_view_no_translation) const override;
-    virtual void update_material(std::shared_ptr<Material> const& material) const override;
     virtual void update_object(std::shared_ptr<Drawable> const& drawable, std::shared_ptr<Material> const& material,
                                glm::mat4 const& projection_view) const override;
 
+    virtual void bind_material(std::shared_ptr<Material> const& material) const override;
     virtual void unbind_material(std::shared_ptr<Material> const& material) const override;
     virtual void bind_universal_resources() const override;
 
@@ -118,7 +118,7 @@ private:
     ID3D11Buffer* m_constant_buffer_ssao = nullptr;
     ID3D11Buffer* m_constant_buffer_psmisc = nullptr;
     ID3D11Buffer* m_constant_buffer_particle = nullptr;
-    ID3D11Buffer* m_constant_buffer_mesh = nullptr;
+    ID3D11Buffer* m_constant_buffer_material = nullptr;
     ID3D11DepthStencilView* m_depth_stencil_view = nullptr;
     ID3D11Texture2D* m_depth_stencil_buffer = nullptr;
     ID3D11DepthStencilState* m_depth_stencil_state = nullptr;

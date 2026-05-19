@@ -106,7 +106,7 @@ struct ConstantBufferPerObject
     i32 is_glowing;
 };
 
-struct ConstantBufferMesh
+struct ConstantBufferMaterial
 {
     glm::vec4 color;
 };
