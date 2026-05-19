@@ -23,16 +23,16 @@ Entities:
         guid: 18aad8f371fabb1d125de5cf0a7b741bb1dc5a41ab1bbfd4b51694b1e6e2e89c
         custom_name: ""
         model_path: ./res/models\jeep_base\jeep.gltf
-        material:
-          Shader:
-            VertexPath: ./res/shaders/lit.hlsl
-            FragmentPath: ./res/shaders/lit.hlsl
-            GeometryPath: ""
-          Color: [1, 1, 1, 1]
-          RenderOrder: 0
-          NeedsForward: false
-          CastsShadows: true
-          IsBillboard: false
+        materials:
+          - Shader:
+              VertexPath: ./res/shaders/lit.hlsl
+              FragmentPath: ./res/shaders/lit.hlsl
+              GeometryPath: ""
+            Color: [1, 1, 1, 1]
+            RenderOrder: 0
+            NeedsForward: false
+            CastsShadows: true
+            IsBillboard: false
       - ComponentName: JeepComponent
         guid: 5fd0cbc30f9392a15a7c8fbf20107b6d0ae083259736a3cc48b2174450ea9737
         custom_name: ""

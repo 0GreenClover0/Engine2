@@ -69,12 +69,12 @@ Cube::Cube(AK::Badge<Cube>, std::string const& diffuse_texture_path, std::string
 
 void Cube::prepare()
 {
-    if (material->is_gpu_instanced)
+    if (first_material()->is_gpu_instanced)
     {
-        if (material->first_drawable != nullptr)
+        if (first_material()->first_drawable != nullptr)
             return;
 
-        material->first_drawable = std::dynamic_pointer_cast<Drawable>(shared_from_this());
+        first_material()->first_drawable = std::dynamic_pointer_cast<Drawable>(shared_from_this());
     }
 
     m_meshes.emplace_back(create_cube());
@@ -104,13 +104,13 @@ std::shared_ptr<Mesh> Cube::create_cube() const
     if (!specular_texture_path.empty())
         specular_maps.emplace_back(ResourceManager::get_instance().load_texture(specular_texture_path, TextureType::Specular));
 
-    material->textures.insert(material->textures.end(), diffuse_maps.begin(), diffuse_maps.end());
-    material->textures.insert(material->textures.end(), specular_maps.begin(), specular_maps.end());
+    first_material()->textures.insert(first_material()->textures.end(), diffuse_maps.begin(), diffuse_maps.end());
+    first_material()->textures.insert(first_material()->textures.end(), specular_maps.begin(), specular_maps.end());
 
     std::stringstream stream;
     stream << m_big_cube << "CUBE";
 
-    return ResourceManager::get_instance().load_mesh(m_meshes.size(), stream.str(), vertices, indices, m_draw_type, material);
+    return ResourceManager::get_instance().load_mesh(m_meshes.size(), stream.str(), vertices, indices, m_draw_type, first_material());
 }
 
 #if EDITOR

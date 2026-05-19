@@ -21,13 +21,13 @@ Entities:
         m_ps_buffer: [[0.0337027088, 0, 0.50555557, 1], [0.00814755727, 0, 0.24444443, 1], 9.99999975e-05, 9.99999975e-05, 2.88000011, 14.4720001, 0.061999999, 0.861000001]
         tesselation_level: 8
         model_path: ""
-        material:
-          Shader:
-            VertexPath: ./res/shaders/water.hlsl
-            FragmentPath: ./res/shaders/water.hlsl
-            GeometryPath: ""
-          Color: [1, 1, 1, 1]
-          RenderOrder: 0
-          NeedsForward: true
-          CastsShadows: false
-          IsBillboard: false
+        materials:
+          - Shader:
+              VertexPath: ./res/shaders/water.hlsl
+              FragmentPath: ./res/shaders/water.hlsl
+              GeometryPath: ""
+            Color: [1, 1, 1, 1]
+            RenderOrder: 0
+            NeedsForward: true
+            CastsShadows: false
+            IsBillboard: false

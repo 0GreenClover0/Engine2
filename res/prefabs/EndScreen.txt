@@ -14,16 +14,16 @@ Entities:
         guid: f799679ce9e07e904169c2da0f782062608af8fa8b11088f0e1eaf211f4e0cdd
         custom_name: ""
         background_path: ./res/textures/UI/end_screen_level_completed.png
-        material:
-          Shader:
-            VertexPath: ./res/shaders/ui.hlsl
-            FragmentPath: ./res/shaders/ui.hlsl
-            GeometryPath: ""
-          Color: [1, 1, 1, 1]
-          RenderOrder: 3001
-          NeedsForward: true
-          CastsShadows: false
-          IsBillboard: false
+        materials:
+          - Shader:
+              VertexPath: ./res/shaders/ui.hlsl
+              FragmentPath: ./res/shaders/ui.hlsl
+              GeometryPath: ""
+            Color: [1, 1, 1, 1]
+            RenderOrder: 3001
+            NeedsForward: true
+            CastsShadows: false
+            IsBillboard: false
       - ComponentName: EndScreenComponent
         guid: b045e21ac44053f5202d712d45964c07eb04ff6b588af8a3243cbbe9ffe762a0
         custom_name: ""
@@ -60,16 +60,16 @@ Entities:
         top_right_corner: [899.990173, 423.414032]
         bottom_left_corner: [566.309448, 735.150269]
         bottom_right_corner: [899.990173, 735.150269]
-        material:
-          Shader:
-            VertexPath: ./res/shaders/ui.hlsl
-            FragmentPath: ./res/shaders/ui.hlsl
-            GeometryPath: ""
-          Color: [1, 1, 1, 1]
-          RenderOrder: 3001
-          NeedsForward: true
-          CastsShadows: false
-          IsBillboard: false
+        materials:
+          - Shader:
+              VertexPath: ./res/shaders/ui.hlsl
+              FragmentPath: ./res/shaders/ui.hlsl
+              GeometryPath: ""
+            Color: [1, 1, 1, 1]
+            RenderOrder: 3001
+            NeedsForward: true
+            CastsShadows: false
+            IsBillboard: false
   - Entity: Star
     guid: b6c640347ac9f38fc1cbcb4750c5ebc4a47bc18d9efaca3f10fe553959f36039
     Name: Star
@@ -90,16 +90,16 @@ Entities:
         top_right_corner: [899.990173, 423.414032]
         bottom_left_corner: [566.309448, 735.150269]
         bottom_right_corner: [899.990173, 735.150269]
-        material:
-          Shader:
-            VertexPath: ./res/shaders/ui.hlsl
-            FragmentPath: ./res/shaders/ui.hlsl
-            GeometryPath: ""
-          Color: [1, 1, 1, 1]
-          RenderOrder: 3001
-          NeedsForward: true
-          CastsShadows: false
-          IsBillboard: false
+        materials:
+          - Shader:
+              VertexPath: ./res/shaders/ui.hlsl
+              FragmentPath: ./res/shaders/ui.hlsl
+              GeometryPath: ""
+            Color: [1, 1, 1, 1]
+            RenderOrder: 3001
+            NeedsForward: true
+            CastsShadows: false
+            IsBillboard: false
   - Entity: Star
     guid: 7d251ee6a4a0743151e0f818a089cf17f58b6bfb43fe02ca24f11bb2d6a24ef3
     Name: Star
@@ -120,16 +120,16 @@ Entities:
         top_right_corner: [899.990173, 423.414032]
         bottom_left_corner: [566.309448, 735.150269]
         bottom_right_corner: [899.990173, 735.150269]
-        material:
-          Shader:
-            VertexPath: ./res/shaders/ui.hlsl
-            FragmentPath: ./res/shaders/ui.hlsl
-            GeometryPath: ""
-          Color: [1, 1, 1, 1]
-          RenderOrder: 3001
-          NeedsForward: true
-          CastsShadows: false
-          IsBillboard: false
+        materials:
+          - Shader:
+              VertexPath: ./res/shaders/ui.hlsl
+              FragmentPath: ./res/shaders/ui.hlsl
+              GeometryPath: ""
+            Color: [1, 1, 1, 1]
+            RenderOrder: 3001
+            NeedsForward: true
+            CastsShadows: false
+            IsBillboard: false
   - Entity: Buttons
     guid: 118b6400cc8ed5206854782605117b2cf7c833c86865682578bc9d9cacb952f1
     Name: Buttons
@@ -161,16 +161,16 @@ Entities:
         top_right_corner: [0, 0]
         bottom_left_corner: [0, 0]
         bottom_right_corner: [0, 0]
-        material:
-          Shader:
-            VertexPath: ./res/shaders/ui.hlsl
-            FragmentPath: ./res/shaders/ui.hlsl
-            GeometryPath: ""
-          Color: [1, 1, 1, 1]
-          RenderOrder: 3001
-          NeedsForward: true
-          CastsShadows: false
-          IsBillboard: false
+        materials:
+          - Shader:
+              VertexPath: ./res/shaders/ui.hlsl
+              FragmentPath: ./res/shaders/ui.hlsl
+              GeometryPath: ""
+            Color: [1, 1, 1, 1]
+            RenderOrder: 3001
+            NeedsForward: true
+            CastsShadows: false
+            IsBillboard: false
   - Entity: ButtonRestart
     guid: e78bd337854423ac7517147d95b84a772f55e953874fd3f2ec6ac27470e0f1ba
     Name: ButtonRestart
@@ -191,16 +191,16 @@ Entities:
         top_right_corner: [0, 0]
         bottom_left_corner: [0, 0]
         bottom_right_corner: [0, 0]
-        material:
-          Shader:
-            VertexPath: ./res/shaders/ui.hlsl
-            FragmentPath: ./res/shaders/ui.hlsl
-            GeometryPath: ""
-          Color: [1, 1, 1, 1]
-          RenderOrder: 3001
-          NeedsForward: true
-          CastsShadows: false
-          IsBillboard: false
+        materials:
+          - Shader:
+              VertexPath: ./res/shaders/ui.hlsl
+              FragmentPath: ./res/shaders/ui.hlsl
+              GeometryPath: ""
+            Color: [1, 1, 1, 1]
+            RenderOrder: 3001
+            NeedsForward: true
+            CastsShadows: false
+            IsBillboard: false
   - Entity: ButtonMenu
     guid: 2654b6f5fb2724b9f863b02fa3a0fb3045f9e0b7c52a964931fa0deb9feb7f52
     Name: ButtonMenu
@@ -221,13 +221,13 @@ Entities:
         top_right_corner: [0, 0]
         bottom_left_corner: [0, 0]
         bottom_right_corner: [0, 0]
-        material:
-          Shader:
-            VertexPath: ./res/shaders/ui.hlsl
-            FragmentPath: ./res/shaders/ui.hlsl
-            GeometryPath: ""
-          Color: [1, 1, 1, 1]
-          RenderOrder: 3001
-          NeedsForward: true
-          CastsShadows: false
-          IsBillboard: false
+        materials:
+          - Shader:
+              VertexPath: ./res/shaders/ui.hlsl
+              FragmentPath: ./res/shaders/ui.hlsl
+              GeometryPath: ""
+            Color: [1, 1, 1, 1]
+            RenderOrder: 3001
+            NeedsForward: true
+            CastsShadows: false
+            IsBillboard: false

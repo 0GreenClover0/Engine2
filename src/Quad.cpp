@@ -93,7 +93,7 @@ void Quad::reprepare()
 
 void Quad::update_quad() const
 {
-    material->color = m_color;
+    first_material()->color = m_color;
 }
 
 void Quad::update()
@@ -135,7 +135,7 @@ std::shared_ptr<Mesh> Quad::create_sprite() const
     if (!path.empty())
         diffuse_maps.emplace_back(ResourceManager::get_instance().load_texture(path, TextureType::Diffuse, texture_settings));
 
-    material->textures.insert(material->textures.end(), diffuse_maps.begin(), diffuse_maps.end());
+    first_material()->textures.insert(first_material()->textures.end(), diffuse_maps.begin(), diffuse_maps.end());
 
-    return ResourceManager::get_instance().load_mesh(0, path, vertices, indices, DrawType::Triangles, material);
+    return ResourceManager::get_instance().load_mesh(0, path, vertices, indices, DrawType::Triangles, first_material());
 }

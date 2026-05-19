@@ -14,16 +14,16 @@ Entities:
         guid: eba628c61e869ab9fa65dc8135963884e04ec3ce3e41513afe6b5299d4e5aa43
         custom_name: ""
         model_path: ./res/models/keeperInHovercraft/keeper.gltf
-        material:
-          Shader:
-            VertexPath: ./res/shaders/lit.hlsl
-            FragmentPath: ./res/shaders/lit.hlsl
-            GeometryPath: ""
-          Color: [1, 1, 1, 1]
-          RenderOrder: 0
-          NeedsForward: false
-          CastsShadows: true
-          IsBillboard: false
+        materials:
+          - Shader:
+              VertexPath: ./res/shaders/lit.hlsl
+              FragmentPath: ./res/shaders/lit.hlsl
+              GeometryPath: ""
+            Color: [1, 1, 1, 1]
+            RenderOrder: 0
+            NeedsForward: false
+            CastsShadows: true
+            IsBillboard: false
       - ComponentName: Collider2DComponent
         guid: 3873420b38d307278c72b19af5e41603b7747534e20addb5ff5c28a696162893
         custom_name: ""

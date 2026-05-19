@@ -25,15 +25,15 @@ Entities:
         guid: e1cfc777266c1f5ed71bca7ee644f1cb01323e91d4d578e3d762c49c33f0d639
         custom_name: ""
         model_path: ./res/models\harborIslands\corner_small_l.gltf
-        material:
-          Shader:
-            VertexPath: ./res/shaders/lit.hlsl
-            FragmentPath: ./res/shaders/lit.hlsl
-            GeometryPath: ""
-          Color: [1, 1, 1, 1]
-          RenderOrder: 0
-          NeedsForward: false
-          CastsShadows: true
+        materials:
+          - Shader:
+              VertexPath: ./res/shaders/lit.hlsl
+              FragmentPath: ./res/shaders/lit.hlsl
+              GeometryPath: ""
+            Color: [1, 1, 1, 1]
+            RenderOrder: 0
+            NeedsForward: false
+            CastsShadows: true
   - Entity: b
     guid: 01c309b5a9e0a7f6cd3a33f34aa135a0ae26975acffe2a10a9fcfdf37e9f92ee
     Name: b
@@ -48,15 +48,15 @@ Entities:
         guid: 054843ef684207513d281b8b9d93c4f61057f16aff6ec6b9621b827cf7a8e44e
         custom_name: ""
         model_path: ./res/models\harborIslands\bottom_small.gltf
-        material:
-          Shader:
-            VertexPath: ./res/shaders/lit.hlsl
-            FragmentPath: ./res/shaders/lit.hlsl
-            GeometryPath: ""
-          Color: [1, 1, 1, 1]
-          RenderOrder: 0
-          NeedsForward: false
-          CastsShadows: true
+        materials:
+          - Shader:
+              VertexPath: ./res/shaders/lit.hlsl
+              FragmentPath: ./res/shaders/lit.hlsl
+              GeometryPath: ""
+            Color: [1, 1, 1, 1]
+            RenderOrder: 0
+            NeedsForward: false
+            CastsShadows: true
   - Entity: rl
     guid: 0e9c1e5d13aff1def8ff1f897eeb79cea7145ce1cb73c4daca015629e631d6ab
     Name: rl
@@ -71,15 +71,15 @@ Entities:
         guid: 808d0e5380cff917f7917e08c3dd867f56eb21142d1b2bfc71bed37102d9135a
         custom_name: ""
         model_path: ./res/models\harborIslands\corner_small_r.gltf
-        material:
-          Shader:
-            VertexPath: ./res/shaders/lit.hlsl
-            FragmentPath: ./res/shaders/lit.hlsl
-            GeometryPath: ""
-          Color: [1, 1, 1, 1]
-          RenderOrder: 0
-          NeedsForward: false
-          CastsShadows: true
+        materials:
+          - Shader:
+              VertexPath: ./res/shaders/lit.hlsl
+              FragmentPath: ./res/shaders/lit.hlsl
+              GeometryPath: ""
+            Color: [1, 1, 1, 1]
+            RenderOrder: 0
+            NeedsForward: false
+            CastsShadows: true
   - Entity: el
     guid: bd9db11971b4e9bef556ab0551e847b923bcf02e3b0e5121933a7513e082592b
     Name: el
@@ -94,15 +94,15 @@ Entities:
         guid: 7d312ddfe851f62ca2ddc72e7f37edc962ce478c5fc58204886f4ab0812edb11
         custom_name: ""
         model_path: ./res/models\harborIslands\end_small_l.gltf
-        material:
-          Shader:
-            VertexPath: ./res/shaders/lit.hlsl
-            FragmentPath: ./res/shaders/lit.hlsl
-            GeometryPath: ""
-          Color: [1, 1, 1, 1]
-          RenderOrder: 0
-          NeedsForward: false
-          CastsShadows: true
+        materials:
+          - Shader:
+              VertexPath: ./res/shaders/lit.hlsl
+              FragmentPath: ./res/shaders/lit.hlsl
+              GeometryPath: ""
+            Color: [1, 1, 1, 1]
+            RenderOrder: 0
+            NeedsForward: false
+            CastsShadows: true
   - Entity: er
     guid: fcffc1d83117eab7bf4d92ef6f204b5ccf766bdbc02e99e372f1580cc468d509
     Name: er
@@ -117,15 +117,15 @@ Entities:
         guid: 9074470bf4ec18f83497dd0acbbe0c6de4958adccc621b6c4aac490898bcfad3
         custom_name: ""
         model_path: ./res/models\harborIslands\end_small_r.gltf
-        material:
-          Shader:
-            VertexPath: ./res/shaders/lit.hlsl
-            FragmentPath: ./res/shaders/lit.hlsl
-            GeometryPath: ""
-          Color: [1, 1, 1, 1]
-          RenderOrder: 0
-          NeedsForward: false
-          CastsShadows: true
+        materials:
+          - Shader:
+              VertexPath: ./res/shaders/lit.hlsl
+              FragmentPath: ./res/shaders/lit.hlsl
+              GeometryPath: ""
+            Color: [1, 1, 1, 1]
+            RenderOrder: 0
+            NeedsForward: false
+            CastsShadows: true
   - Entity: Lights
     guid: 1f5810c99f5ddc36c4337a3f7355db66ab0d6bf7e680461833db338c0d13684a
     Name: Lights

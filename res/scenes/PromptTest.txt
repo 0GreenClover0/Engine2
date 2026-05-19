@@ -38,16 +38,16 @@ Entities:
         guid: 23b2cec791af735372fb3fcd6d2c1365494db10d8e630450c02bcd94f93d73e7
         custom_name: ""
         background_path: ./res/textures/black.jpg
-        material:
-          Shader:
-            VertexPath: ./res/shaders/ui.hlsl
-            FragmentPath: ./res/shaders/ui.hlsl
-            GeometryPath: ""
-          Color: [1, 1, 1, 1]
-          RenderOrder: 3001
-          NeedsForward: true
-          CastsShadows: false
-          IsBillboard: false
+        materials:
+          - Shader:
+              VertexPath: ./res/shaders/ui.hlsl
+              FragmentPath: ./res/shaders/ui.hlsl
+              GeometryPath: ""
+            Color: [1, 1, 1, 1]
+            RenderOrder: 3001
+            NeedsForward: true
+            CastsShadows: false
+            IsBillboard: false
   - Entity: Middle text
     guid: 88b5ca8c58d0371e5a0de335f18dc373a313a93f7508c3beae1afcc4e811ca6a
     Name: Middle text
@@ -70,16 +70,16 @@ Entities:
         bold: false
         button_ref:
           guid: nullptr
-        material:
-          Shader:
-            VertexPath: ./res/shaders/ui.hlsl
-            FragmentPath: ./res/shaders/ui.hlsl
-            GeometryPath: ""
-          Color: [1, 1, 1, 1]
-          RenderOrder: 3003
-          NeedsForward: true
-          CastsShadows: false
-          IsBillboard: false
+        materials:
+          - Shader:
+              VertexPath: ./res/shaders/ui.hlsl
+              FragmentPath: ./res/shaders/ui.hlsl
+              GeometryPath: ""
+            Color: [1, 1, 1, 1]
+            RenderOrder: 3003
+            NeedsForward: true
+            CastsShadows: false
+            IsBillboard: false
   - Entity: Upper text
     guid: 054d78fccd9e1006a78f6c102518ed61f65eb74368912f2bed59406ca4de85da
     Name: Upper text
@@ -102,16 +102,16 @@ Entities:
         bold: false
         button_ref:
           guid: nullptr
-        material:
-          Shader:
-            VertexPath: ./res/shaders/ui.hlsl
-            FragmentPath: ./res/shaders/ui.hlsl
-            GeometryPath: ""
-          Color: [1, 1, 1, 1]
-          RenderOrder: 3003
-          NeedsForward: true
-          CastsShadows: false
-          IsBillboard: false
+        materials:
+          - Shader:
+              VertexPath: ./res/shaders/ui.hlsl
+              FragmentPath: ./res/shaders/ui.hlsl
+              GeometryPath: ""
+            Color: [1, 1, 1, 1]
+            RenderOrder: 3003
+            NeedsForward: true
+            CastsShadows: false
+            IsBillboard: false
   - Entity: Lower text
     guid: 5e863f3882b2f8ee94933157e10b9b2167674d8d23f0ab1d6870dab37f5770a3
     Name: Lower text
@@ -134,13 +134,13 @@ Entities:
         bold: false
         button_ref:
           guid: nullptr
-        material:
-          Shader:
-            VertexPath: ./res/shaders/ui.hlsl
-            FragmentPath: ./res/shaders/ui.hlsl
-            GeometryPath: ""
-          Color: [1, 1, 1, 1]
-          RenderOrder: 3003
-          NeedsForward: true
-          CastsShadows: false
-          IsBillboard: false
+        materials:
+          - Shader:
+              VertexPath: ./res/shaders/ui.hlsl
+              FragmentPath: ./res/shaders/ui.hlsl
+              GeometryPath: ""
+            Color: [1, 1, 1, 1]
+            RenderOrder: 3003
+            NeedsForward: true
+            CastsShadows: false
+            IsBillboard: false

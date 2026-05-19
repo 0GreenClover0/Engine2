@@ -14,16 +14,16 @@ Entities:
         guid: 398a8d10e55402d02aa3182781c35b55a62fdb5773a6a735190912c9a06230a1
         custom_name: ""
         model_path: ./res/models\wheat\wheat.gltf
-        material:
-          Shader:
-            VertexPath: ./res/shaders/lit.hlsl
-            FragmentPath: ./res/shaders/lit.hlsl
-            GeometryPath: ""
-          Color: [1, 1, 1, 1]
-          RenderOrder: 0
-          NeedsForward: false
-          CastsShadows: true
-          IsBillboard: false
+        materials:
+          - Shader:
+              VertexPath: ./res/shaders/lit.hlsl
+              FragmentPath: ./res/shaders/lit.hlsl
+              GeometryPath: ""
+            Color: [1, 1, 1, 1]
+            RenderOrder: 0
+            NeedsForward: false
+            CastsShadows: true
+            IsBillboard: false
       - ComponentName: WheatComponent
         guid: b8fd1f779302bcaa2bbab44f11def623aca83df4fe40598c374719d7af78e161
         custom_name: ""

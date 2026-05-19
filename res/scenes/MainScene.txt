@@ -201,16 +201,16 @@ Entities:
         guid: d2d3119dbb91c300bd4904fb7cd57eb14ff8d7acf90d50ef89820e84d7324761
         custom_name: ""
         background_path: ./res/textures/UI/panel.png
-        material:
-          Shader:
-            VertexPath: ./res/shaders/ui.hlsl
-            FragmentPath: ./res/shaders/ui.hlsl
-            GeometryPath: ""
-          Color: [1, 1, 1, 1]
-          RenderOrder: 3001
-          NeedsForward: true
-          CastsShadows: false
-          IsBillboard: false
+        materials:
+          - Shader:
+              VertexPath: ./res/shaders/ui.hlsl
+              FragmentPath: ./res/shaders/ui.hlsl
+              GeometryPath: ""
+            Color: [1, 1, 1, 1]
+            RenderOrder: 3001
+            NeedsForward: true
+            CastsShadows: false
+            IsBillboard: false
       - ComponentName: ClockComponent
         guid: a4368873ab5e72837fc970e734c95cbec4c678c1ae23b21d5b6cc0d287fd9ebb
         custom_name: ""
@@ -228,16 +228,16 @@ Entities:
         guid: 5c61c37765a009edcbdb8e90d95304f2461c2e86390bce6ffaf63239b1db2b4d
         custom_name: ""
         background_path: ./res/textures/UI/glass.png
-        material:
-          Shader:
-            VertexPath: ./res/shaders/ui.hlsl
-            FragmentPath: ./res/shaders/ui.hlsl
-            GeometryPath: ""
-          Color: [1, 1, 1, 1]
-          RenderOrder: 3001
-          NeedsForward: true
-          CastsShadows: false
-          IsBillboard: false
+        materials:
+          - Shader:
+              VertexPath: ./res/shaders/ui.hlsl
+              FragmentPath: ./res/shaders/ui.hlsl
+              GeometryPath: ""
+            Color: [1, 1, 1, 1]
+            RenderOrder: 3001
+            NeedsForward: true
+            CastsShadows: false
+            IsBillboard: false
   - Entity: Packages
     guid: 5737590350919fed1af889f0c3e118efc055f5fe2701529b3868b65a2437ea36
     Name: Packages
@@ -260,16 +260,16 @@ Entities:
         bold: false
         button_ref:
           guid: nullptr
-        material:
-          Shader:
-            VertexPath: ./res/shaders/ui.hlsl
-            FragmentPath: ./res/shaders/ui.hlsl
-            GeometryPath: ""
-          Color: [1, 1, 1, 1]
-          RenderOrder: 3003
-          NeedsForward: true
-          CastsShadows: false
-          IsBillboard: false
+        materials:
+          - Shader:
+              VertexPath: ./res/shaders/ui.hlsl
+              FragmentPath: ./res/shaders/ui.hlsl
+              GeometryPath: ""
+            Color: [1, 1, 1, 1]
+            RenderOrder: 3003
+            NeedsForward: true
+            CastsShadows: false
+            IsBillboard: false
   - Entity: Flashes
     guid: 6c065ceda5553215985be476868aff353e8f987bb40dfd6173fb207e3c318d07
     Name: Flashes
@@ -292,16 +292,16 @@ Entities:
         bold: false
         button_ref:
           guid: nullptr
-        material:
-          Shader:
-            VertexPath: ./res/shaders/ui.hlsl
-            FragmentPath: ./res/shaders/ui.hlsl
-            GeometryPath: ""
-          Color: [1, 1, 1, 1]
-          RenderOrder: 3003
-          NeedsForward: true
-          CastsShadows: false
-          IsBillboard: false
+        materials:
+          - Shader:
+              VertexPath: ./res/shaders/ui.hlsl
+              FragmentPath: ./res/shaders/ui.hlsl
+              GeometryPath: ""
+            Color: [1, 1, 1, 1]
+            RenderOrder: 3003
+            NeedsForward: true
+            CastsShadows: false
+            IsBillboard: false
   - Entity: Level
     guid: ae954d8603ceee70405c19f4a91428c67687a15d7e953100c93d326a90d91540
     Name: Level
@@ -324,16 +324,16 @@ Entities:
         bold: false
         button_ref:
           guid: nullptr
-        material:
-          Shader:
-            VertexPath: ./res/shaders/ui.hlsl
-            FragmentPath: ./res/shaders/ui.hlsl
-            GeometryPath: ""
-          Color: [1, 1, 1, 1]
-          RenderOrder: 3003
-          NeedsForward: true
-          CastsShadows: false
-          IsBillboard: false
+        materials:
+          - Shader:
+              VertexPath: ./res/shaders/ui.hlsl
+              FragmentPath: ./res/shaders/ui.hlsl
+              GeometryPath: ""
+            Color: [1, 1, 1, 1]
+            RenderOrder: 3003
+            NeedsForward: true
+            CastsShadows: false
+            IsBillboard: false
   - Entity: Clock
     guid: 34b0664c2389397821dd94c9bba9fdbf5851dec97e9f58bf26eed60b3ca1a9d3
     Name: Clock
@@ -356,16 +356,16 @@ Entities:
         bold: true
         button_ref:
           guid: nullptr
-        material:
-          Shader:
-            VertexPath: ./res/shaders/ui.hlsl
-            FragmentPath: ./res/shaders/ui.hlsl
-            GeometryPath: ""
-          Color: [1, 1, 1, 1]
-          RenderOrder: 3003
-          NeedsForward: true
-          CastsShadows: false
-          IsBillboard: false
+        materials:
+          - Shader:
+              VertexPath: ./res/shaders/ui.hlsl
+              FragmentPath: ./res/shaders/ui.hlsl
+              GeometryPath: ""
+            Color: [1, 1, 1, 1]
+            RenderOrder: 3003
+            NeedsForward: true
+            CastsShadows: false
+            IsBillboard: false
   - Entity: A_DIRECTIONAL
     guid: 20b5b682f57c835e97f62c090a9572a823623e1f26ba8ecfdbf1e6b7ca0cad21
     Name: A_DIRECTIONAL
@@ -466,16 +466,16 @@ Entities:
         bold: false
         button_ref:
           guid: nullptr
-        material:
-          Shader:
-            VertexPath: ./res/shaders/ui.hlsl
-            FragmentPath: ./res/shaders/ui.hlsl
-            GeometryPath: ""
-          Color: [1, 1, 1, 1]
-          RenderOrder: 3003
-          NeedsForward: true
-          CastsShadows: false
-          IsBillboard: false
+        materials:
+          - Shader:
+              VertexPath: ./res/shaders/ui.hlsl
+              FragmentPath: ./res/shaders/ui.hlsl
+              GeometryPath: ""
+            Color: [1, 1, 1, 1]
+            RenderOrder: 3003
+            NeedsForward: true
+            CastsShadows: false
+            IsBillboard: false
   - Entity: Upper text
     guid: f15ac881728db8a4e7d688a9f2fd7634ea18aa6a8441ed91d43a24fcf5fa23b2
     Name: Upper text
@@ -498,16 +498,16 @@ Entities:
         bold: false
         button_ref:
           guid: nullptr
-        material:
-          Shader:
-            VertexPath: ./res/shaders/ui.hlsl
-            FragmentPath: ./res/shaders/ui.hlsl
-            GeometryPath: ""
-          Color: [1, 1, 1, 1]
-          RenderOrder: 3003
-          NeedsForward: true
-          CastsShadows: false
-          IsBillboard: false
+        materials:
+          - Shader:
+              VertexPath: ./res/shaders/ui.hlsl
+              FragmentPath: ./res/shaders/ui.hlsl
+              GeometryPath: ""
+            Color: [1, 1, 1, 1]
+            RenderOrder: 3003
+            NeedsForward: true
+            CastsShadows: false
+            IsBillboard: false
   - Entity: Lower text
     guid: a297bae7d00fcca68c3746aa7523c5477e95615a11c0a6dd22cc5fed85dce12a
     Name: Lower text
@@ -530,16 +530,16 @@ Entities:
         bold: false
         button_ref:
           guid: nullptr
-        material:
-          Shader:
-            VertexPath: ./res/shaders/ui.hlsl
-            FragmentPath: ./res/shaders/ui.hlsl
-            GeometryPath: ""
-          Color: [1, 1, 1, 1]
-          RenderOrder: 3003
-          NeedsForward: true
-          CastsShadows: false
-          IsBillboard: false
+        materials:
+          - Shader:
+              VertexPath: ./res/shaders/ui.hlsl
+              FragmentPath: ./res/shaders/ui.hlsl
+              GeometryPath: ""
+            Color: [1, 1, 1, 1]
+            RenderOrder: 3003
+            NeedsForward: true
+            CastsShadows: false
+            IsBillboard: false
   - Entity: KeeperSprite
     guid: 28b1ff2f3ca0d3c349282ff61e022387dcd6d6e38ada00b90a034d70e53fd79f
     Name: KeeperSprite
@@ -554,16 +554,16 @@ Entities:
         guid: f2afb9749beb60598ccb9ee98254da3f8f503e7bd94a0ace8dbf04977c7a59ac
         custom_name: ""
         background_path: ./res/textures/UI/keeper_sprite.png
-        material:
-          Shader:
-            VertexPath: ./res/shaders/ui.hlsl
-            FragmentPath: ./res/shaders/ui.hlsl
-            GeometryPath: ""
-          Color: [1, 1, 1, 1]
-          RenderOrder: 3001
-          NeedsForward: true
-          CastsShadows: false
-          IsBillboard: false
+        materials:
+          - Shader:
+              VertexPath: ./res/shaders/ui.hlsl
+              FragmentPath: ./res/shaders/ui.hlsl
+              GeometryPath: ""
+            Color: [1, 1, 1, 1]
+            RenderOrder: 3001
+            NeedsForward: true
+            CastsShadows: false
+            IsBillboard: false
   - Entity: Bubble
     guid: 9b17f10216f433fa55266f8321d19ee7c61397455a2b78304dfd9cb306b64c5f
     Name: Bubble
@@ -584,16 +584,16 @@ Entities:
         top_right_corner: [1688.26172, 1001]
         bottom_left_corner: [545.861694, 1001]
         bottom_right_corner: [1688.26172, 1001]
-        material:
-          Shader:
-            VertexPath: ./res/shaders/ui.hlsl
-            FragmentPath: ./res/shaders/ui.hlsl
-            GeometryPath: ""
-          Color: [1, 1, 1, 1]
-          RenderOrder: 3001
-          NeedsForward: true
-          CastsShadows: false
-          IsBillboard: false
+        materials:
+          - Shader:
+              VertexPath: ./res/shaders/ui.hlsl
+              FragmentPath: ./res/shaders/ui.hlsl
+              GeometryPath: ""
+            Color: [1, 1, 1, 1]
+            RenderOrder: 3001
+            NeedsForward: true
+            CastsShadows: false
+            IsBillboard: false
   - Entity: FallingSnow
     guid: 7a72a3672d93450cd48afa0b82df409f98d7c21bbd4f5d57edeb37a829b36158
     Name: FallingSnow

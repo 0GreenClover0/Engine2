@@ -36,16 +36,16 @@ Entities:
         guid: 59beca8e5b802febaf028459a3ef8a14dd6dc41dfedba3502c67179c2100b13e
         custom_name: ""
         model_path: ./res/models\ground\ground.gltf
-        material:
-          Shader:
-            VertexPath: ./res/shaders/lit.hlsl
-            FragmentPath: ./res/shaders/lit.hlsl
-            GeometryPath: ""
-          Color: [1, 1, 1, 1]
-          RenderOrder: 0
-          NeedsForward: false
-          CastsShadows: true
-          IsBillboard: false
+        materials:
+          - Shader:
+              VertexPath: ./res/shaders/lit.hlsl
+              FragmentPath: ./res/shaders/lit.hlsl
+              GeometryPath: ""
+            Color: [1, 1, 1, 1]
+            RenderOrder: 0
+            NeedsForward: false
+            CastsShadows: true
+            IsBillboard: false
   - Entity: FieldGrid
     guid: 18ed7c178c21b57e7b713f7b77c72f1553aa9784f3e603737cf54a0024fb94ba
     Name: FieldGrid
@@ -75,16 +75,16 @@ Entities:
         guid: 17e2287326a82c9bf3f82d4d612c0986d0baf07ec1b8cc5e1b4a8bf2e0aa9c48
         custom_name: ""
         path: ./res/textures/UI\testOverlay.png
-        material:
-          Shader:
-            VertexPath: ./res/shaders/particle.hlsl
-            FragmentPath: ./res/shaders/particle.hlsl
-            GeometryPath: ""
-          Color: [1, 1, 1, 1]
-          RenderOrder: 1000
-          NeedsForward: true
-          CastsShadows: false
-          IsBillboard: false
+        materials:
+          - Shader:
+              VertexPath: ./res/shaders/particle.hlsl
+              FragmentPath: ./res/shaders/particle.hlsl
+              GeometryPath: ""
+            Color: [1, 1, 1, 1]
+            RenderOrder: 1000
+            NeedsForward: true
+            CastsShadows: false
+            IsBillboard: false
       - ComponentName: WheatOverlayComponent
         guid: 59e0087a9a2937933ed80b15de03c987e515167f13d9dc877cd44beef8864bb8
         custom_name: ""
@@ -102,16 +102,16 @@ Entities:
         guid: 0dba841ea1f8e3f72070ba7515b819ce88b9cb9f3918c4200cd5635afe96d89a
         custom_name: ""
         model_path: ./res/models\truther\truther.gltf
-        material:
-          Shader:
-            VertexPath: ./res/shaders/lit.hlsl
-            FragmentPath: ./res/shaders/lit.hlsl
-            GeometryPath: ""
-          Color: [1, 1, 1, 1]
-          RenderOrder: 0
-          NeedsForward: false
-          CastsShadows: true
-          IsBillboard: false
+        materials:
+          - Shader:
+              VertexPath: ./res/shaders/lit.hlsl
+              FragmentPath: ./res/shaders/lit.hlsl
+              GeometryPath: ""
+            Color: [1, 1, 1, 1]
+            RenderOrder: 0
+            NeedsForward: false
+            CastsShadows: true
+            IsBillboard: false
       - ComponentName: Collider2DComponent
         guid: 727af3fc53a31f030bdfac70706a247470d9afdfa08edaa0e471ee81f8803198
         custom_name: ""

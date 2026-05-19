@@ -22,15 +22,15 @@ Entities:
         guid: bfe65461b1136358e51daecbf51bd74180b6f0369fcddb8fa1e70ed701501b82
         custom_name: ""
         model_path: ./res/models\generator\generator.gltf
-        material:
-          Shader:
-            VertexPath: ./res/shaders/lit.hlsl
-            FragmentPath: ./res/shaders/lit.hlsl
-            GeometryPath: ""
-          Color: [1, 1, 1, 1]
-          RenderOrder: 0
-          NeedsForward: false
-          CastsShadows: true
+        materials:
+          - Shader:
+              VertexPath: ./res/shaders/lit.hlsl
+              FragmentPath: ./res/shaders/lit.hlsl
+              GeometryPath: ""
+            Color: [1, 1, 1, 1]
+            RenderOrder: 0
+            NeedsForward: false
+            CastsShadows: true
       - ComponentName: Collider2DComponent
         guid: 5f29b2af9a1443b51c86c9b604d30f33340a7cc7fb0d018f11d883af2829e96a
         custom_name: ""

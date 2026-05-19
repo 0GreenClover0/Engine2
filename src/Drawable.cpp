@@ -7,7 +7,7 @@
 #include "imgui_extensions.h"
 #endif
 
-Drawable::Drawable(std::shared_ptr<Material> const& material) : material(material)
+Drawable::Drawable(std::shared_ptr<Material> const& material) : materials({material})
 {
 }
 
@@ -49,9 +49,16 @@ void Drawable::set_rasterizer_draw_type(RasterizerDrawType const new_draw_mode)
     m_rasterizer_draw_type = new_draw_mode;
 }
 
+std::shared_ptr<Material> Drawable::first_material() const
+{
+    assert(!materials.empty());
+
+    return materials[0];
+}
+
 void Drawable::initialize()
 {
-    Renderer::get_instance()->register_drawable(std::static_pointer_cast<Drawable>(shared_from_this()));
+    Renderer::get_instance()->register_drawable(std::static_pointer_cast<Drawable>(shared_from_this()), materials);
 
     calculate_bounding_box();
     adjust_bounding_box();
@@ -63,7 +70,7 @@ void Drawable::uninitialize()
 
     if (Renderer::get_instance()->is_drawable_registered(drawable))
     {
-        Renderer::get_instance()->unregister_drawable(drawable);
+        Renderer::get_instance()->unregister_drawable(drawable, materials);
     }
 }
 
@@ -74,7 +81,7 @@ void Drawable::on_enabled()
     // Drawable might have already been registered in initialize() method
     if (!Renderer::get_instance()->is_drawable_registered(drawable))
     {
-        Renderer::get_instance()->register_drawable(drawable);
+        Renderer::get_instance()->register_drawable(drawable, materials);
     }
 }
 
@@ -85,7 +92,7 @@ void Drawable::on_disabled()
     // Drawable might have already been unregistered in uninitialize() method
     if (Renderer::get_instance()->is_drawable_registered(drawable))
     {
-        Renderer::get_instance()->unregister_drawable(drawable);
+        Renderer::get_instance()->unregister_drawable(drawable, materials);
     }
 }
 

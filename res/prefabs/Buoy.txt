@@ -14,16 +14,16 @@ Entities:
         guid: cf7208cf385f182adb5c96bfb2b2d17cab4fd819ab06eb20b05c3bb040aaa49c
         custom_name: ""
         model_path: ./res/models\buoy\light_buoy.gltf
-        material:
-          Shader:
-            VertexPath: ./res/shaders/lit.hlsl
-            FragmentPath: ./res/shaders/lit.hlsl
-            GeometryPath: ""
-          Color: [1, 1, 1, 1]
-          RenderOrder: 0
-          NeedsForward: false
-          CastsShadows: true
-          IsBillboard: false
+        materials:
+          - Shader:
+              VertexPath: ./res/shaders/lit.hlsl
+              FragmentPath: ./res/shaders/lit.hlsl
+              GeometryPath: ""
+            Color: [1, 1, 1, 1]
+            RenderOrder: 0
+            NeedsForward: false
+            CastsShadows: true
+            IsBillboard: false
       - ComponentName: FloaterComponent
         guid: 05cf789667fc6cb471e0bc7275891ed7d6b61083aa9411379b316cf8f791c3b4
         custom_name: ""

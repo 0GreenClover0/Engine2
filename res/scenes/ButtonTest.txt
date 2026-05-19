@@ -46,17 +46,17 @@ Entities:
         m_ps_buffer: [[0.100000001, 0.100000001, 0.5, 1], [0, 0, 0.400000006, 1], 0.00200000009, 0.00260000001, 35, 10, 0.5, 0.980000019]
         tesselation_level: 5
         model_path: ""
-        material:
-          Shader:
-            VertexPath: ./res/shaders/water.hlsl
-            FragmentPath: ./res/shaders/water.hlsl
-            GeometryPath: ""
-          Color: [1, 1, 1, 1]
-          RenderOrder: 0
-          NeedsForward: true
-          CastsShadows: false
-          IsUI: false
-          IsBillboard: false
+        materials:
+          - Shader:
+              VertexPath: ./res/shaders/water.hlsl
+              FragmentPath: ./res/shaders/water.hlsl
+              GeometryPath: ""
+            Color: [1, 1, 1, 1]
+            RenderOrder: 0
+            NeedsForward: true
+            CastsShadows: false
+            IsUI: false
+            IsBillboard: false
   - Entity: Sea Floor
     guid: 05ae771b8e0529c2aa7c6d2a86d014411fb63948ab78ea4f3673bbb56fce6a52
     Name: Sea Floor
@@ -71,17 +71,17 @@ Entities:
         guid: 7061ecbc1d2399c56ce838bb765450ce6abaebb66585a72165929f9445d18893
         custom_name: ""
         model_path: ./res/models/water/water.gltf
-        material:
-          Shader:
-            VertexPath: ./res/shaders/lit.hlsl
-            FragmentPath: ./res/shaders/lit.hlsl
-            GeometryPath: ""
-          Color: [1, 1, 1, 1]
-          RenderOrder: 0
-          NeedsForward: false
-          CastsShadows: true
-          IsUI: false
-          IsBillboard: false
+        materials:
+          - Shader:
+              VertexPath: ./res/shaders/lit.hlsl
+              FragmentPath: ./res/shaders/lit.hlsl
+              GeometryPath: ""
+            Color: [1, 1, 1, 1]
+            RenderOrder: 0
+            NeedsForward: false
+            CastsShadows: true
+            IsUI: false
+            IsBillboard: false
   - Entity: Directional light
     guid: 3a4f51f3e1d635b3909f93ee22c5c2c1c78cf5f433fbf573bc33cbac46028188
     Name: Directional light
@@ -100,17 +100,17 @@ Entities:
         texture_path: ./res/textures/container.png
         radius: 0.100000001
         model_path: ""
-        material:
-          Shader:
-            VertexPath: ./res/shaders/light_source.hlsl
-            FragmentPath: ./res/shaders/light_source.hlsl
-            GeometryPath: ""
-          Color: [1, 1, 1, 1]
-          RenderOrder: 0
-          NeedsForward: false
-          CastsShadows: true
-          IsUI: false
-          IsBillboard: false
+        materials:
+          - Shader:
+              VertexPath: ./res/shaders/light_source.hlsl
+              FragmentPath: ./res/shaders/light_source.hlsl
+              GeometryPath: ""
+            Color: [1, 1, 1, 1]
+            RenderOrder: 0
+            NeedsForward: false
+            CastsShadows: true
+            IsUI: false
+            IsBillboard: false
       - ComponentName: DirectionalLightComponent
         guid: 36380a6639551aede560b1ed26fe9fc66d0020f28c66e800c3ee132def1444d5
         custom_name: ""
@@ -296,17 +296,17 @@ Entities:
         top_right_corner: [0, 0]
         bottom_left_corner: [0, 0]
         bottom_right_corner: [0, 0]
-        material:
-          Shader:
-            VertexPath: ./res/shaders/ui.hlsl
-            FragmentPath: ./res/shaders/ui.hlsl
-            GeometryPath: ""
-          Color: [1, 1, 1, 1]
-          RenderOrder: 1
-          NeedsForward: false
-          CastsShadows: false
-          IsUI: true
-          IsBillboard: false
+        materials:
+          - Shader:
+              VertexPath: ./res/shaders/ui.hlsl
+              FragmentPath: ./res/shaders/ui.hlsl
+              GeometryPath: ""
+            Color: [1, 1, 1, 1]
+            RenderOrder: 1
+            NeedsForward: false
+            CastsShadows: false
+            IsUI: true
+            IsBillboard: false
   - Entity: ScreenText
     guid: 28e32624d9d80b7770d45aa44b5c9f48a682b0ed6fbdd8554198a12ef95444dc
     Name: ScreenText
@@ -327,14 +327,14 @@ Entities:
         flags: 2053
         button_ref:
           guid: 9b3faf38e062233164a47df4276806064628aeb6d803b06568162e05fc6ce9b9
-        material:
-          Shader:
-            VertexPath: ./res/shaders/ui.hlsl
-            FragmentPath: ./res/shaders/ui.hlsl
-            GeometryPath: ""
-          Color: [1, 1, 1, 1]
-          RenderOrder: 2
-          NeedsForward: false
-          CastsShadows: true
-          IsUI: false
-          IsBillboard: false
+        materials:
+          - Shader:
+              VertexPath: ./res/shaders/ui.hlsl
+              FragmentPath: ./res/shaders/ui.hlsl
+              GeometryPath: ""
+            Color: [1, 1, 1, 1]
+            RenderOrder: 2
+            NeedsForward: false
+            CastsShadows: true
+            IsUI: false
+            IsBillboard: false

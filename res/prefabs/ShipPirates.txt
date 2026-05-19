@@ -38,16 +38,16 @@ Entities:
         guid: c969a25a4a0442bc524d384c0830004d11b044cdc72b716d3fdba826015dfc8e
         custom_name: ""
         model_path: ./res/models/shipPirates/shipPirates.gltf
-        material:
-          Shader:
-            VertexPath: ./res/shaders/lit.hlsl
-            FragmentPath: ./res/shaders/lit.hlsl
-            GeometryPath: ""
-          Color: [1, 1, 1, 1]
-          RenderOrder: 0
-          NeedsForward: false
-          CastsShadows: true
-          IsBillboard: false
+        materials:
+          - Shader:
+              VertexPath: ./res/shaders/lit.hlsl
+              FragmentPath: ./res/shaders/lit.hlsl
+              GeometryPath: ""
+            Color: [1, 1, 1, 1]
+            RenderOrder: 0
+            NeedsForward: false
+            CastsShadows: true
+            IsBillboard: false
   - Entity: Eyes
     guid: 6c1f49a8db6daba54ca22856f7345564392f95f29426f3cb2aeda911ed0226e3
     Name: Eyes

@@ -95,16 +95,16 @@ Entities:
         guid: b83038d9ec008cf984c5df0522c4af1b0b7b7769726d8870d5c6c8e6d2c962fd
         custom_name: ""
         model_path: ./res/models\lighthouseNew\lighthouse.gltf
-        material:
-          Shader:
-            VertexPath: ./res/shaders/lit.hlsl
-            FragmentPath: ./res/shaders/lit.hlsl
-            GeometryPath: ""
-          Color: [1, 1, 1, 1]
-          RenderOrder: 0
-          NeedsForward: false
-          CastsShadows: true
-          IsBillboard: false
+        materials:
+          - Shader:
+              VertexPath: ./res/shaders/lit.hlsl
+              FragmentPath: ./res/shaders/lit.hlsl
+              GeometryPath: ""
+            Color: [1, 1, 1, 1]
+            RenderOrder: 0
+            NeedsForward: false
+            CastsShadows: true
+            IsBillboard: false
   - Entity: Controller
     guid: 709cfcae0de979aeb46181f6f9786b2897f0e1e9b08dbf3c2fa84176ec4a63ed
     Name: Controller
@@ -270,16 +270,16 @@ Entities:
         guid: 5d2cd7e108c2edfbf42ace28d50059bfa5a47495ab0a03c94ed23620a68c0716
         custom_name: ""
         model_path: ./res/models\buoy\light_buoy.gltf
-        material:
-          Shader:
-            VertexPath: ./res/shaders/lit.hlsl
-            FragmentPath: ./res/shaders/lit.hlsl
-            GeometryPath: ""
-          Color: [1, 1, 1, 1]
-          RenderOrder: 0
-          NeedsForward: false
-          CastsShadows: true
-          IsBillboard: false
+        materials:
+          - Shader:
+              VertexPath: ./res/shaders/lit.hlsl
+              FragmentPath: ./res/shaders/lit.hlsl
+              GeometryPath: ""
+            Color: [1, 1, 1, 1]
+            RenderOrder: 0
+            NeedsForward: false
+            CastsShadows: true
+            IsBillboard: false
       - ComponentName: FloaterComponent
         guid: dc1e3ac915e2120d91eafa23e98c1392c2a9d274821385fb255c7b2b65966cca
         custom_name: ""
@@ -344,16 +344,16 @@ Entities:
         guid: 84f03e6eca936bed1efea73194e4fdd205ae3fa9281db687fa334b52eadc6c80
         custom_name: ""
         model_path: ./res/models\buoy\light_buoy.gltf
-        material:
-          Shader:
-            VertexPath: ./res/shaders/lit.hlsl
-            FragmentPath: ./res/shaders/lit.hlsl
-            GeometryPath: ""
-          Color: [1, 1, 1, 1]
-          RenderOrder: 0
-          NeedsForward: false
-          CastsShadows: true
-          IsBillboard: false
+        materials:
+          - Shader:
+              VertexPath: ./res/shaders/lit.hlsl
+              FragmentPath: ./res/shaders/lit.hlsl
+              GeometryPath: ""
+            Color: [1, 1, 1, 1]
+            RenderOrder: 0
+            NeedsForward: false
+            CastsShadows: true
+            IsBillboard: false
       - ComponentName: FloaterComponent
         guid: c17ae67eab9ca8541e33d9a8a31a807194c96d331f0fe807f8525e36bfd973e5
         custom_name: ""
@@ -418,16 +418,16 @@ Entities:
         guid: 73e162ed8dc216d002a5289053f829c963a55cfc0d1003f282107cb522f5858c
         custom_name: ""
         model_path: ./res/models\buoy\light_buoy.gltf
-        material:
-          Shader:
-            VertexPath: ./res/shaders/lit.hlsl
-            FragmentPath: ./res/shaders/lit.hlsl
-            GeometryPath: ""
-          Color: [1, 1, 1, 1]
-          RenderOrder: 0
-          NeedsForward: false
-          CastsShadows: true
-          IsBillboard: false
+        materials:
+          - Shader:
+              VertexPath: ./res/shaders/lit.hlsl
+              FragmentPath: ./res/shaders/lit.hlsl
+              GeometryPath: ""
+            Color: [1, 1, 1, 1]
+            RenderOrder: 0
+            NeedsForward: false
+            CastsShadows: true
+            IsBillboard: false
       - ComponentName: FloaterComponent
         guid: 09a9c26c6ca754bd5bcb87a4b30174a216b1031b1b1a3daafb26943e1676cd40
         custom_name: ""
@@ -492,16 +492,16 @@ Entities:
         guid: 77f9455d38a53d2ccd150cd3789cf6b8574ab9216328d814500da7607d20fe64
         custom_name: ""
         model_path: ./res/models\buoy\light_buoy.gltf
-        material:
-          Shader:
-            VertexPath: ./res/shaders/lit.hlsl
-            FragmentPath: ./res/shaders/lit.hlsl
-            GeometryPath: ""
-          Color: [1, 1, 1, 1]
-          RenderOrder: 0
-          NeedsForward: false
-          CastsShadows: true
-          IsBillboard: false
+        materials:
+          - Shader:
+              VertexPath: ./res/shaders/lit.hlsl
+              FragmentPath: ./res/shaders/lit.hlsl
+              GeometryPath: ""
+            Color: [1, 1, 1, 1]
+            RenderOrder: 0
+            NeedsForward: false
+            CastsShadows: true
+            IsBillboard: false
       - ComponentName: FloaterComponent
         guid: b2ae3b0c90606d6ea579f848f593afa83e1f7abb58c0b630c5925fb939d940b4
         custom_name: ""
@@ -654,16 +654,16 @@ Entities:
         guid: ba9041ca17247ae8cede9689ebd6c826e620c4cc40c147eebb5b31402fbe03b2
         custom_name: ""
         model_path: ./res/models\generator\generator.gltf
-        material:
-          Shader:
-            VertexPath: ./res/shaders/lit.hlsl
-            FragmentPath: ./res/shaders/lit.hlsl
-            GeometryPath: ""
-          Color: [1, 1, 1, 1]
-          RenderOrder: 0
-          NeedsForward: false
-          CastsShadows: true
-          IsBillboard: false
+        materials:
+          - Shader:
+              VertexPath: ./res/shaders/lit.hlsl
+              FragmentPath: ./res/shaders/lit.hlsl
+              GeometryPath: ""
+            Color: [1, 1, 1, 1]
+            RenderOrder: 0
+            NeedsForward: false
+            CastsShadows: true
+            IsBillboard: false
       - ComponentName: Collider2DComponent
         guid: fd49769e5148f99d5463eb9bd85f93a930ba188ba6daef93aaf8f60f20d0c5c4
         custom_name: ""
@@ -773,16 +773,16 @@ Entities:
         guid: 459a2dda9bb33930a06951ebf8232f1033ab90a9c74094f382f109021deafe04
         custom_name: ""
         model_path: ./res/models\workshop\workshop.gltf
-        material:
-          Shader:
-            VertexPath: ./res/shaders/lit.hlsl
-            FragmentPath: ./res/shaders/lit.hlsl
-            GeometryPath: ""
-          Color: [1, 1, 1, 1]
-          RenderOrder: 0
-          NeedsForward: false
-          CastsShadows: true
-          IsBillboard: false
+        materials:
+          - Shader:
+              VertexPath: ./res/shaders/lit.hlsl
+              FragmentPath: ./res/shaders/lit.hlsl
+              GeometryPath: ""
+            Color: [1, 1, 1, 1]
+            RenderOrder: 0
+            NeedsForward: false
+            CastsShadows: true
+            IsBillboard: false
       - ComponentName: Collider2DComponent
         guid: b8f27ca7e0ae3d890553cc6ad731609b903eeaf73fc4c99a9f824cb32e67a44d
         custom_name: ""
@@ -835,16 +835,16 @@ Entities:
         guid: 9aeadfd7660d37974240058ee1c6693bdecb55fb90103a283a9dd950e094bde0
         custom_name: ""
         model_path: ./res/models/iceIslands/s_2.gltf
-        material:
-          Shader:
-            VertexPath: ./res/shaders/lit.hlsl
-            FragmentPath: ./res/shaders/lit.hlsl
-            GeometryPath: ""
-          Color: [1, 1, 1, 1]
-          RenderOrder: 0
-          NeedsForward: false
-          CastsShadows: true
-          IsBillboard: false
+        materials:
+          - Shader:
+              VertexPath: ./res/shaders/lit.hlsl
+              FragmentPath: ./res/shaders/lit.hlsl
+              GeometryPath: ""
+            Color: [1, 1, 1, 1]
+            RenderOrder: 0
+            NeedsForward: false
+            CastsShadows: true
+            IsBillboard: false
   - Entity: Floe
     guid: def62b734ab3560e2205d99f5186c0a7da59bdeee4a529f9d6281412099a7dfc
     Name: Floe
@@ -874,16 +874,16 @@ Entities:
         guid: 4768d4841379c5fa797e65420871439e293ca9e33aea5e1db703c723f1acc223
         custom_name: ""
         model_path: ./res/models/iceIslands/c_4.gltf
-        material:
-          Shader:
-            VertexPath: ./res/shaders/lit.hlsl
-            FragmentPath: ./res/shaders/lit.hlsl
-            GeometryPath: ""
-          Color: [1, 1, 1, 1]
-          RenderOrder: 0
-          NeedsForward: false
-          CastsShadows: true
-          IsBillboard: false
+        materials:
+          - Shader:
+              VertexPath: ./res/shaders/lit.hlsl
+              FragmentPath: ./res/shaders/lit.hlsl
+              GeometryPath: ""
+            Color: [1, 1, 1, 1]
+            RenderOrder: 0
+            NeedsForward: false
+            CastsShadows: true
+            IsBillboard: false
   - Entity: Floe
     guid: 72bff10ac986c5646983bbcee24541c9f5a096994c340ff87ba6f9dac6dfdc40
     Name: Floe
@@ -913,16 +913,16 @@ Entities:
         guid: 6430ffc86a3a23884e35ad5f4b7a12bb4659f9fb4c371cb42752c9313d9067be
         custom_name: ""
         model_path: ./res/models/iceIslands/s_3.gltf
-        material:
-          Shader:
-            VertexPath: ./res/shaders/lit.hlsl
-            FragmentPath: ./res/shaders/lit.hlsl
-            GeometryPath: ""
-          Color: [1, 1, 1, 1]
-          RenderOrder: 0
-          NeedsForward: false
-          CastsShadows: true
-          IsBillboard: false
+        materials:
+          - Shader:
+              VertexPath: ./res/shaders/lit.hlsl
+              FragmentPath: ./res/shaders/lit.hlsl
+              GeometryPath: ""
+            Color: [1, 1, 1, 1]
+            RenderOrder: 0
+            NeedsForward: false
+            CastsShadows: true
+            IsBillboard: false
   - Entity: Floe
     guid: 446a84c4d39b556a404f15ffcd44c3b7da833bcfbbf33064f50ddb48b97c3aa8
     Name: Floe
@@ -952,16 +952,16 @@ Entities:
         guid: 7cf7c9e398d1dbe65f1669379cd6024cce9d99e5c2167bb2611c1b6bbf0502db
         custom_name: ""
         model_path: ./res/models/iceIslands/s_3.gltf
-        material:
-          Shader:
-            VertexPath: ./res/shaders/lit.hlsl
-            FragmentPath: ./res/shaders/lit.hlsl
-            GeometryPath: ""
-          Color: [1, 1, 1, 1]
-          RenderOrder: 0
-          NeedsForward: false
-          CastsShadows: true
-          IsBillboard: false
+        materials:
+          - Shader:
+              VertexPath: ./res/shaders/lit.hlsl
+              FragmentPath: ./res/shaders/lit.hlsl
+              GeometryPath: ""
+            Color: [1, 1, 1, 1]
+            RenderOrder: 0
+            NeedsForward: false
+            CastsShadows: true
+            IsBillboard: false
   - Entity: Floe
     guid: 8ef1097a4db7b5227dfb245e5b6c3b9e7c8f990fe42b032bea747064802095cc
     Name: Floe
@@ -991,16 +991,16 @@ Entities:
         guid: 75d9e9a662ee4acae43a6e00616d319f59105faa76fcab5540eb64acde7e5d54
         custom_name: ""
         model_path: ./res/models/iceIslands/s_4.gltf
-        material:
-          Shader:
-            VertexPath: ./res/shaders/lit.hlsl
-            FragmentPath: ./res/shaders/lit.hlsl
-            GeometryPath: ""
-          Color: [1, 1, 1, 1]
-          RenderOrder: 0
-          NeedsForward: false
-          CastsShadows: true
-          IsBillboard: false
+        materials:
+          - Shader:
+              VertexPath: ./res/shaders/lit.hlsl
+              FragmentPath: ./res/shaders/lit.hlsl
+              GeometryPath: ""
+            Color: [1, 1, 1, 1]
+            RenderOrder: 0
+            NeedsForward: false
+            CastsShadows: true
+            IsBillboard: false
   - Entity: Floe
     guid: bc5db61ed4d3368574ef7c746c69411b8534a853de96764d29df2fde26274e1f
     Name: Floe
@@ -1030,16 +1030,16 @@ Entities:
         guid: 5b0a80a4bfac35ba9b7ffe0cbcc47ba610ebb87210d2809977becc4140120e5b
         custom_name: ""
         model_path: ./res/models/iceIslands/c_7.gltf
-        material:
-          Shader:
-            VertexPath: ./res/shaders/lit.hlsl
-            FragmentPath: ./res/shaders/lit.hlsl
-            GeometryPath: ""
-          Color: [1, 1, 1, 1]
-          RenderOrder: 0
-          NeedsForward: false
-          CastsShadows: true
-          IsBillboard: false
+        materials:
+          - Shader:
+              VertexPath: ./res/shaders/lit.hlsl
+              FragmentPath: ./res/shaders/lit.hlsl
+              GeometryPath: ""
+            Color: [1, 1, 1, 1]
+            RenderOrder: 0
+            NeedsForward: false
+            CastsShadows: true
+            IsBillboard: false
   - Entity: Floe
     guid: e69b78ff88d0136b5e4e5c1aea3f2522e0f6d9a51a8e5eb783594f11f750e4a9
     Name: Floe
@@ -1069,16 +1069,16 @@ Entities:
         guid: 6a1bfa4cbb7d851aa5e51b73defbff152c8010168e9ac5f94f7193dadd068473
         custom_name: ""
         model_path: ./res/models/iceIslands/s_1.gltf
-        material:
-          Shader:
-            VertexPath: ./res/shaders/lit.hlsl
-            FragmentPath: ./res/shaders/lit.hlsl
-            GeometryPath: ""
-          Color: [1, 1, 1, 1]
-          RenderOrder: 0
-          NeedsForward: false
-          CastsShadows: true
-          IsBillboard: false
+        materials:
+          - Shader:
+              VertexPath: ./res/shaders/lit.hlsl
+              FragmentPath: ./res/shaders/lit.hlsl
+              GeometryPath: ""
+            Color: [1, 1, 1, 1]
+            RenderOrder: 0
+            NeedsForward: false
+            CastsShadows: true
+            IsBillboard: false
   - Entity: Floe
     guid: dc4bf69cb9d6f870f25d6357064a0e268e67a1cd6f4751d7e455cc7d67826c8f
     Name: Floe
@@ -1108,16 +1108,16 @@ Entities:
         guid: 2668b4a6a58109ab9afe4a9b58bc3f8ffeb166a4dae1fa19be9f0cce44767f09
         custom_name: ""
         model_path: ./res/models/iceIslands/c_4.gltf
-        material:
-          Shader:
-            VertexPath: ./res/shaders/lit.hlsl
-            FragmentPath: ./res/shaders/lit.hlsl
-            GeometryPath: ""
-          Color: [1, 1, 1, 1]
-          RenderOrder: 0
-          NeedsForward: false
-          CastsShadows: true
-          IsBillboard: false
+        materials:
+          - Shader:
+              VertexPath: ./res/shaders/lit.hlsl
+              FragmentPath: ./res/shaders/lit.hlsl
+              GeometryPath: ""
+            Color: [1, 1, 1, 1]
+            RenderOrder: 0
+            NeedsForward: false
+            CastsShadows: true
+            IsBillboard: false
   - Entity: Floe
     guid: 85c89de40ee691253e738d4c6d4ac4b61d46ad6d8327ba9bc155c582b1e2db20
     Name: Floe
@@ -1147,16 +1147,16 @@ Entities:
         guid: ed3e15e215eb55bd69ef161f585766827b89566519954c1a7f2c89edd2dbd265
         custom_name: ""
         model_path: ./res/models/iceIslands/c_7.gltf
-        material:
-          Shader:
-            VertexPath: ./res/shaders/lit.hlsl
-            FragmentPath: ./res/shaders/lit.hlsl
-            GeometryPath: ""
-          Color: [1, 1, 1, 1]
-          RenderOrder: 0
-          NeedsForward: false
-          CastsShadows: true
-          IsBillboard: false
+        materials:
+          - Shader:
+              VertexPath: ./res/shaders/lit.hlsl
+              FragmentPath: ./res/shaders/lit.hlsl
+              GeometryPath: ""
+            Color: [1, 1, 1, 1]
+            RenderOrder: 0
+            NeedsForward: false
+            CastsShadows: true
+            IsBillboard: false
   - Entity: Floe
     guid: 336f1bc97223c98c4f46b69f94ba5d9f8eebdbc077f8ee0b6cda62abd746f33a
     Name: Floe
@@ -1186,16 +1186,16 @@ Entities:
         guid: eabcb1df9cbccd53caaa825f17945616dcd8b2c86166a52c9c2846a3f48548d7
         custom_name: ""
         model_path: ./res/models/iceIslands/c_5.gltf
-        material:
-          Shader:
-            VertexPath: ./res/shaders/lit.hlsl
-            FragmentPath: ./res/shaders/lit.hlsl
-            GeometryPath: ""
-          Color: [1, 1, 1, 1]
-          RenderOrder: 0
-          NeedsForward: false
-          CastsShadows: true
-          IsBillboard: false
+        materials:
+          - Shader:
+              VertexPath: ./res/shaders/lit.hlsl
+              FragmentPath: ./res/shaders/lit.hlsl
+              GeometryPath: ""
+            Color: [1, 1, 1, 1]
+            RenderOrder: 0
+            NeedsForward: false
+            CastsShadows: true
+            IsBillboard: false
   - Entity: Floe
     guid: 6926d4e9d22b75757d44ed2dec1228163769ceaa23b4a5b8f30b0d2383d5e47a
     Name: Floe
@@ -1225,16 +1225,16 @@ Entities:
         guid: fb0f3b9f6aa6fa886178edfca7a78197f0ed7122bafb2794b061643dd2c64f71
         custom_name: ""
         model_path: ./res/models/iceIslands/c_5.gltf
-        material:
-          Shader:
-            VertexPath: ./res/shaders/lit.hlsl
-            FragmentPath: ./res/shaders/lit.hlsl
-            GeometryPath: ""
-          Color: [1, 1, 1, 1]
-          RenderOrder: 0
-          NeedsForward: false
-          CastsShadows: true
-          IsBillboard: false
+        materials:
+          - Shader:
+              VertexPath: ./res/shaders/lit.hlsl
+              FragmentPath: ./res/shaders/lit.hlsl
+              GeometryPath: ""
+            Color: [1, 1, 1, 1]
+            RenderOrder: 0
+            NeedsForward: false
+            CastsShadows: true
+            IsBillboard: false
   - Entity: Floe
     guid: 24d35069c2d8a8941fda8c093f489c4bf597df6d1b6ce3764c1da34da4dd447b
     Name: Floe
@@ -1264,16 +1264,16 @@ Entities:
         guid: bb759d78ecc10c261295a44c85abf4e511c7e565ea26093102346070ec1cf248
         custom_name: ""
         model_path: ./res/models/iceIslands/s_1.gltf
-        material:
-          Shader:
-            VertexPath: ./res/shaders/lit.hlsl
-            FragmentPath: ./res/shaders/lit.hlsl
-            GeometryPath: ""
-          Color: [1, 1, 1, 1]
-          RenderOrder: 0
-          NeedsForward: false
-          CastsShadows: true
-          IsBillboard: false
+        materials:
+          - Shader:
+              VertexPath: ./res/shaders/lit.hlsl
+              FragmentPath: ./res/shaders/lit.hlsl
+              GeometryPath: ""
+            Color: [1, 1, 1, 1]
+            RenderOrder: 0
+            NeedsForward: false
+            CastsShadows: true
+            IsBillboard: false
   - Entity: Floe
     guid: bddb1aea0ce3ce87266e9bf17e322e596cad288b542476338512622d2b963887
     Name: Floe
@@ -1303,16 +1303,16 @@ Entities:
         guid: fa4796016b053761ddc05dca2e38cd9af8c1739c3caec4ee46c9840a2cfe18c2
         custom_name: ""
         model_path: ./res/models/iceIslands/s_2.gltf
-        material:
-          Shader:
-            VertexPath: ./res/shaders/lit.hlsl
-            FragmentPath: ./res/shaders/lit.hlsl
-            GeometryPath: ""
-          Color: [1, 1, 1, 1]
-          RenderOrder: 0
-          NeedsForward: false
-          CastsShadows: true
-          IsBillboard: false
+        materials:
+          - Shader:
+              VertexPath: ./res/shaders/lit.hlsl
+              FragmentPath: ./res/shaders/lit.hlsl
+              GeometryPath: ""
+            Color: [1, 1, 1, 1]
+            RenderOrder: 0
+            NeedsForward: false
+            CastsShadows: true
+            IsBillboard: false
   - Entity: Floe
     guid: f36e1c77c8b6be3aaa5ea76e441c3c5d6727a37d280a837db715212487d49d58
     Name: Floe
@@ -1342,16 +1342,16 @@ Entities:
         guid: c85c47e6061c42266125953b0e19bedf763ec567794a9223b648bd881b4ba12f
         custom_name: ""
         model_path: ./res/models/iceIslands/s_4.gltf
-        material:
-          Shader:
-            VertexPath: ./res/shaders/lit.hlsl
-            FragmentPath: ./res/shaders/lit.hlsl
-            GeometryPath: ""
-          Color: [1, 1, 1, 1]
-          RenderOrder: 0
-          NeedsForward: false
-          CastsShadows: true
-          IsBillboard: false
+        materials:
+          - Shader:
+              VertexPath: ./res/shaders/lit.hlsl
+              FragmentPath: ./res/shaders/lit.hlsl
+              GeometryPath: ""
+            Color: [1, 1, 1, 1]
+            RenderOrder: 0
+            NeedsForward: false
+            CastsShadows: true
+            IsBillboard: false
   - Entity: Floe
     guid: a5f07e9060a9aca368932297870a9df729ddc20fe01dc146857430e4057dd4e6
     Name: Floe
@@ -1381,16 +1381,16 @@ Entities:
         guid: c02086ac2b1d4efa058158f3961ca72a1e7d3352ff7e11d4367073afda1dad89
         custom_name: ""
         model_path: ./res/models/iceIslands/c_7.gltf
-        material:
-          Shader:
-            VertexPath: ./res/shaders/lit.hlsl
-            FragmentPath: ./res/shaders/lit.hlsl
-            GeometryPath: ""
-          Color: [1, 1, 1, 1]
-          RenderOrder: 0
-          NeedsForward: false
-          CastsShadows: true
-          IsBillboard: false
+        materials:
+          - Shader:
+              VertexPath: ./res/shaders/lit.hlsl
+              FragmentPath: ./res/shaders/lit.hlsl
+              GeometryPath: ""
+            Color: [1, 1, 1, 1]
+            RenderOrder: 0
+            NeedsForward: false
+            CastsShadows: true
+            IsBillboard: false
   - Entity: Floe
     guid: 3b4a1a04b146811dd2c330683a9ad10633629fb734e7204de90233e575a1829a
     Name: Floe
@@ -1420,16 +1420,16 @@ Entities:
         guid: 7d09468cba3b1e024e02fb0c2084ed5e4a68348f26786047f34a0df11c60c837
         custom_name: ""
         model_path: ./res/models/iceIslands/s_3.gltf
-        material:
-          Shader:
-            VertexPath: ./res/shaders/lit.hlsl
-            FragmentPath: ./res/shaders/lit.hlsl
-            GeometryPath: ""
-          Color: [1, 1, 1, 1]
-          RenderOrder: 0
-          NeedsForward: false
-          CastsShadows: true
-          IsBillboard: false
+        materials:
+          - Shader:
+              VertexPath: ./res/shaders/lit.hlsl
+              FragmentPath: ./res/shaders/lit.hlsl
+              GeometryPath: ""
+            Color: [1, 1, 1, 1]
+            RenderOrder: 0
+            NeedsForward: false
+            CastsShadows: true
+            IsBillboard: false
   - Entity: Floe
     guid: c01c2bf580c405e9d386240305b061dcfec5a94a68509d8736f609171b878582
     Name: Floe
@@ -1459,16 +1459,16 @@ Entities:
         guid: 5e19b5c0a739ff084d6089a99afd66ad0b6cea256296832212201fb87adb0062
         custom_name: ""
         model_path: ./res/models/iceIslands/s_3.gltf
-        material:
-          Shader:
-            VertexPath: ./res/shaders/lit.hlsl
-            FragmentPath: ./res/shaders/lit.hlsl
-            GeometryPath: ""
-          Color: [1, 1, 1, 1]
-          RenderOrder: 0
-          NeedsForward: false
-          CastsShadows: true
-          IsBillboard: false
+        materials:
+          - Shader:
+              VertexPath: ./res/shaders/lit.hlsl
+              FragmentPath: ./res/shaders/lit.hlsl
+              GeometryPath: ""
+            Color: [1, 1, 1, 1]
+            RenderOrder: 0
+            NeedsForward: false
+            CastsShadows: true
+            IsBillboard: false
   - Entity: HarborBig
     guid: a7e09959307f8ad010576b6f41561bb615b78b2121d670a67bdfa40788372bec
     Name: HarborBig
@@ -1505,16 +1505,16 @@ Entities:
         guid: d755a2a7b2c8e2641d50fe1396ad88325e8027eb03cbecae952109680c88a489
         custom_name: ""
         model_path: ./res/models\harborIslands\corner_big_l.gltf
-        material:
-          Shader:
-            VertexPath: ./res/shaders/lit.hlsl
-            FragmentPath: ./res/shaders/lit.hlsl
-            GeometryPath: ""
-          Color: [1, 1, 1, 1]
-          RenderOrder: 0
-          NeedsForward: false
-          CastsShadows: true
-          IsBillboard: false
+        materials:
+          - Shader:
+              VertexPath: ./res/shaders/lit.hlsl
+              FragmentPath: ./res/shaders/lit.hlsl
+              GeometryPath: ""
+            Color: [1, 1, 1, 1]
+            RenderOrder: 0
+            NeedsForward: false
+            CastsShadows: true
+            IsBillboard: false
   - Entity: b
     guid: c0080e605e6bd1f0e5b308f604215650662b835d32f7ae5fda23ab1dc5a502a7
     Name: b
@@ -1529,16 +1529,16 @@ Entities:
         guid: 1779952bbc99a8fcd36c7773b0a4f218d52f4785bf3c5ee553ad214c952de695
         custom_name: ""
         model_path: ./res/models\harborIslands\bottom_big.gltf
-        material:
-          Shader:
-            VertexPath: ./res/shaders/lit.hlsl
-            FragmentPath: ./res/shaders/lit.hlsl
-            GeometryPath: ""
-          Color: [1, 1, 1, 1]
-          RenderOrder: 0
-          NeedsForward: false
-          CastsShadows: true
-          IsBillboard: false
+        materials:
+          - Shader:
+              VertexPath: ./res/shaders/lit.hlsl
+              FragmentPath: ./res/shaders/lit.hlsl
+              GeometryPath: ""
+            Color: [1, 1, 1, 1]
+            RenderOrder: 0
+            NeedsForward: false
+            CastsShadows: true
+            IsBillboard: false
   - Entity: rl
     guid: 3c51ba5f36a488a8a133fe8e969fc6a40630669838d98818b2b384d510bcc04a
     Name: rl
@@ -1553,16 +1553,16 @@ Entities:
         guid: d5a8683277f237129ca7b54d3766bd5d5ed073bd5c80f3f71a9df8452a73a150
         custom_name: ""
         model_path: ./res/models\harborIslands\corner_big_r.gltf
-        material:
-          Shader:
-            VertexPath: ./res/shaders/lit.hlsl
-            FragmentPath: ./res/shaders/lit.hlsl
-            GeometryPath: ""
-          Color: [1, 1, 1, 1]
-          RenderOrder: 0
-          NeedsForward: false
-          CastsShadows: true
-          IsBillboard: false
+        materials:
+          - Shader:
+              VertexPath: ./res/shaders/lit.hlsl
+              FragmentPath: ./res/shaders/lit.hlsl
+              GeometryPath: ""
+            Color: [1, 1, 1, 1]
+            RenderOrder: 0
+            NeedsForward: false
+            CastsShadows: true
+            IsBillboard: false
   - Entity: el
     guid: e20fb590fb52f1fd1c85d34d77ecd39022c62b4ee08f92a1e3ba30bd0faf2f0f
     Name: el
@@ -1577,16 +1577,16 @@ Entities:
         guid: 4bdabfbc547194367cc0872c24f687426f16ce3f08e3df5f4cbccf72128771f7
         custom_name: ""
         model_path: ./res/models\harborIslands\end_big_l.gltf
-        material:
-          Shader:
-            VertexPath: ./res/shaders/lit.hlsl
-            FragmentPath: ./res/shaders/lit.hlsl
-            GeometryPath: ""
-          Color: [1, 1, 1, 1]
-          RenderOrder: 0
-          NeedsForward: false
-          CastsShadows: true
-          IsBillboard: false
+        materials:
+          - Shader:
+              VertexPath: ./res/shaders/lit.hlsl
+              FragmentPath: ./res/shaders/lit.hlsl
+              GeometryPath: ""
+            Color: [1, 1, 1, 1]
+            RenderOrder: 0
+            NeedsForward: false
+            CastsShadows: true
+            IsBillboard: false
   - Entity: er
     guid: e0d47d84151ab6d8a5891d2f7bd6fce9649f2eeb05f69311a967cd3b2c702079
     Name: er
@@ -1601,16 +1601,16 @@ Entities:
         guid: eee3a768640f0a425140a7eb2750377cb01d8a3b0db9b6a7af20c089b411d0f1
         custom_name: ""
         model_path: ./res/models\harborIslands\end_big_r.gltf
-        material:
-          Shader:
-            VertexPath: ./res/shaders/lit.hlsl
-            FragmentPath: ./res/shaders/lit.hlsl
-            GeometryPath: ""
-          Color: [1, 1, 1, 1]
-          RenderOrder: 0
-          NeedsForward: false
-          CastsShadows: true
-          IsBillboard: false
+        materials:
+          - Shader:
+              VertexPath: ./res/shaders/lit.hlsl
+              FragmentPath: ./res/shaders/lit.hlsl
+              GeometryPath: ""
+            Color: [1, 1, 1, 1]
+            RenderOrder: 0
+            NeedsForward: false
+            CastsShadows: true
+            IsBillboard: false
   - Entity: Bounds
     guid: a3778d6367c1d5b2634070b6492358a0873561abe4fa0f34ea34b6e885ffa083
     Name: Bounds
@@ -1722,16 +1722,16 @@ Entities:
         guid: 08ff48fa99406434b8836dfc0815296c5859eafc0dd18c22a3093c28e0c69536
         custom_name: ""
         model_path: ./res/models\iceIslands\c_6.gltf
-        material:
-          Shader:
-            VertexPath: ./res/shaders/lit.hlsl
-            FragmentPath: ./res/shaders/lit.hlsl
-            GeometryPath: ""
-          Color: [1, 1, 1, 1]
-          RenderOrder: 0
-          NeedsForward: false
-          CastsShadows: true
-          IsBillboard: false
+        materials:
+          - Shader:
+              VertexPath: ./res/shaders/lit.hlsl
+              FragmentPath: ./res/shaders/lit.hlsl
+              GeometryPath: ""
+            Color: [1, 1, 1, 1]
+            RenderOrder: 0
+            NeedsForward: false
+            CastsShadows: true
+            IsBillboard: false
   - Entity: Entity
     guid: bb9bde5b495018d80be6b4b2d61518777d424fe92397b16944c83840b7a0f628
     Name: Entity
@@ -1746,16 +1746,16 @@ Entities:
         guid: 71a3c7d4e210acef0a30df921d5b1f9d2a2356bd07bb3aadb10abf84e94dc126
         custom_name: ""
         model_path: ./res/models\iceIslands\c_6.gltf
-        material:
-          Shader:
-            VertexPath: ./res/shaders/lit.hlsl
-            FragmentPath: ./res/shaders/lit.hlsl
-            GeometryPath: ""
-          Color: [1, 1, 1, 1]
-          RenderOrder: 0
-          NeedsForward: false
-          CastsShadows: true
-          IsBillboard: false
+        materials:
+          - Shader:
+              VertexPath: ./res/shaders/lit.hlsl
+              FragmentPath: ./res/shaders/lit.hlsl
+              GeometryPath: ""
+            Color: [1, 1, 1, 1]
+            RenderOrder: 0
+            NeedsForward: false
+            CastsShadows: true
+            IsBillboard: false
   - Entity: Entity
     guid: 8ff78a9d6f894490e5c91297435ffd98c0ec0cdfd64c48ebb0d76b9696ae1b02
     Name: Entity
@@ -1770,16 +1770,16 @@ Entities:
         guid: 4e5fd81d876c8556f025217de0b36cea3d9ad375045e3f646a3624529ef88474
         custom_name: ""
         model_path: ./res/models\iceIslands\c_6.gltf
-        material:
-          Shader:
-            VertexPath: ./res/shaders/lit.hlsl
-            FragmentPath: ./res/shaders/lit.hlsl
-            GeometryPath: ""
-          Color: [1, 1, 1, 1]
-          RenderOrder: 0
-          NeedsForward: false
-          CastsShadows: true
-          IsBillboard: false
+        materials:
+          - Shader:
+              VertexPath: ./res/shaders/lit.hlsl
+              FragmentPath: ./res/shaders/lit.hlsl
+              GeometryPath: ""
+            Color: [1, 1, 1, 1]
+            RenderOrder: 0
+            NeedsForward: false
+            CastsShadows: true
+            IsBillboard: false
   - Entity: Entity
     guid: 019fae2de629a52b763dd0e7f2b21d3c74bb360953a3c5e617674de785e6ef3b
     Name: Entity
@@ -1794,16 +1794,16 @@ Entities:
         guid: 97c73f121a497a0f2e706b226bf9521e09396edda9f20bcc7c67a717cd8974da
         custom_name: ""
         model_path: ./res/models\iceIslands\c_6.gltf
-        material:
-          Shader:
-            VertexPath: ./res/shaders/lit.hlsl
-            FragmentPath: ./res/shaders/lit.hlsl
-            GeometryPath: ""
-          Color: [1, 1, 1, 1]
-          RenderOrder: 0
-          NeedsForward: false
-          CastsShadows: true
-          IsBillboard: false
+        materials:
+          - Shader:
+              VertexPath: ./res/shaders/lit.hlsl
+              FragmentPath: ./res/shaders/lit.hlsl
+              GeometryPath: ""
+            Color: [1, 1, 1, 1]
+            RenderOrder: 0
+            NeedsForward: false
+            CastsShadows: true
+            IsBillboard: false
   - Entity: Entity
     guid: d5f7dc7d9b4da1fdce3768a241f8050333b0ef4b6f140828c88fbe82dabcc8a1
     Name: Entity
@@ -1818,16 +1818,16 @@ Entities:
         guid: dfd2d7eb611dd1cf4b71e8c00df4e5fc08ec67b63e2c9fed14ec7588d708ffa3
         custom_name: ""
         model_path: ./res/models\iceIslands\c_6.gltf
-        material:
-          Shader:
-            VertexPath: ./res/shaders/lit.hlsl
-            FragmentPath: ./res/shaders/lit.hlsl
-            GeometryPath: ""
-          Color: [1, 1, 1, 1]
-          RenderOrder: 0
-          NeedsForward: false
-          CastsShadows: true
-          IsBillboard: false
+        materials:
+          - Shader:
+              VertexPath: ./res/shaders/lit.hlsl
+              FragmentPath: ./res/shaders/lit.hlsl
+              GeometryPath: ""
+            Color: [1, 1, 1, 1]
+            RenderOrder: 0
+            NeedsForward: false
+            CastsShadows: true
+            IsBillboard: false
   - Entity: Entity
     guid: debffa41491ff55d05ba37853deecda788ed6376dd8dc73d9c007419d668b95c
     Name: Entity
@@ -1842,16 +1842,16 @@ Entities:
         guid: 93092732142dbd45be62f994bf3aedeb36ff69903f622f271855ac532e82d3c1
         custom_name: ""
         model_path: ./res/models\iceIslands\c_6.gltf
-        material:
-          Shader:
-            VertexPath: ./res/shaders/lit.hlsl
-            FragmentPath: ./res/shaders/lit.hlsl
-            GeometryPath: ""
-          Color: [1, 1, 1, 1]
-          RenderOrder: 0
-          NeedsForward: false
-          CastsShadows: true
-          IsBillboard: false
+        materials:
+          - Shader:
+              VertexPath: ./res/shaders/lit.hlsl
+              FragmentPath: ./res/shaders/lit.hlsl
+              GeometryPath: ""
+            Color: [1, 1, 1, 1]
+            RenderOrder: 0
+            NeedsForward: false
+            CastsShadows: true
+            IsBillboard: false
   - Entity: Entity
     guid: 9394b8890ffdfdd4f480a0b55ed13bc48d8149b1fb5618b509e7a8c368f2093a
     Name: Entity
@@ -1866,16 +1866,16 @@ Entities:
         guid: 12d7133e274e5670842a0b9dcb107309b2f0067fac26d6ec8ff79bb30b51ae6d
         custom_name: ""
         model_path: ./res/models\iceIslands\c_6.gltf
-        material:
-          Shader:
-            VertexPath: ./res/shaders/lit.hlsl
-            FragmentPath: ./res/shaders/lit.hlsl
-            GeometryPath: ""
-          Color: [1, 1, 1, 1]
-          RenderOrder: 0
-          NeedsForward: false
-          CastsShadows: true
-          IsBillboard: false
+        materials:
+          - Shader:
+              VertexPath: ./res/shaders/lit.hlsl
+              FragmentPath: ./res/shaders/lit.hlsl
+              GeometryPath: ""
+            Color: [1, 1, 1, 1]
+            RenderOrder: 0
+            NeedsForward: false
+            CastsShadows: true
+            IsBillboard: false
   - Entity: Entity
     guid: 362a8464e0888fa977473f14bf298d2856ba99af737eac8be8214e0cddfd4c9e
     Name: Entity
@@ -1890,16 +1890,16 @@ Entities:
         guid: b6e056647c3834f7b5a1ea1c53c97685cdff22911045381ca62a744dd94b8efd
         custom_name: ""
         model_path: ./res/models\iceIslands\c_6.gltf
-        material:
-          Shader:
-            VertexPath: ./res/shaders/lit.hlsl
-            FragmentPath: ./res/shaders/lit.hlsl
-            GeometryPath: ""
-          Color: [1, 1, 1, 1]
-          RenderOrder: 0
-          NeedsForward: false
-          CastsShadows: true
-          IsBillboard: false
+        materials:
+          - Shader:
+              VertexPath: ./res/shaders/lit.hlsl
+              FragmentPath: ./res/shaders/lit.hlsl
+              GeometryPath: ""
+            Color: [1, 1, 1, 1]
+            RenderOrder: 0
+            NeedsForward: false
+            CastsShadows: true
+            IsBillboard: false
   - Entity: Entity
     guid: 34711854a79596bc16886ec8829601aae280a1a749168636aeeaaa3cf6ca7543
     Name: Entity
@@ -1914,16 +1914,16 @@ Entities:
         guid: 80c243074dd10ff0e2a9c355d58cc1c8fee6ddf9769596de41fbf4588a196693
         custom_name: ""
         model_path: ./res/models\iceIslands\c_6.gltf
-        material:
-          Shader:
-            VertexPath: ./res/shaders/lit.hlsl
-            FragmentPath: ./res/shaders/lit.hlsl
-            GeometryPath: ""
-          Color: [1, 1, 1, 1]
-          RenderOrder: 0
-          NeedsForward: false
-          CastsShadows: true
-          IsBillboard: false
+        materials:
+          - Shader:
+              VertexPath: ./res/shaders/lit.hlsl
+              FragmentPath: ./res/shaders/lit.hlsl
+              GeometryPath: ""
+            Color: [1, 1, 1, 1]
+            RenderOrder: 0
+            NeedsForward: false
+            CastsShadows: true
+            IsBillboard: false
   - Entity: Entity
     guid: 0f4755e4d5da1d86b19b425ed27b015ace5cc8b71d0c2d5fdf44cd5cf9e19799
     Name: Entity
@@ -1938,16 +1938,16 @@ Entities:
         guid: 10641ace020a92be0e1e5b1a449c2fed18fe092df83f9eb1c980c1da05b5a243
         custom_name: ""
         model_path: ./res/models\iceIslands\c_6.gltf
-        material:
-          Shader:
-            VertexPath: ./res/shaders/lit.hlsl
-            FragmentPath: ./res/shaders/lit.hlsl
-            GeometryPath: ""
-          Color: [1, 1, 1, 1]
-          RenderOrder: 0
-          NeedsForward: false
-          CastsShadows: true
-          IsBillboard: false
+        materials:
+          - Shader:
+              VertexPath: ./res/shaders/lit.hlsl
+              FragmentPath: ./res/shaders/lit.hlsl
+              GeometryPath: ""
+            Color: [1, 1, 1, 1]
+            RenderOrder: 0
+            NeedsForward: false
+            CastsShadows: true
+            IsBillboard: false
   - Entity: Entity
     guid: c70b0e42789f1d131e792f74337029ccfd1161ca1e9298ed88e8afaaa381a2ef
     Name: Entity
@@ -1962,16 +1962,16 @@ Entities:
         guid: 4f532edb70fe87a4c377e8c329f9d8f1139466d9a45de5db7c4264e15cec541d
         custom_name: ""
         model_path: ./res/models\iceIslands\c_6.gltf
-        material:
-          Shader:
-            VertexPath: ./res/shaders/lit.hlsl
-            FragmentPath: ./res/shaders/lit.hlsl
-            GeometryPath: ""
-          Color: [1, 1, 1, 1]
-          RenderOrder: 0
-          NeedsForward: false
-          CastsShadows: true
-          IsBillboard: false
+        materials:
+          - Shader:
+              VertexPath: ./res/shaders/lit.hlsl
+              FragmentPath: ./res/shaders/lit.hlsl
+              GeometryPath: ""
+            Color: [1, 1, 1, 1]
+            RenderOrder: 0
+            NeedsForward: false
+            CastsShadows: true
+            IsBillboard: false
   - Entity: Background
     guid: f337bcad6565c04ea8d3873aa30b9c60e22457fd3aa85abdf921b3b5443d803e
     Name: Background
@@ -1986,16 +1986,16 @@ Entities:
         guid: f24354f19b171d4cc9d6f788ccd3ce63f6da99350110ae041db468a3a7ef01f3
         custom_name: ""
         model_path: ./res/models\ground\ground.gltf
-        material:
-          Shader:
-            VertexPath: ./res/shaders/lit.hlsl
-            FragmentPath: ./res/shaders/lit.hlsl
-            GeometryPath: ""
-          Color: [1, 1, 1, 1]
-          RenderOrder: 0
-          NeedsForward: false
-          CastsShadows: true
-          IsBillboard: false
+        materials:
+          - Shader:
+              VertexPath: ./res/shaders/lit.hlsl
+              FragmentPath: ./res/shaders/lit.hlsl
+              GeometryPath: ""
+            Color: [1, 1, 1, 1]
+            RenderOrder: 0
+            NeedsForward: false
+            CastsShadows: true
+            IsBillboard: false
   - Entity: FloatersManager
     guid: 1af66ea7fc72c84b91ad9eba9400c4f7ca7c4d3468ae532870be39be1098bfa4
     Name: FloatersManager
@@ -2037,16 +2037,16 @@ Entities:
         m_ps_buffer: [[0.0337027088, 0, 0.50555557, 1], [0.00814755727, 0, 0.24444443, 1], 9.99999975e-05, 9.99999975e-05, 2.88000011, 14.4720001, 0.061999999, 0.861000001]
         tesselation_level: 8
         model_path: ""
-        material:
-          Shader:
-            VertexPath: ./res/shaders/water.hlsl
-            FragmentPath: ./res/shaders/water.hlsl
-            GeometryPath: ""
-          Color: [1, 1, 1, 1]
-          RenderOrder: 0
-          NeedsForward: true
-          CastsShadows: false
-          IsBillboard: false
+        materials:
+          - Shader:
+              VertexPath: ./res/shaders/water.hlsl
+              FragmentPath: ./res/shaders/water.hlsl
+              GeometryPath: ""
+            Color: [1, 1, 1, 1]
+            RenderOrder: 0
+            NeedsForward: true
+            CastsShadows: false
+            IsBillboard: false
   - Entity: Decor
     guid: 2c00fd9e0fb588525efa5faec9cf7b06b4cd8c3448651edfc5c3e5d89339a4a3
     Name: Decor
@@ -2072,16 +2072,16 @@ Entities:
         guid: 2da626852cdc96d384a885a4306e29182ec9e84b84007a1899eadccbfdac323e
         custom_name: ""
         model_path: ./res/models\iglooVeryFinal\igloo.gltf
-        material:
-          Shader:
-            VertexPath: ./res/shaders/lit.hlsl
-            FragmentPath: ./res/shaders/lit.hlsl
-            GeometryPath: ""
-          Color: [1, 1, 1, 1]
-          RenderOrder: 0
-          NeedsForward: false
-          CastsShadows: true
-          IsBillboard: false
+        materials:
+          - Shader:
+              VertexPath: ./res/shaders/lit.hlsl
+              FragmentPath: ./res/shaders/lit.hlsl
+              GeometryPath: ""
+            Color: [1, 1, 1, 1]
+            RenderOrder: 0
+            NeedsForward: false
+            CastsShadows: true
+            IsBillboard: false
       - ComponentName: Collider2DComponent
         guid: 6b2e396cb047ff1566beb35528246b0fd8b058aae6e6c8ff04b68b7bc4b341c3
         custom_name: ""
@@ -2108,16 +2108,16 @@ Entities:
         guid: b842f3946cd294354b7c40983a24ef14144ce68e127761fb9906d160ad87620b
         custom_name: ""
         model_path: ./res/models\skull\skull.gltf
-        material:
-          Shader:
-            VertexPath: ./res/shaders/lit.hlsl
-            FragmentPath: ./res/shaders/lit.hlsl
-            GeometryPath: ""
-          Color: [1, 1, 1, 1]
-          RenderOrder: 0
-          NeedsForward: false
-          CastsShadows: true
-          IsBillboard: false
+        materials:
+          - Shader:
+              VertexPath: ./res/shaders/lit.hlsl
+              FragmentPath: ./res/shaders/lit.hlsl
+              GeometryPath: ""
+            Color: [1, 1, 1, 1]
+            RenderOrder: 0
+            NeedsForward: false
+            CastsShadows: true
+            IsBillboard: false
       - ComponentName: Collider2DComponent
         guid: 3359cfd47151f7fcc1899298a43fbb4cacf5a7addd9cc70c9967e1d954ebd67a
         custom_name: ""
@@ -2144,13 +2144,13 @@ Entities:
         guid: 14f00bfcf1b0b351734f0815c53f89af782bf6ef2dfb660f99020569a5391adf
         custom_name: ""
         model_path: ./res/models\portfloor\portfloor.gltf
-        material:
-          Shader:
-            VertexPath: ./res/shaders/lit.hlsl
-            FragmentPath: ./res/shaders/lit.hlsl
-            GeometryPath: ""
-          Color: [1, 1, 1, 1]
-          RenderOrder: 0
-          NeedsForward: false
-          CastsShadows: true
-          IsBillboard: false
+        materials:
+          - Shader:
+              VertexPath: ./res/shaders/lit.hlsl
+              FragmentPath: ./res/shaders/lit.hlsl
+              GeometryPath: ""
+            Color: [1, 1, 1, 1]
+            RenderOrder: 0
+            NeedsForward: false
+            CastsShadows: true
+            IsBillboard: false

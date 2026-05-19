@@ -14,16 +14,16 @@ Entities:
         guid: 570631cb8dedb2f79ef272a6cc5fc956b839a2506bf4e0edef054e3cecbfafc2
         custom_name: ""
         background_path: ./res/textures/UI\UFOend_lvl.png
-        material:
-          Shader:
-            VertexPath: ./res/shaders/ui.hlsl
-            FragmentPath: ./res/shaders/ui.hlsl
-            GeometryPath: ""
-          Color: [1, 1, 1, 1]
-          RenderOrder: 3001
-          NeedsForward: true
-          CastsShadows: false
-          IsBillboard: false
+        materials:
+          - Shader:
+              VertexPath: ./res/shaders/ui.hlsl
+              FragmentPath: ./res/shaders/ui.hlsl
+              GeometryPath: ""
+            Color: [1, 1, 1, 1]
+            RenderOrder: 3001
+            NeedsForward: true
+            CastsShadows: false
+            IsBillboard: false
       - ComponentName: EndScreenFoliageComponent
         guid: 7b366c964927a1b78f59fdaf5cbf42ebfcf241cd956ea02e7bede2c51069215e
         custom_name: ""
@@ -66,16 +66,16 @@ Entities:
         top_right_corner: [0, 0]
         bottom_left_corner: [0, 0]
         bottom_right_corner: [0, 0]
-        material:
-          Shader:
-            VertexPath: ./res/shaders/ui.hlsl
-            FragmentPath: ./res/shaders/ui.hlsl
-            GeometryPath: ""
-          Color: [1, 1, 1, 1]
-          RenderOrder: 3001
-          NeedsForward: true
-          CastsShadows: false
-          IsBillboard: false
+        materials:
+          - Shader:
+              VertexPath: ./res/shaders/ui.hlsl
+              FragmentPath: ./res/shaders/ui.hlsl
+              GeometryPath: ""
+            Color: [1, 1, 1, 1]
+            RenderOrder: 3001
+            NeedsForward: true
+            CastsShadows: false
+            IsBillboard: false
   - Entity: Percentage
     guid: 97c3bead81654bc0344409a903252e392f931ad51d47824a60cb3a6a73736d1f
     Name: Percentage
@@ -98,16 +98,16 @@ Entities:
         bold: false
         button_ref:
           guid: nullptr
-        material:
-          Shader:
-            VertexPath: ./res/shaders/ui.hlsl
-            FragmentPath: ./res/shaders/ui.hlsl
-            GeometryPath: ""
-          Color: [1, 1, 1, 1]
-          RenderOrder: 3003
-          NeedsForward: true
-          CastsShadows: false
-          IsBillboard: false
+        materials:
+          - Shader:
+              VertexPath: ./res/shaders/ui.hlsl
+              FragmentPath: ./res/shaders/ui.hlsl
+              GeometryPath: ""
+            Color: [1, 1, 1, 1]
+            RenderOrder: 3003
+            NeedsForward: true
+            CastsShadows: false
+            IsBillboard: false
   - Entity: Bar
     guid: 937f9d11b5d370b4150788d1c985db5f5adcd3146101c016c305f152e44cb800
     Name: Bar
@@ -122,16 +122,16 @@ Entities:
         guid: d5701b1fa579fb866ed7ce462dca94e679f41f8ca232c2b482b3c9aff6037083
         custom_name: ""
         background_path: ./res/textures/UI\progress_bar_base.png
-        material:
-          Shader:
-            VertexPath: ./res/shaders/ui.hlsl
-            FragmentPath: ./res/shaders/ui.hlsl
-            GeometryPath: ""
-          Color: [1, 1, 1, 1]
-          RenderOrder: 3001
-          NeedsForward: true
-          CastsShadows: false
-          IsBillboard: false
+        materials:
+          - Shader:
+              VertexPath: ./res/shaders/ui.hlsl
+              FragmentPath: ./res/shaders/ui.hlsl
+              GeometryPath: ""
+            Color: [1, 1, 1, 1]
+            RenderOrder: 3001
+            NeedsForward: true
+            CastsShadows: false
+            IsBillboard: false
   - Entity: BarValue
     guid: a73ce961f33e3392d29b224650a6b90c4f291539e7bc206b81e1fdc929fcb244
     Name: BarValue
@@ -146,16 +146,16 @@ Entities:
         guid: 9377c140a069f57e55e28ac4c4cbce7b4015ff51ec2be74136fade6f1c187686
         custom_name: ""
         background_path: ./res/textures/lime.jpg
-        material:
-          Shader:
-            VertexPath: ./res/shaders/ui.hlsl
-            FragmentPath: ./res/shaders/ui.hlsl
-            GeometryPath: ""
-          Color: [1, 1, 1, 1]
-          RenderOrder: 3001
-          NeedsForward: true
-          CastsShadows: false
-          IsBillboard: false
+        materials:
+          - Shader:
+              VertexPath: ./res/shaders/ui.hlsl
+              FragmentPath: ./res/shaders/ui.hlsl
+              GeometryPath: ""
+            Color: [1, 1, 1, 1]
+            RenderOrder: 3001
+            NeedsForward: true
+            CastsShadows: false
+            IsBillboard: false
   - Entity: Alien
     guid: e4bb605601944643fb6cfd66715e9dd0302fa3737b5c302e7406d582d5ea4dee
     Name: Alien
@@ -170,16 +170,16 @@ Entities:
         guid: 77ae5bf96b2f1721c153d9f7c833e591b4b2ff5ec311aa60de9c780410e45c50
         custom_name: ""
         background_path: ./res/textures/UI\alien_head.png
-        material:
-          Shader:
-            VertexPath: ./res/shaders/ui.hlsl
-            FragmentPath: ./res/shaders/ui.hlsl
-            GeometryPath: ""
-          Color: [1, 1, 1, 1]
-          RenderOrder: 3001
-          NeedsForward: true
-          CastsShadows: false
-          IsBillboard: false
+        materials:
+          - Shader:
+              VertexPath: ./res/shaders/ui.hlsl
+              FragmentPath: ./res/shaders/ui.hlsl
+              GeometryPath: ""
+            Color: [1, 1, 1, 1]
+            RenderOrder: 3001
+            NeedsForward: true
+            CastsShadows: false
+            IsBillboard: false
   - Entity: Human
     guid: b16e1d3183ba3016722521236326112ea503a68fecb14096f9084451bb331044
     Name: Human
@@ -194,16 +194,16 @@ Entities:
         guid: 2083bd549f3a1e22a8efdf9458f538238c5017e77fad6f6dc5d335f9a4bdc47f
         custom_name: ""
         background_path: ./res/textures/UI\truther_head.png
-        material:
-          Shader:
-            VertexPath: ./res/shaders/ui.hlsl
-            FragmentPath: ./res/shaders/ui.hlsl
-            GeometryPath: ""
-          Color: [1, 1, 1, 1]
-          RenderOrder: 3001
-          NeedsForward: true
-          CastsShadows: false
-          IsBillboard: false
+        materials:
+          - Shader:
+              VertexPath: ./res/shaders/ui.hlsl
+              FragmentPath: ./res/shaders/ui.hlsl
+              GeometryPath: ""
+            Color: [1, 1, 1, 1]
+            RenderOrder: 3001
+            NeedsForward: true
+            CastsShadows: false
+            IsBillboard: false
   - Entity: BarFront
     guid: d2bd8971f8a4d1d133dd2ecff8fa2189dfb52777230bc33db112047c693e4a2b
     Name: BarFront
@@ -218,13 +218,13 @@ Entities:
         guid: f264c8e41b0ce57f84ba65ee4cf9bd1a8be4ef32b267723b7fa1d2341e3320a8
         custom_name: ""
         background_path: ./res/textures/UI\progress_bar_top.png
-        material:
-          Shader:
-            VertexPath: ./res/shaders/ui.hlsl
-            FragmentPath: ./res/shaders/ui.hlsl
-            GeometryPath: ""
-          Color: [1, 1, 1, 1]
-          RenderOrder: 3001
-          NeedsForward: true
-          CastsShadows: false
-          IsBillboard: false
+        materials:
+          - Shader:
+              VertexPath: ./res/shaders/ui.hlsl
+              FragmentPath: ./res/shaders/ui.hlsl
+              GeometryPath: ""
+            Color: [1, 1, 1, 1]
+            RenderOrder: 3001
+            NeedsForward: true
+            CastsShadows: false
+            IsBillboard: false

@@ -46,12 +46,12 @@ Sprite::Sprite(AK::Badge<Sprite>, std::shared_ptr<Material> const& material, std
 
 void Sprite::prepare()
 {
-    if (material->is_gpu_instanced)
+    if (first_material()->is_gpu_instanced)
     {
-        if (material->first_drawable != nullptr)
+        if (first_material()->first_drawable != nullptr)
             return;
 
-        material->first_drawable = std::dynamic_pointer_cast<Drawable>(shared_from_this());
+        first_material()->first_drawable = std::dynamic_pointer_cast<Drawable>(shared_from_this());
     }
 
     m_meshes.emplace_back(create_sprite());
@@ -77,9 +77,9 @@ std::shared_ptr<Mesh> Sprite::create_sprite() const
     if (!diffuse_texture_path.empty())
         diffuse_maps.emplace_back(ResourceManager::get_instance().load_texture(diffuse_texture_path, std::nullopt, texture_settings));
 
-    material->textures.insert(material->textures.end(), diffuse_maps.begin(), diffuse_maps.end());
+    first_material()->textures.insert(first_material()->textures.end(), diffuse_maps.begin(), diffuse_maps.end());
 
-    return ResourceManager::get_instance().load_mesh(m_meshes.size(), diffuse_texture_path, vertices, indices, m_draw_type, material);
+    return ResourceManager::get_instance().load_mesh(m_meshes.size(), diffuse_texture_path, vertices, indices, m_draw_type, first_material());
 }
 
 #if EDITOR

@@ -55,29 +55,35 @@ void Renderer::unregister_shader(std::shared_ptr<Shader> const& shader)
 
 bool Renderer::is_drawable_registered(std::shared_ptr<Drawable> const& drawable) const
 {
-    return std::ranges::find(drawable->material->drawables.begin(), drawable->material->drawables.end(), drawable)
-        != drawable->material->drawables.end();
+    return std::ranges::find(drawable->first_material()->drawables.begin(), drawable->first_material()->drawables.end(), drawable)
+        != drawable->first_material()->drawables.end();
 }
 
-void Renderer::register_drawable(std::shared_ptr<Drawable> const& drawable)
+void Renderer::register_drawable(std::shared_ptr<Drawable> const& drawable, std::vector<std::shared_ptr<Material>> const& materials)
 {
-    bool const should_register_material = drawable->material->drawables.size() == 0;
-
-    drawable->material->drawables.emplace_back(drawable);
-
-    if (should_register_material)
+    for (auto const& material : materials)
     {
-        register_material(drawable->material);
+        bool const should_register_material = material->drawables.empty();
+
+        material->drawables.emplace_back(drawable);
+
+        if (should_register_material)
+        {
+            register_material(material);
+        }
     }
 }
 
-void Renderer::unregister_drawable(std::shared_ptr<Drawable> const& drawable)
+void Renderer::unregister_drawable(std::shared_ptr<Drawable> const& drawable, std::vector<std::shared_ptr<Material>> const& materials)
 {
-    AK::swap_and_erase(drawable->material->drawables, drawable);
-
-    if (drawable->material->drawables.size() == 0)
+    for (auto const& material : materials)
     {
-        unregister_material(drawable->material);
+        AK::swap_and_erase(material->drawables, drawable);
+
+        if (material->drawables.empty())
+        {
+            unregister_material(material);
+        }
     }
 }
 
@@ -454,6 +460,7 @@ void Renderer::bind_for_render_frame() const
 void Renderer::draw(std::shared_ptr<Material> const& material, glm::mat4 const& projection_view) const
 {
     update_material(material);
+    active_material = material;
 
     for (auto const& drawable : material->drawables)
     {
@@ -467,6 +474,7 @@ void Renderer::draw(std::shared_ptr<Material> const& material, glm::mat4 const& 
         drawable->draw();
     }
 
+    active_material = nullptr;
     unbind_material(material);
 }
 
@@ -509,9 +517,9 @@ void Renderer::draw_instanced(std::shared_ptr<Material> const& material, glm::ma
     //set_shader_uniforms(shader, projection_view, projection_view_no_translation);
 
     shader->set_vec3("material.color",
-                     glm::vec3(first_drawable->material->color.x, first_drawable->material->color.y, first_drawable->material->color.z));
-    shader->set_float("material.specular", first_drawable->material->specular);
-    shader->set_float("material.shininess", first_drawable->material->shininess);
+                     glm::vec3(first_drawable->first_material()->color.x, first_drawable->first_material()->color.y, first_drawable->first_material()->color.z));
+    shader->set_float("material.specular", first_drawable->first_material()->specular);
+    shader->set_float("material.shininess", first_drawable->first_material()->shininess);
 
     first_drawable->draw_instanced(material->model_matrices.size());
 }
@@ -536,30 +544,30 @@ void Renderer::draw_transparent(glm::mat4 const& projection_view, glm::mat4 cons
 
     for (auto const& drawable : transparent_drawables)
     {
-        drawable->material->shader->use();
+        drawable->first_material()->shader->use();
 
-        update_shader(drawable->material->shader, projection_view, projection_view_no_translation);
+        update_shader(drawable->first_material()->shader, projection_view, projection_view_no_translation);
 
 #if _DEBUG
-        if (drawable->material->is_gpu_instanced)
+        if (drawable->first_material()->is_gpu_instanced)
         {
             Debug::log("GPU instanced transparent materials are not supported.", DebugType::Error);
             return;
         }
 #endif
 
-        update_material(drawable->material);
+        update_material(drawable->first_material());
 
-        update_object(drawable, drawable->material, projection_view);
+        update_object(drawable, drawable->first_material(), projection_view);
 
-        if (drawable->material->is_billboard)
+        if (drawable->first_material()->is_billboard)
         {
             drawable->entity->transform->set_euler_angles(Camera::get_main_camera()->entity->transform->get_euler_angles());
         }
 
         drawable->draw();
 
-        unbind_material(drawable->material);
+        unbind_material(drawable->first_material());
     }
 }
 

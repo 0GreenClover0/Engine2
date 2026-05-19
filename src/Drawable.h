@@ -13,7 +13,7 @@ public:
 #endif
 
     explicit Drawable(std::shared_ptr<Material> const& material);
-    ~Drawable() override = default;
+    virtual ~Drawable() override = default;
 
     virtual void initialize() override;
     virtual void uninitialize() override;
@@ -37,12 +37,14 @@ public:
     RasterizerDrawType get_rasterizer_draw_type() const;
     void set_rasterizer_draw_type(RasterizerDrawType const new_draw_mode);
 
+    std::shared_ptr<Material> first_material() const;
+
     NON_SERIALIZED
     BoundingBox bounds = {};
 
     // FIXME: This cannot be represented in an editor right now.
     CUSTOM_EDITOR
-    std::shared_ptr<Material> material = nullptr;
+    std::vector<std::shared_ptr<Material>> materials = {};
 
 protected:
     RasterizerDrawType m_rasterizer_draw_type = RasterizerDrawType::Default;

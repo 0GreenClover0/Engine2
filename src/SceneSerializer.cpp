@@ -355,7 +355,7 @@ void SceneSerializer::auto_serialize_component(YAML::Emitter& out, std::shared_p
             out << YAML::Key << "custom_name" << YAML::Value << drawable->get_custom_name();
 #endif
         }
-        out << YAML::Key << "material" << YAML::Value << drawable->material;
+        out << YAML::Key << "materials" << YAML::Value << drawable->materials;
         out << YAML::EndMap;
     }
     else
@@ -1377,9 +1377,9 @@ void SceneSerializer::auto_deserialize_component(YAML::Node const& component, st
             {
                 deserialized_component->path_pressed = component["path_pressed"].as<std::string>();
             }
-            if (component["material"].IsDefined())
+            if (component["materials"].IsDefined())
             {
-                deserialized_component->material = component["material"].as<std::shared_ptr<Material>>();
+                deserialized_component->materials = component["materials"].as<std::vector<std::shared_ptr<Material>>>();
             }
             deserialized_entity->add_component(deserialized_component);
             deserialized_component->reprepare();
@@ -1404,9 +1404,9 @@ void SceneSerializer::auto_deserialize_component(YAML::Node const& component, st
             {
                 deserialized_component->model_path = component["model_path"].as<std::string>();
             }
-            if (component["material"].IsDefined())
+            if (component["materials"].IsDefined())
             {
-                deserialized_component->material = component["material"].as<std::shared_ptr<Material>>();
+                deserialized_component->materials = component["materials"].as<std::vector<std::shared_ptr<Material>>>();
             }
             deserialized_entity->add_component(deserialized_component);
             deserialized_component->reprepare();
@@ -1439,9 +1439,9 @@ void SceneSerializer::auto_deserialize_component(YAML::Node const& component, st
             {
                 deserialized_component->model_path = component["model_path"].as<std::string>();
             }
-            if (component["material"].IsDefined())
+            if (component["materials"].IsDefined())
             {
-                deserialized_component->material = component["material"].as<std::shared_ptr<Material>>();
+                deserialized_component->materials = component["materials"].as<std::vector<std::shared_ptr<Material>>>();
             }
             deserialized_entity->add_component(deserialized_component);
             deserialized_component->reprepare();
@@ -1482,9 +1482,9 @@ void SceneSerializer::auto_deserialize_component(YAML::Node const& component, st
             {
                 deserialized_component->model_path = component["model_path"].as<std::string>();
             }
-            if (component["material"].IsDefined())
+            if (component["materials"].IsDefined())
             {
-                deserialized_component->material = component["material"].as<std::shared_ptr<Material>>();
+                deserialized_component->materials = component["materials"].as<std::vector<std::shared_ptr<Material>>>();
             }
             deserialized_entity->add_component(deserialized_component);
             deserialized_component->reprepare();
@@ -1513,9 +1513,9 @@ void SceneSerializer::auto_deserialize_component(YAML::Node const& component, st
             {
                 deserialized_component->model_path = component["model_path"].as<std::string>();
             }
-            if (component["material"].IsDefined())
+            if (component["materials"].IsDefined())
             {
-                deserialized_component->material = component["material"].as<std::shared_ptr<Material>>();
+                deserialized_component->materials = component["materials"].as<std::vector<std::shared_ptr<Material>>>();
             }
             deserialized_entity->add_component(deserialized_component);
             deserialized_component->reprepare();
@@ -1552,9 +1552,9 @@ void SceneSerializer::auto_deserialize_component(YAML::Node const& component, st
             {
                 deserialized_component->model_path = component["model_path"].as<std::string>();
             }
-            if (component["material"].IsDefined())
+            if (component["materials"].IsDefined())
             {
-                deserialized_component->material = component["material"].as<std::shared_ptr<Material>>();
+                deserialized_component->materials = component["materials"].as<std::vector<std::shared_ptr<Material>>>();
             }
             deserialized_entity->add_component(deserialized_component);
             deserialized_component->reprepare();
@@ -1579,9 +1579,9 @@ void SceneSerializer::auto_deserialize_component(YAML::Node const& component, st
             {
                 deserialized_component->background_path = component["background_path"].as<std::string>();
             }
-            if (component["material"].IsDefined())
+            if (component["materials"].IsDefined())
             {
-                deserialized_component->material = component["material"].as<std::shared_ptr<Material>>();
+                deserialized_component->materials = component["materials"].as<std::vector<std::shared_ptr<Material>>>();
             }
             deserialized_entity->add_component(deserialized_component);
             deserialized_component->reprepare();
@@ -1606,9 +1606,9 @@ void SceneSerializer::auto_deserialize_component(YAML::Node const& component, st
             {
                 deserialized_component->path = component["path"].as<std::string>();
             }
-            if (component["material"].IsDefined())
+            if (component["materials"].IsDefined())
             {
-                deserialized_component->material = component["material"].as<std::shared_ptr<Material>>();
+                deserialized_component->materials = component["materials"].as<std::vector<std::shared_ptr<Material>>>();
             }
             deserialized_entity->add_component(deserialized_component);
             deserialized_component->reprepare();
@@ -1661,9 +1661,9 @@ void SceneSerializer::auto_deserialize_component(YAML::Node const& component, st
             {
                 deserialized_component->button_ref = component["button_ref"].as<std::weak_ptr<Button>>();
             }
-            if (component["material"].IsDefined())
+            if (component["materials"].IsDefined())
             {
-                deserialized_component->material = component["material"].as<std::shared_ptr<Material>>();
+                deserialized_component->materials = component["materials"].as<std::vector<std::shared_ptr<Material>>>();
             }
             deserialized_entity->add_component(deserialized_component);
             deserialized_component->reprepare();

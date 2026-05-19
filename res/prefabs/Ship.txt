@@ -34,15 +34,15 @@ Entities:
         guid: eb5113e922357b5bd9b35dc090ebad0273eaf1a4acbfde0aac505a788d7b95ad
         custom_name: ""
         model_path: ./res/models/shipMedium/shipMedium.gltf
-        material:
-          Shader:
-            VertexPath: ./res/shaders/lit.hlsl
-            FragmentPath: ./res/shaders/lit.hlsl
-            GeometryPath: ""
-          Color: [1, 1, 1, 1]
-          RenderOrder: 0
-          NeedsForward: false
-          CastsShadows: true
+        materials:
+          - Shader:
+              VertexPath: ./res/shaders/lit.hlsl
+              FragmentPath: ./res/shaders/lit.hlsl
+              GeometryPath: ""
+            Color: [1, 1, 1, 1]
+            RenderOrder: 0
+            NeedsForward: false
+            CastsShadows: true
   - Entity: Eyes
     guid: 2624f77ad254391a870b6b26a66f5bbfccaa1de40dbec4d481efcff3e3d492a6
     Name: Eyes

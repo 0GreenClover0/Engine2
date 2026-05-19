@@ -47,15 +47,15 @@ Entities:
         diffuse_texture_path: ./res/textures/white.jpg
         specular_texture_path: ""
         model_path: ""
-        material:
-          Shader:
-            VertexPath: ./res/shaders/light_source.hlsl
-            FragmentPath: ./res/shaders/light_source.hlsl
-            GeometryPath: ""
-          Color: [1, 1, 1, 1]
-          RenderOrder: 0
-          NeedsForward: false
-          CastsShadows: true
+        materials:
+          - Shader:
+              VertexPath: ./res/shaders/light_source.hlsl
+              FragmentPath: ./res/shaders/light_source.hlsl
+              GeometryPath: ""
+            Color: [1, 1, 1, 1]
+            RenderOrder: 0
+            NeedsForward: false
+            CastsShadows: true
   - Entity: Wall
     guid: a7a67147052b399279fc440493b94c9cb50b05d2eea9925d9c76255d296ee7cb
     Name: Wall
@@ -92,15 +92,15 @@ Entities:
         diffuse_texture_path: ./res/textures/white.jpg
         specular_texture_path: ""
         model_path: ""
-        material:
-          Shader:
-            VertexPath: ./res/shaders/light_source.hlsl
-            FragmentPath: ./res/shaders/light_source.hlsl
-            GeometryPath: ""
-          Color: [1, 1, 1, 1]
-          RenderOrder: 0
-          NeedsForward: false
-          CastsShadows: true
+        materials:
+          - Shader:
+              VertexPath: ./res/shaders/light_source.hlsl
+              FragmentPath: ./res/shaders/light_source.hlsl
+              GeometryPath: ""
+            Color: [1, 1, 1, 1]
+            RenderOrder: 0
+            NeedsForward: false
+            CastsShadows: true
   - Entity: Wall
     guid: 54b877e522a8f5d2341b261445b1ff75279bb9db9fb5b5c94bd93a5785425288
     Name: Wall
@@ -137,15 +137,15 @@ Entities:
         diffuse_texture_path: ./res/textures/white.jpg
         specular_texture_path: ""
         model_path: ""
-        material:
-          Shader:
-            VertexPath: ./res/shaders/light_source.hlsl
-            FragmentPath: ./res/shaders/light_source.hlsl
-            GeometryPath: ""
-          Color: [1, 1, 1, 1]
-          RenderOrder: 0
-          NeedsForward: false
-          CastsShadows: true
+        materials:
+          - Shader:
+              VertexPath: ./res/shaders/light_source.hlsl
+              FragmentPath: ./res/shaders/light_source.hlsl
+              GeometryPath: ""
+            Color: [1, 1, 1, 1]
+            RenderOrder: 0
+            NeedsForward: false
+            CastsShadows: true
   - Entity: Wall
     guid: a9a57460976288df89bb7ef51c695eb3ac5d4a084296ca0d0db156071c310d49
     Name: Wall
@@ -182,12 +182,12 @@ Entities:
         diffuse_texture_path: ./res/textures/white.jpg
         specular_texture_path: ""
         model_path: ""
-        material:
-          Shader:
-            VertexPath: ./res/shaders/light_source.hlsl
-            FragmentPath: ./res/shaders/light_source.hlsl
-            GeometryPath: ""
-          Color: [1, 1, 1, 1]
-          RenderOrder: 0
-          NeedsForward: false
-          CastsShadows: true
+        materials:
+          - Shader:
+              VertexPath: ./res/shaders/light_source.hlsl
+              FragmentPath: ./res/shaders/light_source.hlsl
+              GeometryPath: ""
+            Color: [1, 1, 1, 1]
+            RenderOrder: 0
+            NeedsForward: false
+            CastsShadows: true

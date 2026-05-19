@@ -14,16 +14,16 @@ Entities:
         guid: 188eaaf45f23b9bd51968c6b574d31d56abdcc99faa8e8ea60eeb93697b58ee1
         custom_name: ""
         model_path: ./res/models/hovercraft/hovercraft.gltf
-        material:
-          Shader:
-            VertexPath: ./res/shaders/lit.hlsl
-            FragmentPath: ./res/shaders/lit.hlsl
-            GeometryPath: ""
-          Color: [1, 1, 1, 1]
-          RenderOrder: 0
-          NeedsForward: false
-          CastsShadows: true
-          IsBillboard: false
+        materials:
+          - Shader:
+              VertexPath: ./res/shaders/lit.hlsl
+              FragmentPath: ./res/shaders/lit.hlsl
+              GeometryPath: ""
+            Color: [1, 1, 1, 1]
+            RenderOrder: 0
+            NeedsForward: false
+            CastsShadows: true
+            IsBillboard: false
       - ComponentName: HovercraftWithoutKeeperComponent
         guid: 2e6090007b6f7eca526e0fd1909e42d9fbd82ec9dab8782dcec30f878b4eb3c9
         custom_name: ""

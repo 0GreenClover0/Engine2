@@ -89,17 +89,17 @@ std::shared_ptr<Mesh> Sphere::create_sphere() const
         if (!texture_path.empty())
         {
             std::vector diffuse_maps = {ResourceManager::get_instance().load_texture(texture_path, TextureType::Diffuse)};
-            material->textures.insert(material->textures.end(), diffuse_maps.begin(), diffuse_maps.end());
+            first_material()->textures.insert(first_material()->textures.end(), diffuse_maps.begin(), diffuse_maps.end());
         }
 
-        material->radius_multiplier = radius;
-        material->sector_count = sector_count;
-        material->stack_count = stack_count;
+        first_material()->radius_multiplier = radius;
+        first_material()->sector_count = sector_count;
+        first_material()->stack_count = stack_count;
 
         std::stringstream stream;
         stream << std::to_string(stack_count) << "|" << std::to_string(sector_count) << "SPHERE";
 
-        return ResourceManager::get_instance().load_mesh(m_meshes.size(), stream.str(), vertices, indices, m_draw_type, material);
+        return ResourceManager::get_instance().load_mesh(m_meshes.size(), stream.str(), vertices, indices, m_draw_type, first_material());
     }
 
     for (u32 x = 0; x <= stack_count; ++x)
@@ -147,12 +147,12 @@ std::shared_ptr<Mesh> Sphere::create_sphere() const
     if (!texture_path.empty())
     {
         std::vector diffuse_maps = {ResourceManager::get_instance().load_texture(texture_path, TextureType::Diffuse)};
-        material->textures.insert(material->textures.end(), diffuse_maps.begin(), diffuse_maps.end());
+        first_material()->textures.insert(first_material()->textures.end(), diffuse_maps.begin(), diffuse_maps.end());
     }
 
     std::stringstream stream;
     stream << std::to_string(stack_count) << "|" << std::to_string(sector_count) << "SPHERE";
-    return ResourceManager::get_instance().load_mesh(m_meshes.size(), stream.str(), vertices, indices, m_draw_type, material);
+    return ResourceManager::get_instance().load_mesh(m_meshes.size(), stream.str(), vertices, indices, m_draw_type, first_material());
 }
 
 #if EDITOR

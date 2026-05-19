@@ -608,6 +608,8 @@ void RendererDX11::update_material(std::shared_ptr<Material> const& material) co
 {
     if (Skybox::get_instance() != nullptr && material->needs_skybox)
         Skybox::get_instance()->bind();
+
+    active_material = material;
 }
 
 void RendererDX11::update_object(std::shared_ptr<Drawable> const& drawable, std::shared_ptr<Material> const& material,

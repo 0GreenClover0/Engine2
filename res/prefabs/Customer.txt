@@ -45,16 +45,16 @@ Entities:
         guid: 8497ff764bee3f4c2acb74bea96940c1e43f917949a448339a06ad95d92ec279
         custom_name: ""
         model_path: ./res/models\penguin\body.gltf
-        material:
-          Shader:
-            VertexPath: ./res/shaders/lit.hlsl
-            FragmentPath: ./res/shaders/lit.hlsl
-            GeometryPath: ""
-          Color: [1, 1, 1, 1]
-          RenderOrder: 0
-          NeedsForward: false
-          CastsShadows: true
-          IsBillboard: false
+        materials:
+          - Shader:
+              VertexPath: ./res/shaders/lit.hlsl
+              FragmentPath: ./res/shaders/lit.hlsl
+              GeometryPath: ""
+            Color: [1, 1, 1, 1]
+            RenderOrder: 0
+            NeedsForward: false
+            CastsShadows: true
+            IsBillboard: false
   - Entity: Left
     guid: f758cc351d041e52d9eabbd94aa79cd0d03db4d98e70b38e1a8bd85529957d04
     Name: Left
@@ -69,16 +69,16 @@ Entities:
         guid: 247d0545cff8171a8f593c072de103f0649ad8e44ed69a9f3fd5dd05d8cc1b5b
         custom_name: ""
         model_path: ./res/models\penguin\wing_left.gltf
-        material:
-          Shader:
-            VertexPath: ./res/shaders/lit.hlsl
-            FragmentPath: ./res/shaders/lit.hlsl
-            GeometryPath: ""
-          Color: [1, 1, 1, 1]
-          RenderOrder: 0
-          NeedsForward: false
-          CastsShadows: true
-          IsBillboard: false
+        materials:
+          - Shader:
+              VertexPath: ./res/shaders/lit.hlsl
+              FragmentPath: ./res/shaders/lit.hlsl
+              GeometryPath: ""
+            Color: [1, 1, 1, 1]
+            RenderOrder: 0
+            NeedsForward: false
+            CastsShadows: true
+            IsBillboard: false
   - Entity: Right
     guid: ea797b2370b0766dae1f44872270a59e06b14fe3fd25349710a971bb4c22d220
     Name: Right
@@ -93,13 +93,13 @@ Entities:
         guid: d1c1df9a9847801358f00c18cfa1622532ee1bb968f6ae649d8f7d76e76b7532
         custom_name: ""
         model_path: ./res/models\penguin\wing_right.gltf
-        material:
-          Shader:
-            VertexPath: ./res/shaders/lit.hlsl
-            FragmentPath: ./res/shaders/lit.hlsl
-            GeometryPath: ""
-          Color: [1, 1, 1, 1]
-          RenderOrder: 0
-          NeedsForward: false
-          CastsShadows: true
-          IsBillboard: false
+        materials:
+          - Shader:
+              VertexPath: ./res/shaders/lit.hlsl
+              FragmentPath: ./res/shaders/lit.hlsl
+              GeometryPath: ""
+            Color: [1, 1, 1, 1]
+            RenderOrder: 0
+            NeedsForward: false
+            CastsShadows: true
+            IsBillboard: false

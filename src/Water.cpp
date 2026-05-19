@@ -137,7 +137,7 @@ void Water::prepare()
     }
 
     m_meshes.push_back(
-        ResourceManager::get_instance().load_mesh(m_meshes.size(), "WATER", vertices, indices, m_draw_type, material));
+        ResourceManager::get_instance().load_mesh(m_meshes.size(), "WATER", vertices, indices, m_draw_type, first_material()));
 }
 
 void Water::reprepare()

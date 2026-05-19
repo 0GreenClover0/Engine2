@@ -140,7 +140,12 @@ void Model::draw() const
     Renderer::get_instance()->set_rasterizer_draw_type(m_rasterizer_draw_type);
 
     for (auto const& mesh : m_meshes)
-        mesh->draw();
+    {
+        if (mesh->material == Renderer::active_material)
+        {
+            mesh->draw();
+        }
+    }
 
     Renderer::get_instance()->restore_default_rasterizer_draw_type();
 }
@@ -153,14 +158,6 @@ void Model::draw_instanced(i32 const size)
 
 void Model::prepare()
 {
-    if (material->is_gpu_instanced)
-    {
-        if (material->first_drawable != nullptr)
-            return;
-
-        material->first_drawable = std::dynamic_pointer_cast<Drawable>(shared_from_this());
-    }
-
     load_model(model_path);
 }
 
@@ -192,24 +189,24 @@ void Model::load_model(std::string const& path)
 
     std::unordered_map<i32, std::shared_ptr<Material>> loaded_materials = {};
 
-    proccess_node(scene->mRootNode, scene);
+    process_node(scene->mRootNode, scene, loaded_materials);
 }
 
-void Model::proccess_node(aiNode const* node, aiScene const* scene)
+void Model::process_node(aiNode const* node, aiScene const* scene, std::unordered_map<i32, std::shared_ptr<Material>>& loaded_materials)
 {
     for (u32 i = 0; i < node->mNumMeshes; ++i)
     {
         aiMesh const* mesh = scene->mMeshes[node->mMeshes[i]];
-        m_meshes.emplace_back(proccess_mesh(mesh, scene));
+        m_meshes.emplace_back(process_mesh(mesh, scene, loaded_materials));
     }
 
     for (u32 i = 0; i < node->mNumChildren; ++i)
     {
-        proccess_node(node->mChildren[i], scene);
+        process_node(node->mChildren[i], scene, loaded_materials);
     }
 }
 
-std::shared_ptr<Mesh> Model::proccess_mesh(aiMesh const* mesh, aiScene const* scene)
+std::shared_ptr<Mesh> Model::process_mesh(aiMesh const* mesh, aiScene const* scene, std::unordered_map<i32, std::shared_ptr<Material>>& loaded_materials)
 {
     std::vector<Vertex> vertices;
     std::vector<u32> indices;
@@ -248,16 +245,32 @@ std::shared_ptr<Mesh> Model::proccess_mesh(aiMesh const* mesh, aiScene const* sc
 
     aiMaterial const* assimp_material = scene->mMaterials[mesh->mMaterialIndex];
 
-    std::vector<std::shared_ptr<Texture>> diffuse_maps =
-        load_material_textures(assimp_material, aiTextureType_DIFFUSE, TextureType::Diffuse);
-    textures.insert(textures.end(), diffuse_maps.begin(), diffuse_maps.end());
+    std::shared_ptr<Material> material = nullptr;
 
-    std::vector<std::shared_ptr<Texture>> specular_maps =
-        load_material_textures(assimp_material, aiTextureType_SPECULAR, TextureType::Specular);
-    textures.insert(textures.end(), specular_maps.begin(), specular_maps.end());
+    if (auto const material_it = loaded_materials.find(mesh->mMaterialIndex); material_it != loaded_materials.end())
+    {
+        material = material_it->second;
+    }
+    else
+    {
+        material = Material::create(default_shader);
+        Renderer::get_instance()->register_drawable(static_pointer_cast<Drawable>(shared_from_this()), {material});
+
+        materials.push_back(material);
+
+        std::vector<std::shared_ptr<Texture>> diffuse_maps =
+            load_material_textures(assimp_material, aiTextureType_DIFFUSE, TextureType::Diffuse);
+        material->textures.insert(material->textures.end(), diffuse_maps.begin(), diffuse_maps.end());
+
+        std::vector<std::shared_ptr<Texture>> specular_maps =
+            load_material_textures(assimp_material, aiTextureType_SPECULAR, TextureType::Specular);
+        material->textures.insert(material->textures.end(), specular_maps.begin(), specular_maps.end());
+
+        loaded_materials.insert({mesh->mMaterialIndex, material});
+    }
 
     std::shared_ptr<Mesh> loaded_mesh =
-        ResourceManager::get_instance().load_mesh(m_meshes.size(), model_path, vertices, indices, textures, m_draw_type, material);
+        ResourceManager::get_instance().load_mesh(m_meshes.size(), model_path, vertices, indices, m_draw_type, material);
 
     aiColor4D diffuse_color = {1.0f, 1.0f, 1.0f, 1.0f};
     aiGetMaterialColor(assimp_material, AI_MATKEY_GLTF_PBRMETALLICROUGHNESS_BASE_COLOR_FACTOR, &diffuse_color);

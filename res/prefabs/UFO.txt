@@ -37,16 +37,16 @@ Entities:
         guid: 9bfce45e0b5401582f3eac44952d3274e033962185adf611207c0c91e0913cea
         custom_name: ""
         model_path: ./res/models\ufo\ufo.gltf
-        material:
-          Shader:
-            VertexPath: ./res/shaders/lit.hlsl
-            FragmentPath: ./res/shaders/lit.hlsl
-            GeometryPath: ""
-          Color: [1, 1, 1, 1]
-          RenderOrder: 0
-          NeedsForward: false
-          CastsShadows: true
-          IsBillboard: false
+        materials:
+          - Shader:
+              VertexPath: ./res/shaders/lit.hlsl
+              FragmentPath: ./res/shaders/lit.hlsl
+              GeometryPath: ""
+            Color: [1, 1, 1, 1]
+            RenderOrder: 0
+            NeedsForward: false
+            CastsShadows: true
+            IsBillboard: false
   - Entity: Spotlight
     guid: 19de254442511a94c5b83189990f10279d6197bc3f4396e8d3857e5b5f710472
     Name: Spotlight

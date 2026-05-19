@@ -13,13 +13,13 @@ Entities:
       - ComponentName: ParticleComponent
         guid: d665caae684d5cb5f3367c1db54ad422a7adcc482716387902fee55aa3fabad0
         custom_name: ""
-        material:
-          Shader:
-            VertexPath: ./res/shaders/particle.hlsl
-            FragmentPath: ./res/shaders/particle.hlsl
-            GeometryPath: ""
-          Color: [1, 1, 1, 1]
-          RenderOrder: 1000
-          NeedsForward: true
-          CastsShadows: false
-          IsBillboard: false
+        materials:
+          - Shader:
+              VertexPath: ./res/shaders/particle.hlsl
+              FragmentPath: ./res/shaders/particle.hlsl
+              GeometryPath: ""
+            Color: [1, 1, 1, 1]
+            RenderOrder: 1000
+            NeedsForward: true
+            CastsShadows: false
+            IsBillboard: false

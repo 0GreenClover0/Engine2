@@ -55,8 +55,8 @@ protected:
 
 private:
     void load_model(std::string const& path);
-    void proccess_node(aiNode const* node, aiScene const* scene);
-    std::shared_ptr<Mesh> proccess_mesh(aiMesh const* mesh, aiScene const* scene);
+    void process_node(aiNode const* node, aiScene const* scene, std::unordered_map<i32, std::shared_ptr<Material>>& loaded_materials);
+    std::shared_ptr<Mesh> process_mesh(aiMesh const* mesh, aiScene const* scene, std::unordered_map<i32, std::shared_ptr<Material>>& loaded_materials);
     std::vector<std::shared_ptr<Texture>> load_material_textures(aiMaterial const* material, aiTextureType type,
                                                                  TextureType const type_name);
 

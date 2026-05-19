@@ -22,15 +22,15 @@ Entities:
         guid: 0a6415c9cfab464be3bc8dd6ae8ff7fdc5f6ecf43b003b43162de2556aebac61
         custom_name: ""
         model_path: ./res/models\workshop\workshop.gltf
-        material:
-          Shader:
-            VertexPath: ./res/shaders/lit.hlsl
-            FragmentPath: ./res/shaders/lit.hlsl
-            GeometryPath: ""
-          Color: [1, 1, 1, 1]
-          RenderOrder: 0
-          NeedsForward: false
-          CastsShadows: true
+        materials:
+          - Shader:
+              VertexPath: ./res/shaders/lit.hlsl
+              FragmentPath: ./res/shaders/lit.hlsl
+              GeometryPath: ""
+            Color: [1, 1, 1, 1]
+            RenderOrder: 0
+            NeedsForward: false
+            CastsShadows: true
       - ComponentName: Collider2DComponent
         guid: cf560306f825a77f0cd0366118af58911f2b55c024fabff3c52d3416d8cb389b
         custom_name: ""

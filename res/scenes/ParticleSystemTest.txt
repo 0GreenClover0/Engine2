@@ -65,15 +65,15 @@ Entities:
         texture_path: ./res/textures/container.png
         radius: 0.100000001
         model_path: ""
-        material:
-          Shader:
-            VertexPath: ./res/shaders/light_source.hlsl
-            FragmentPath: ./res/shaders/light_source.hlsl
-            GeometryPath: ""
-          Color: [1, 1, 1, 1]
-          RenderOrder: 0
-          NeedsForward: false
-          CastsShadows: true
+        materials:
+          - Shader:
+              VertexPath: ./res/shaders/light_source.hlsl
+              FragmentPath: ./res/shaders/light_source.hlsl
+              GeometryPath: ""
+            Color: [1, 1, 1, 1]
+            RenderOrder: 0
+            NeedsForward: false
+            CastsShadows: true
       - ComponentName: DirectionalLightComponent
         guid: 09643ffab4ff7190c69cac10812fe8eace0fa69df2c3a35a742bedbc1338242f
         custom_name: ""
@@ -100,15 +100,15 @@ Entities:
         guid: 8e61363ed31c1f3021ca3443768b49c183a332b9ee7730c4afd03d30a14ae525
         custom_name: ""
         model_path: ./res/models/hubert/floor.gltf
-        material:
-          Shader:
-            VertexPath: ./res/shaders/lit.hlsl
-            FragmentPath: ./res/shaders/lit.hlsl
-            GeometryPath: ""
-          Color: [1, 1, 1, 1]
-          RenderOrder: 0
-          NeedsForward: false
-          CastsShadows: true
+        materials:
+          - Shader:
+              VertexPath: ./res/shaders/lit.hlsl
+              FragmentPath: ./res/shaders/lit.hlsl
+              GeometryPath: ""
+            Color: [1, 1, 1, 1]
+            RenderOrder: 0
+            NeedsForward: false
+            CastsShadows: true
   - Entity: Workshop
     guid: 9e3e848abd40f98bdc69739073fcab3f2433c238668224c366f09b0115f2ba83
     Name: Workshop
@@ -127,15 +127,15 @@ Entities:
         guid: 545d91a6e1dc5e97ba9b6d9a2662c9bf208acc181956c5de2f8042fd4bc755e0
         custom_name: ""
         model_path: ./res/models/lighthouseOld/lighthouse.gltf
-        material:
-          Shader:
-            VertexPath: ./res/shaders/lit.hlsl
-            FragmentPath: ./res/shaders/lit.hlsl
-            GeometryPath: ""
-          Color: [1, 1, 1, 1]
-          RenderOrder: 0
-          NeedsForward: false
-          CastsShadows: true
+        materials:
+          - Shader:
+              VertexPath: ./res/shaders/lit.hlsl
+              FragmentPath: ./res/shaders/lit.hlsl
+              GeometryPath: ""
+            Color: [1, 1, 1, 1]
+            RenderOrder: 0
+            NeedsForward: false
+            CastsShadows: true
   - Entity: Lighthouse
     guid: 7d74f1c90b410b3be76cf81d5bfca4a9795c30e250de738af250d5a9153ce1a5
     Name: Lighthouse
@@ -150,15 +150,15 @@ Entities:
         guid: 1328f211b353982b4d9031eaa66bb940161320caf8d79353a55895efd8b5109e
         custom_name: ""
         model_path: ./res/models/lighthouseNew/lighthouse.gltf
-        material:
-          Shader:
-            VertexPath: ./res/shaders/lit.hlsl
-            FragmentPath: ./res/shaders/lit.hlsl
-            GeometryPath: ""
-          Color: [1, 1, 1, 1]
-          RenderOrder: 0
-          NeedsForward: false
-          CastsShadows: true
+        materials:
+          - Shader:
+              VertexPath: ./res/shaders/lit.hlsl
+              FragmentPath: ./res/shaders/lit.hlsl
+              GeometryPath: ""
+            Color: [1, 1, 1, 1]
+            RenderOrder: 0
+            NeedsForward: false
+            CastsShadows: true
       - ComponentName: LighthouseComponent
         guid: 31c02634f68bbeb5e257d8412cbe9bcaeb8095f40b2bf4b6ae84af1f0134da66
         custom_name: ""
@@ -236,15 +236,15 @@ Entities:
           - [[-0.600000024, 0.100000001], [0, 0], 100, 0.899999976, 500, 0.0350000001]
         tesselation_level: 5
         model_path: ""
-        material:
-          Shader:
-            VertexPath: ./res/shaders/water.hlsl
-            FragmentPath: ./res/shaders/water.hlsl
-            GeometryPath: ""
-          Color: [1, 1, 1, 1]
-          RenderOrder: 0
-          NeedsForward: true
-          CastsShadows: false
+        materials:
+          - Shader:
+              VertexPath: ./res/shaders/water.hlsl
+              FragmentPath: ./res/shaders/water.hlsl
+              GeometryPath: ""
+            Color: [1, 1, 1, 1]
+            RenderOrder: 0
+            NeedsForward: true
+            CastsShadows: false
   - Entity: Skybox
     guid: c17994be6c667b77bd7d6cf0bb0e221930648180c1756069f7caad4e012b1b04
     Name: Skybox
@@ -270,15 +270,15 @@ Entities:
         guid: ac81c8b6bdda1bf1b2f7c911f19298409f02512d115b1fa94dd272c27aa54f1c
         custom_name: ""
         model_path: ./res/models/water/water.gltf
-        material:
-          Shader:
-            VertexPath: ./res/shaders/lit.hlsl
-            FragmentPath: ./res/shaders/lit.hlsl
-            GeometryPath: ""
-          Color: [1, 1, 1, 1]
-          RenderOrder: 0
-          NeedsForward: false
-          CastsShadows: true
+        materials:
+          - Shader:
+              VertexPath: ./res/shaders/lit.hlsl
+              FragmentPath: ./res/shaders/lit.hlsl
+              GeometryPath: ""
+            Color: [1, 1, 1, 1]
+            RenderOrder: 0
+            NeedsForward: false
+            CastsShadows: true
   - Entity: Entity
     guid: 4657ab0df9cb0849581780f95cec6736a60ae7d3e32d7ca25bd4ce1910265462
     Name: Entity
@@ -295,15 +295,15 @@ Entities:
         diffuse_texture_path: ""
         specular_texture_path: ""
         model_path: ""
-        material:
-          Shader:
-            VertexPath: ./res/shaders/lit.hlsl
-            FragmentPath: ./res/shaders/lit.hlsl
-            GeometryPath: ""
-          Color: [1, 1, 1, 1]
-          RenderOrder: 0
-          NeedsForward: false
-          CastsShadows: true
+        materials:
+          - Shader:
+              VertexPath: ./res/shaders/lit.hlsl
+              FragmentPath: ./res/shaders/lit.hlsl
+              GeometryPath: ""
+            Color: [1, 1, 1, 1]
+            RenderOrder: 0
+            NeedsForward: false
+            CastsShadows: true
   - Entity: Entity
     guid: 1af0a0d44837af28f7b7ae9c203b417433d03e6e9d90f867e932bfa0c30eec44
     Name: Entity
@@ -320,15 +320,15 @@ Entities:
         diffuse_texture_path: ""
         specular_texture_path: ""
         model_path: ""
-        material:
-          Shader:
-            VertexPath: ./res/shaders/lit.hlsl
-            FragmentPath: ./res/shaders/lit.hlsl
-            GeometryPath: ""
-          Color: [1, 1, 1, 1]
-          RenderOrder: 0
-          NeedsForward: false
-          CastsShadows: true
+        materials:
+          - Shader:
+              VertexPath: ./res/shaders/lit.hlsl
+              FragmentPath: ./res/shaders/lit.hlsl
+              GeometryPath: ""
+            Color: [1, 1, 1, 1]
+            RenderOrder: 0
+            NeedsForward: false
+            CastsShadows: true
   - Entity: Entity
     guid: 6c6c8878ba5eb223c8f54673ddf92eb30c0751571ef22e2c136e47190412f064
     Name: Entity
@@ -345,15 +345,15 @@ Entities:
         diffuse_texture_path: ""
         specular_texture_path: ""
         model_path: ""
-        material:
-          Shader:
-            VertexPath: ./res/shaders/lit.hlsl
-            FragmentPath: ./res/shaders/lit.hlsl
-            GeometryPath: ""
-          Color: [1, 1, 1, 1]
-          RenderOrder: 0
-          NeedsForward: false
-          CastsShadows: true
+        materials:
+          - Shader:
+              VertexPath: ./res/shaders/lit.hlsl
+              FragmentPath: ./res/shaders/lit.hlsl
+              GeometryPath: ""
+            Color: [1, 1, 1, 1]
+            RenderOrder: 0
+            NeedsForward: false
+            CastsShadows: true
   - Entity: Entity
     guid: 42ff2bb5aefc9beef5b10f5bc860861f852bd7cf3cd981e9381603a77b111387
     Name: Entity
@@ -370,15 +370,15 @@ Entities:
         diffuse_texture_path: ""
         specular_texture_path: ""
         model_path: ""
-        material:
-          Shader:
-            VertexPath: ./res/shaders/lit.hlsl
-            FragmentPath: ./res/shaders/lit.hlsl
-            GeometryPath: ""
-          Color: [1, 1, 1, 1]
-          RenderOrder: 0
-          NeedsForward: false
-          CastsShadows: true
+        materials:
+          - Shader:
+              VertexPath: ./res/shaders/lit.hlsl
+              FragmentPath: ./res/shaders/lit.hlsl
+              GeometryPath: ""
+            Color: [1, 1, 1, 1]
+            RenderOrder: 0
+            NeedsForward: false
+            CastsShadows: true
   - Entity: Controller
     guid: 413a15c234b9e1c21d6a641cd77b24d160f137ce7c6cb27a73226f52310f4618
     Name: Controller

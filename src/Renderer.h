@@ -35,8 +35,8 @@ public:
     void unregister_shader(std::shared_ptr<Shader> const& shader);
 
     bool is_drawable_registered(std::shared_ptr<Drawable> const& drawable) const;
-    void register_drawable(std::shared_ptr<Drawable> const& drawable);
-    void unregister_drawable(std::shared_ptr<Drawable> const& drawable);
+    void register_drawable(std::shared_ptr<Drawable> const& drawable, std::vector<std::shared_ptr<Material>> const& materials);
+    void unregister_drawable(std::shared_ptr<Drawable> const& drawable, std::vector<std::shared_ptr<Material>> const& materials);
 
     void register_material(std::shared_ptr<Material> const& material);
     void unregister_material(std::shared_ptr<Material> const& material);
@@ -76,6 +76,8 @@ public:
     };
 
     inline static RendererApi renderer_api = RendererApi::DirectX11;
+
+    inline static std::shared_ptr<Material> active_material = nullptr;
 
     bool wireframe_mode_active = false;
 

@@ -277,7 +277,7 @@ std::shared_ptr<Mesh> Button::create_sprite() const
     if (!m_path.empty())
         diffuse_maps.emplace_back(ResourceManager::get_instance().load_texture(m_path, TextureType::Diffuse, texture_settings));
 
-    material->textures.insert(material->textures.end(), diffuse_maps.begin(), diffuse_maps.end());
+    first_material()->textures.insert(first_material()->textures.end(), diffuse_maps.begin(), diffuse_maps.end());
 
-    return ResourceManager::get_instance().load_mesh(0, m_path, vertices, indices, DrawType::Triangles, material);
+    return ResourceManager::get_instance().load_mesh(0, m_path, vertices, indices, DrawType::Triangles, first_material());
 }

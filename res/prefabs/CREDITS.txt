@@ -14,16 +14,16 @@ Entities:
         guid: ab5f38b27cc3df7653a850850a197bcc9d6ecd2f9483856bd441bc08f0dbb12d
         custom_name: ""
         model_path: ./res/models\main_menu\credits.gltf
-        material:
-          Shader:
-            VertexPath: ./res/shaders/lit.hlsl
-            FragmentPath: ./res/shaders/lit.hlsl
-            GeometryPath: ""
-          Color: [1, 1, 1, 1]
-          RenderOrder: 0
-          NeedsForward: false
-          CastsShadows: true
-          IsBillboard: false
+        materials:
+          - Shader:
+              VertexPath: ./res/shaders/lit.hlsl
+              FragmentPath: ./res/shaders/lit.hlsl
+              GeometryPath: ""
+            Color: [1, 1, 1, 1]
+            RenderOrder: 0
+            NeedsForward: false
+            CastsShadows: true
+            IsBillboard: false
       - ComponentName: Collider2DComponent
         guid: 537b49c12e5fb994ad50ed5ffbfb1aded2b7aefdac171f5bbcae4344e88e9c4b
         custom_name: ""

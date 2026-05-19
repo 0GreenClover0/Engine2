@@ -66,7 +66,7 @@ std::shared_ptr<Mesh> Ellipse::create_ellipse() const
         vertices.emplace_back(vertex);
     }
 
-    return ResourceManager::get_instance().load_mesh(m_meshes.size(), "ELLIPSE", vertices, {}, m_draw_type, material,
+    return ResourceManager::get_instance().load_mesh(m_meshes.size(), "ELLIPSE", vertices, {}, m_draw_type, first_material(),
                                                      DrawFunctionType::NotIndexed);
 }
 

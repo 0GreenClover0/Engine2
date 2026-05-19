@@ -38,16 +38,16 @@ Entities:
         guid: fc145da2a46482dfe3c541a6960c8afa34e5b39c49adce1735cbc374d220732a
         custom_name: ""
         model_path: ./res/models/shipBig/shipBig.gltf
-        material:
-          Shader:
-            VertexPath: ./res/shaders/lit.hlsl
-            FragmentPath: ./res/shaders/lit.hlsl
-            GeometryPath: ""
-          Color: [1, 1, 1, 1]
-          RenderOrder: 0
-          NeedsForward: false
-          CastsShadows: true
-          IsBillboard: false
+        materials:
+          - Shader:
+              VertexPath: ./res/shaders/lit.hlsl
+              FragmentPath: ./res/shaders/lit.hlsl
+              GeometryPath: ""
+            Color: [1, 1, 1, 1]
+            RenderOrder: 0
+            NeedsForward: false
+            CastsShadows: true
+            IsBillboard: false
   - Entity: Eyes
     guid: 68493fca62d9a6c64006ad92f8c7c563600a24e1e79965f7ca27f0222700505f
     Name: Eyes

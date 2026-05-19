@@ -36,16 +36,16 @@ Entities:
         guid: 59beca8e5b802febaf028459a3ef8a14dd6dc41dfedba3502c67179c2100b13e
         custom_name: ""
         model_path: ./res/models\ground\ground.gltf
-        material:
-          Shader:
-            VertexPath: ./res/shaders/lit.hlsl
-            FragmentPath: ./res/shaders/lit.hlsl
-            GeometryPath: ""
-          Color: [1, 1, 1, 1]
-          RenderOrder: 0
-          NeedsForward: false
-          CastsShadows: true
-          IsBillboard: false
+        materials:
+          - Shader:
+              VertexPath: ./res/shaders/lit.hlsl
+              FragmentPath: ./res/shaders/lit.hlsl
+              GeometryPath: ""
+            Color: [1, 1, 1, 1]
+            RenderOrder: 0
+            NeedsForward: false
+            CastsShadows: true
+            IsBillboard: false
   - Entity: FieldGrid
     guid: 18ed7c178c21b57e7b713f7b77c72f1553aa9784f3e603737cf54a0024fb94ba
     Name: FieldGrid
@@ -76,16 +76,16 @@ Entities:
         guid: 17e2287326a82c9bf3f82d4d612c0986d0baf07ec1b8cc5e1b4a8bf2e0aa9c48
         custom_name: ""
         path: ./res/textures/UI\overlay00.png
-        material:
-          Shader:
-            VertexPath: ./res/shaders/particle.hlsl
-            FragmentPath: ./res/shaders/particle.hlsl
-            GeometryPath: ""
-          Color: [1, 1, 1, 1]
-          RenderOrder: 1000
-          NeedsForward: true
-          CastsShadows: false
-          IsBillboard: false
+        materials:
+          - Shader:
+              VertexPath: ./res/shaders/particle.hlsl
+              FragmentPath: ./res/shaders/particle.hlsl
+              GeometryPath: ""
+            Color: [1, 1, 1, 1]
+            RenderOrder: 1000
+            NeedsForward: true
+            CastsShadows: false
+            IsBillboard: false
       - ComponentName: WheatOverlayComponent
         guid: 59e0087a9a2937933ed80b15de03c987e515167f13d9dc877cd44beef8864bb8
         custom_name: ""
@@ -281,16 +281,16 @@ Entities:
         guid: b2c7dd139dd468a75eefe534265c432cde8f7e7983bfb0f00bc9d110e49cdab1
         custom_name: ""
         model_path: ./res/models\tree2\tree.gltf
-        material:
-          Shader:
-            VertexPath: ./res/shaders/lit.hlsl
-            FragmentPath: ./res/shaders/lit.hlsl
-            GeometryPath: ""
-          Color: [1, 1, 1, 1]
-          RenderOrder: 0
-          NeedsForward: false
-          CastsShadows: true
-          IsBillboard: false
+        materials:
+          - Shader:
+              VertexPath: ./res/shaders/lit.hlsl
+              FragmentPath: ./res/shaders/lit.hlsl
+              GeometryPath: ""
+            Color: [1, 1, 1, 1]
+            RenderOrder: 0
+            NeedsForward: false
+            CastsShadows: true
+            IsBillboard: false
       - ComponentName: Collider2DComponent
         guid: ca4edf4a5e950b36f621fe95f00494d94be913e90667d20d74b7b9df1d416abd
         custom_name: ""
@@ -317,16 +317,16 @@ Entities:
         guid: 2711604a85b22e90d89d293d550c9cb8693ff5b5f335d2bdbf012f4dc933c081
         custom_name: ""
         model_path: ./res/models\fence\fence.gltf
-        material:
-          Shader:
-            VertexPath: ./res/shaders/lit.hlsl
-            FragmentPath: ./res/shaders/lit.hlsl
-            GeometryPath: ""
-          Color: [1, 1, 1, 1]
-          RenderOrder: 0
-          NeedsForward: false
-          CastsShadows: true
-          IsBillboard: false
+        materials:
+          - Shader:
+              VertexPath: ./res/shaders/lit.hlsl
+              FragmentPath: ./res/shaders/lit.hlsl
+              GeometryPath: ""
+            Color: [1, 1, 1, 1]
+            RenderOrder: 0
+            NeedsForward: false
+            CastsShadows: true
+            IsBillboard: false
       - ComponentName: Collider2DComponent
         guid: f2f8970a99b6e070fe92a3a59511c6c1be540ebf9d04e2eb1a48042efca8a524
         custom_name: ""
@@ -353,16 +353,16 @@ Entities:
         guid: 429720a6d4a34c01d711b1ec637072f68c36a25a6f049e30b1c28d7a37a62924
         custom_name: ""
         model_path: ./res/models\rocks\rocks.gltf
-        material:
-          Shader:
-            VertexPath: ./res/shaders/lit.hlsl
-            FragmentPath: ./res/shaders/lit.hlsl
-            GeometryPath: ""
-          Color: [1, 1, 1, 1]
-          RenderOrder: 0
-          NeedsForward: false
-          CastsShadows: true
-          IsBillboard: false
+        materials:
+          - Shader:
+              VertexPath: ./res/shaders/lit.hlsl
+              FragmentPath: ./res/shaders/lit.hlsl
+              GeometryPath: ""
+            Color: [1, 1, 1, 1]
+            RenderOrder: 0
+            NeedsForward: false
+            CastsShadows: true
+            IsBillboard: false
       - ComponentName: Collider2DComponent
         guid: 97e5d9f8f23cf0ff3988eadc994d3c5d7f620da765384de792c0730c0e3e675c
         custom_name: ""
@@ -389,16 +389,16 @@ Entities:
         guid: d0446cfde7f0650ef5d138e8e3aa7b3e6c40e9c36ddb5151d55d8a84972475a6
         custom_name: ""
         model_path: ./res/models\rocks\rocks.gltf
-        material:
-          Shader:
-            VertexPath: ./res/shaders/lit.hlsl
-            FragmentPath: ./res/shaders/lit.hlsl
-            GeometryPath: ""
-          Color: [1, 1, 1, 1]
-          RenderOrder: 0
-          NeedsForward: false
-          CastsShadows: true
-          IsBillboard: false
+        materials:
+          - Shader:
+              VertexPath: ./res/shaders/lit.hlsl
+              FragmentPath: ./res/shaders/lit.hlsl
+              GeometryPath: ""
+            Color: [1, 1, 1, 1]
+            RenderOrder: 0
+            NeedsForward: false
+            CastsShadows: true
+            IsBillboard: false
       - ComponentName: Collider2DComponent
         guid: 607fb9a0cfcf2813468d15c96fd1d59f99bd9f8cfb82c4f7d22678be68eb8a4c
         custom_name: ""
@@ -425,16 +425,16 @@ Entities:
         guid: 33ce62a841b9842bc40143391e5e8d9e2aafa13a1ff035f5dcc6567ea42f3316
         custom_name: ""
         model_path: ./res/models\house\house.gltf
-        material:
-          Shader:
-            VertexPath: ./res/shaders/lit.hlsl
-            FragmentPath: ./res/shaders/lit.hlsl
-            GeometryPath: ""
-          Color: [1, 1, 1, 1]
-          RenderOrder: 0
-          NeedsForward: false
-          CastsShadows: true
-          IsBillboard: false
+        materials:
+          - Shader:
+              VertexPath: ./res/shaders/lit.hlsl
+              FragmentPath: ./res/shaders/lit.hlsl
+              GeometryPath: ""
+            Color: [1, 1, 1, 1]
+            RenderOrder: 0
+            NeedsForward: false
+            CastsShadows: true
+            IsBillboard: false
       - ComponentName: Collider2DComponent
         guid: 6a38e3bf990396e8bf05470df8ece9b18fa45291659fcf2b2c7807d3e677ab5b
         custom_name: ""
@@ -461,16 +461,16 @@ Entities:
         guid: dd239f3cb6aa9cc02896c537779c9e0b6f6984cddeb16d4333abed7a61959c26
         custom_name: ""
         background_path: ./res/textures/UI\UFOclock_base.png
-        material:
-          Shader:
-            VertexPath: ./res/shaders/ui.hlsl
-            FragmentPath: ./res/shaders/ui.hlsl
-            GeometryPath: ""
-          Color: [1, 1, 1, 1]
-          RenderOrder: 3001
-          NeedsForward: true
-          CastsShadows: false
-          IsBillboard: false
+        materials:
+          - Shader:
+              VertexPath: ./res/shaders/ui.hlsl
+              FragmentPath: ./res/shaders/ui.hlsl
+              GeometryPath: ""
+            Color: [1, 1, 1, 1]
+            RenderOrder: 3001
+            NeedsForward: true
+            CastsShadows: false
+            IsBillboard: false
       - ComponentName: ClockComponent
         guid: b5b9611506ae6e3e854883ee7b415e407fb3cb86dc48429134351cc0539b1d21
         custom_name: ""
@@ -488,16 +488,16 @@ Entities:
         guid: 12f2e2a59d25061dedf4daaeb607e272902d1fae3a12b8872ce42992ae7b8ff6
         custom_name: ""
         background_path: ./res/textures/UI\UFOclock_glass.png
-        material:
-          Shader:
-            VertexPath: ./res/shaders/ui.hlsl
-            FragmentPath: ./res/shaders/ui.hlsl
-            GeometryPath: ""
-          Color: [1, 1, 1, 1]
-          RenderOrder: 3001
-          NeedsForward: true
-          CastsShadows: false
-          IsBillboard: false
+        materials:
+          - Shader:
+              VertexPath: ./res/shaders/ui.hlsl
+              FragmentPath: ./res/shaders/ui.hlsl
+              GeometryPath: ""
+            Color: [1, 1, 1, 1]
+            RenderOrder: 3001
+            NeedsForward: true
+            CastsShadows: false
+            IsBillboard: false
   - Entity: Clock
     guid: 2aa34bf2d99be8004b1251d9d226b6afdecf8c486dea420c46386cbdcc4d0bb9
     Name: Clock
@@ -520,16 +520,16 @@ Entities:
         bold: true
         button_ref:
           guid: nullptr
-        material:
-          Shader:
-            VertexPath: ./res/shaders/ui.hlsl
-            FragmentPath: ./res/shaders/ui.hlsl
-            GeometryPath: ""
-          Color: [1, 1, 1, 1]
-          RenderOrder: 3003
-          NeedsForward: true
-          CastsShadows: false
-          IsBillboard: false
+        materials:
+          - Shader:
+              VertexPath: ./res/shaders/ui.hlsl
+              FragmentPath: ./res/shaders/ui.hlsl
+              GeometryPath: ""
+            Color: [1, 1, 1, 1]
+            RenderOrder: 3003
+            NeedsForward: true
+            CastsShadows: false
+            IsBillboard: false
   - Entity: Planks
     guid: 3695f15d36a4190cba51f35fd4a01ab10b2d63ae88ec1bc19e9407bae4a12946
     Name: Planks
@@ -544,16 +544,16 @@ Entities:
         guid: a3871db75e764d89138dcea10321352c6599dcb100db9e49142327099379daf9
         custom_name: ""
         model_path: ./res/models\wood\wood1.gltf
-        material:
-          Shader:
-            VertexPath: ./res/shaders/lit.hlsl
-            FragmentPath: ./res/shaders/lit.hlsl
-            GeometryPath: ""
-          Color: [1, 1, 1, 1]
-          RenderOrder: 0
-          NeedsForward: false
-          CastsShadows: true
-          IsBillboard: false
+        materials:
+          - Shader:
+              VertexPath: ./res/shaders/lit.hlsl
+              FragmentPath: ./res/shaders/lit.hlsl
+              GeometryPath: ""
+            Color: [1, 1, 1, 1]
+            RenderOrder: 0
+            NeedsForward: false
+            CastsShadows: true
+            IsBillboard: false
   - Entity: Planks
     guid: 56dd02cf3d96646580b9bc23b7462d5c10e64c57be7b78f6802d01a5c8a5f13a
     Name: Planks
@@ -568,16 +568,16 @@ Entities:
         guid: 37f61db55f647ae775622c6672490b77f97b6de620c3b1068af983b0e3e073d3
         custom_name: ""
         model_path: ./res/models\wood\wood2.gltf
-        material:
-          Shader:
-            VertexPath: ./res/shaders/lit.hlsl
-            FragmentPath: ./res/shaders/lit.hlsl
-            GeometryPath: ""
-          Color: [1, 1, 1, 1]
-          RenderOrder: 0
-          NeedsForward: false
-          CastsShadows: true
-          IsBillboard: false
+        materials:
+          - Shader:
+              VertexPath: ./res/shaders/lit.hlsl
+              FragmentPath: ./res/shaders/lit.hlsl
+              GeometryPath: ""
+            Color: [1, 1, 1, 1]
+            RenderOrder: 0
+            NeedsForward: false
+            CastsShadows: true
+            IsBillboard: false
   - Entity: Fence
     guid: d1d1d506f24abfa2da1a8d05569b0e768a94f92c3b5e65c74c5cb8dfad098bc7
     Name: Fence
@@ -592,16 +592,16 @@ Entities:
         guid: ba7e4d8708cf475ee26cc54bacf6e30c1e37662950d78add44632df2e36338f2
         custom_name: ""
         model_path: ./res/models\fence\fence.gltf
-        material:
-          Shader:
-            VertexPath: ./res/shaders/lit.hlsl
-            FragmentPath: ./res/shaders/lit.hlsl
-            GeometryPath: ""
-          Color: [1, 1, 1, 1]
-          RenderOrder: 0
-          NeedsForward: false
-          CastsShadows: true
-          IsBillboard: false
+        materials:
+          - Shader:
+              VertexPath: ./res/shaders/lit.hlsl
+              FragmentPath: ./res/shaders/lit.hlsl
+              GeometryPath: ""
+            Color: [1, 1, 1, 1]
+            RenderOrder: 0
+            NeedsForward: false
+            CastsShadows: true
+            IsBillboard: false
       - ComponentName: Collider2DComponent
         guid: 2aaa82fc7630d3f77eba2c560a93aa1c001b5d9d539e5c1edb3d66d8b43f9cb8
         custom_name: ""
@@ -628,16 +628,16 @@ Entities:
         guid: 39da8c70b94c3d45f1e092b7f5932d43ed46c26e17bfc5d585de06cda1e5c988
         custom_name: ""
         model_path: ./res/models\fence\fence.gltf
-        material:
-          Shader:
-            VertexPath: ./res/shaders/lit.hlsl
-            FragmentPath: ./res/shaders/lit.hlsl
-            GeometryPath: ""
-          Color: [1, 1, 1, 1]
-          RenderOrder: 0
-          NeedsForward: false
-          CastsShadows: true
-          IsBillboard: false
+        materials:
+          - Shader:
+              VertexPath: ./res/shaders/lit.hlsl
+              FragmentPath: ./res/shaders/lit.hlsl
+              GeometryPath: ""
+            Color: [1, 1, 1, 1]
+            RenderOrder: 0
+            NeedsForward: false
+            CastsShadows: true
+            IsBillboard: false
       - ComponentName: Collider2DComponent
         guid: 1976ce3543f67563feb3d3160778a48a22665fedfaf8e6188fa6b1fd35054d3c
         custom_name: ""
@@ -664,16 +664,16 @@ Entities:
         guid: 8a94e99273ca1b4ae87aec114f17dff3ecf2659c716061d4d1c3a2fd70a83d95
         custom_name: ""
         model_path: ./res/models\fence\fence.gltf
-        material:
-          Shader:
-            VertexPath: ./res/shaders/lit.hlsl
-            FragmentPath: ./res/shaders/lit.hlsl
-            GeometryPath: ""
-          Color: [1, 1, 1, 1]
-          RenderOrder: 0
-          NeedsForward: false
-          CastsShadows: true
-          IsBillboard: false
+        materials:
+          - Shader:
+              VertexPath: ./res/shaders/lit.hlsl
+              FragmentPath: ./res/shaders/lit.hlsl
+              GeometryPath: ""
+            Color: [1, 1, 1, 1]
+            RenderOrder: 0
+            NeedsForward: false
+            CastsShadows: true
+            IsBillboard: false
       - ComponentName: Collider2DComponent
         guid: e850fd8d34775edf00220716c95e35efe619306822a889e4033109d1a792830d
         custom_name: ""
@@ -700,16 +700,16 @@ Entities:
         guid: 01a0d9c6b8131e2ad744b14783cdf4c47ddc1b579205e6e29145662898d7788d
         custom_name: ""
         model_path: ./res/models\tree2\tree.gltf
-        material:
-          Shader:
-            VertexPath: ./res/shaders/lit.hlsl
-            FragmentPath: ./res/shaders/lit.hlsl
-            GeometryPath: ""
-          Color: [1, 1, 1, 1]
-          RenderOrder: 0
-          NeedsForward: false
-          CastsShadows: true
-          IsBillboard: false
+        materials:
+          - Shader:
+              VertexPath: ./res/shaders/lit.hlsl
+              FragmentPath: ./res/shaders/lit.hlsl
+              GeometryPath: ""
+            Color: [1, 1, 1, 1]
+            RenderOrder: 0
+            NeedsForward: false
+            CastsShadows: true
+            IsBillboard: false
       - ComponentName: Collider2DComponent
         guid: 17beb8d36c8e76364796bc9726bd94aa2924dbbb4bb2e07d1883bb1f7e7e12a4
         custom_name: ""
@@ -736,16 +736,16 @@ Entities:
         guid: e4dcaa1dd86a0596b832612bf5927f2d65b3a04db4131d5b59cd1a61aea378e2
         custom_name: ""
         model_path: ./res/models\rocks2\rocks2.gltf
-        material:
-          Shader:
-            VertexPath: ./res/shaders/lit.hlsl
-            FragmentPath: ./res/shaders/lit.hlsl
-            GeometryPath: ""
-          Color: [1, 1, 1, 1]
-          RenderOrder: 0
-          NeedsForward: false
-          CastsShadows: true
-          IsBillboard: false
+        materials:
+          - Shader:
+              VertexPath: ./res/shaders/lit.hlsl
+              FragmentPath: ./res/shaders/lit.hlsl
+              GeometryPath: ""
+            Color: [1, 1, 1, 1]
+            RenderOrder: 0
+            NeedsForward: false
+            CastsShadows: true
+            IsBillboard: false
       - ComponentName: Collider2DComponent
         guid: 4fbcddb0e0e75558f7b984d0b08e6a4a637e291447d33d3cdb8acce00e1effbc
         custom_name: ""
@@ -772,16 +772,16 @@ Entities:
         guid: ec25b178ab51785275a656754d49b8476d545808b8d486ca9d36532843a50ebe
         custom_name: ""
         model_path: ./res/models\tree2\tree.gltf
-        material:
-          Shader:
-            VertexPath: ./res/shaders/lit.hlsl
-            FragmentPath: ./res/shaders/lit.hlsl
-            GeometryPath: ""
-          Color: [1, 1, 1, 1]
-          RenderOrder: 0
-          NeedsForward: false
-          CastsShadows: true
-          IsBillboard: false
+        materials:
+          - Shader:
+              VertexPath: ./res/shaders/lit.hlsl
+              FragmentPath: ./res/shaders/lit.hlsl
+              GeometryPath: ""
+            Color: [1, 1, 1, 1]
+            RenderOrder: 0
+            NeedsForward: false
+            CastsShadows: true
+            IsBillboard: false
       - ComponentName: Collider2DComponent
         guid: cd969513964d3aad8ae0e3b1cc0013d97de0b5b4ae0d113c50262fd8854d5d22
         custom_name: ""
@@ -808,16 +808,16 @@ Entities:
         guid: 205c541cbe56473798f7c2a6e80e094a8206e3b024a3915a9285a366f836f595
         custom_name: ""
         model_path: ./res/models\tree2\tree.gltf
-        material:
-          Shader:
-            VertexPath: ./res/shaders/lit.hlsl
-            FragmentPath: ./res/shaders/lit.hlsl
-            GeometryPath: ""
-          Color: [1, 1, 1, 1]
-          RenderOrder: 0
-          NeedsForward: false
-          CastsShadows: true
-          IsBillboard: false
+        materials:
+          - Shader:
+              VertexPath: ./res/shaders/lit.hlsl
+              FragmentPath: ./res/shaders/lit.hlsl
+              GeometryPath: ""
+            Color: [1, 1, 1, 1]
+            RenderOrder: 0
+            NeedsForward: false
+            CastsShadows: true
+            IsBillboard: false
   - Entity: Bush
     guid: c0d72065ff6a143a9e4eeb20249c2c0ac9f6355ac2d4cc733aac651e24038908
     Name: Bush
@@ -832,16 +832,16 @@ Entities:
         guid: b4caeb50ed5d62d41778425f42d7970289d6ad913ccb8c500540b61fc1c68422
         custom_name: ""
         model_path: ./res/models\tree2\tree.gltf
-        material:
-          Shader:
-            VertexPath: ./res/shaders/lit.hlsl
-            FragmentPath: ./res/shaders/lit.hlsl
-            GeometryPath: ""
-          Color: [1, 1, 1, 1]
-          RenderOrder: 0
-          NeedsForward: false
-          CastsShadows: true
-          IsBillboard: false
+        materials:
+          - Shader:
+              VertexPath: ./res/shaders/lit.hlsl
+              FragmentPath: ./res/shaders/lit.hlsl
+              GeometryPath: ""
+            Color: [1, 1, 1, 1]
+            RenderOrder: 0
+            NeedsForward: false
+            CastsShadows: true
+            IsBillboard: false
       - ComponentName: Collider2DComponent
         guid: 9d239dd97e1e41511248d30fe8f3dba01cced17641be35d899ea185ab79a34c6
         custom_name: ""
@@ -868,13 +868,13 @@ Entities:
         guid: a164a55629f0bec875a7553c605a8d95c6b8cf7b68453ee2aea9fd25a7f7442b
         custom_name: ""
         model_path: ./res/models\tree2\tree.gltf
-        material:
-          Shader:
-            VertexPath: ./res/shaders/lit.hlsl
-            FragmentPath: ./res/shaders/lit.hlsl
-            GeometryPath: ""
-          Color: [1, 1, 1, 1]
-          RenderOrder: 0
-          NeedsForward: false
-          CastsShadows: true
-          IsBillboard: false
+        materials:
+          - Shader:
+              VertexPath: ./res/shaders/lit.hlsl
+              FragmentPath: ./res/shaders/lit.hlsl
+              GeometryPath: ""
+            Color: [1, 1, 1, 1]
+            RenderOrder: 0
+            NeedsForward: false
+            CastsShadows: true
+            IsBillboard: false

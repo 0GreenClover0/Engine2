@@ -37,7 +37,6 @@ protected:
 
     [[nodiscard]] BoundingBox calculate_adjusted_bounding_box(glm::mat4 const& model_matrix) const;
 
-    // FIXME: Maybe each Mesh should have its own Material instead?
     std::vector<Vertex> m_vertices = {};
     std::vector<u32> m_indices = {};
     glm::vec4 m_color = {1.0f, 1.0f, 1.0f, 1.0f};

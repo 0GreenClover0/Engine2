@@ -14,16 +14,16 @@ Entities:
         guid: 2eefec42b4ba3c7310c1f91e570eaad1fb6529055b50283595784991921e8bae
         custom_name: ""
         background_path: ./res/textures/UI\thanks_for_playing.png
-        material:
-          Shader:
-            VertexPath: ./res/shaders/ui.hlsl
-            FragmentPath: ./res/shaders/ui.hlsl
-            GeometryPath: ""
-          Color: [1, 1, 1, 1]
-          RenderOrder: 3001
-          NeedsForward: true
-          CastsShadows: false
-          IsBillboard: false
+        materials:
+          - Shader:
+              VertexPath: ./res/shaders/ui.hlsl
+              FragmentPath: ./res/shaders/ui.hlsl
+              GeometryPath: ""
+            Color: [1, 1, 1, 1]
+            RenderOrder: 3001
+            NeedsForward: true
+            CastsShadows: false
+            IsBillboard: false
       - ComponentName: PopupComponent
         guid: 1acaaaae5d69694aed6296da0b3e54943e9cbf3e6550fa8f0f83a5f0f5722951
         custom_name: ""
@@ -52,13 +52,13 @@ Entities:
         top_right_corner: [1084.80005, 673.989014]
         bottom_left_corner: [835.200012, 747.430969]
         bottom_right_corner: [1084.80005, 747.430969]
-        material:
-          Shader:
-            VertexPath: ./res/shaders/ui.hlsl
-            FragmentPath: ./res/shaders/ui.hlsl
-            GeometryPath: ""
-          Color: [1, 1, 1, 1]
-          RenderOrder: 3001
-          NeedsForward: true
-          CastsShadows: false
-          IsBillboard: false
+        materials:
+          - Shader:
+              VertexPath: ./res/shaders/ui.hlsl
+              FragmentPath: ./res/shaders/ui.hlsl
+              GeometryPath: ""
+            Color: [1, 1, 1, 1]
+            RenderOrder: 3001
+            NeedsForward: true
+            CastsShadows: false
+            IsBillboard: false

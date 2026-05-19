@@ -80,13 +80,13 @@ std::shared_ptr<Mesh> Terrain::create_terrain_from_height_map_gpu() const
     if (heightmap->id == 0)
     {
         std::cout << "Height map failed to load at path: " << m_height_map_path << '\n';
-        return ResourceManager::get_instance().load_mesh(m_meshes.size(), m_height_map_path, {}, {}, m_draw_type, material);
+        return ResourceManager::get_instance().load_mesh(m_meshes.size(), m_height_map_path, {}, {}, m_draw_type, first_material());
     }
 
     i32 const width = heightmap->width;
     i32 const height = heightmap->height;
 
-    material->textures.emplace_back(heightmap);
+    first_material()->textures.emplace_back(heightmap);
 
     u32 constexpr resolution = 20;
     std::vector<Vertex> vertices = {};
@@ -137,7 +137,7 @@ std::shared_ptr<Mesh> Terrain::create_terrain_from_height_map_gpu() const
         }
     }
 
-    return ResourceManager::get_instance().load_mesh(m_meshes.size(), m_height_map_path, vertices, {}, m_draw_type, material,
+    return ResourceManager::get_instance().load_mesh(m_meshes.size(), m_height_map_path, vertices, {}, m_draw_type, first_material(),
                                                      DrawFunctionType::NotIndexed);
 }
 
@@ -152,7 +152,7 @@ std::shared_ptr<Mesh> Terrain::create_terrain_from_height_map()
     {
         std::cout << "Height map failed to load at path: " << m_height_map_path << '\n';
         stbi_image_free(data);
-        return ResourceManager::get_instance().load_mesh(m_meshes.size(), m_height_map_path, {}, {}, m_draw_type, material);
+        return ResourceManager::get_instance().load_mesh(m_meshes.size(), m_height_map_path, {}, {}, m_draw_type, first_material());
     }
 
     std::vector<Vertex> vertices = {};
@@ -192,7 +192,7 @@ std::shared_ptr<Mesh> Terrain::create_terrain_from_height_map()
     m_strips_count = height - 1;
     m_vertices_per_strip = width * 2;
 
-    return ResourceManager::get_instance().load_mesh(m_meshes.size(), m_height_map_path, vertices, indices, m_draw_type, material);
+    return ResourceManager::get_instance().load_mesh(m_meshes.size(), m_height_map_path, vertices, indices, m_draw_type, first_material());
 }
 
 #if EDITOR

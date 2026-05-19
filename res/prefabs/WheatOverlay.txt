@@ -14,16 +14,16 @@ Entities:
         guid: 17e2287326a82c9bf3f82d4d612c0986d0baf07ec1b8cc5e1b4a8bf2e0aa9c48
         custom_name: ""
         path: ./res/textures/UI\overlay00.png
-        material:
-          Shader:
-            VertexPath: ./res/shaders/particle.hlsl
-            FragmentPath: ./res/shaders/particle.hlsl
-            GeometryPath: ""
-          Color: [1, 1, 1, 1]
-          RenderOrder: 1000
-          NeedsForward: true
-          CastsShadows: false
-          IsBillboard: false
+        materials:
+          - Shader:
+              VertexPath: ./res/shaders/particle.hlsl
+              FragmentPath: ./res/shaders/particle.hlsl
+              GeometryPath: ""
+            Color: [1, 1, 1, 1]
+            RenderOrder: 1000
+            NeedsForward: true
+            CastsShadows: false
+            IsBillboard: false
       - ComponentName: WheatOverlayComponent
         guid: 59e0087a9a2937933ed80b15de03c987e515167f13d9dc877cd44beef8864bb8
         custom_name: ""
