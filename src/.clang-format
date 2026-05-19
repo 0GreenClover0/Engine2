@@ -16,7 +16,7 @@ BreakBeforeConceptDeclarations: Always
 BreakBeforeInheritanceComma: true
 BreakConstructorInitializers: BeforeColon
 Cpp11BracedListStyle: true
-ColumnLimit: 140
+ColumnLimit: 150
 FixNamespaceComments: false
 IndentAccessModifiers: false
 IndentPPDirectives: None
