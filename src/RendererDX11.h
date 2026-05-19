@@ -42,7 +42,7 @@ public:
     virtual void set_rasterizer_draw_type(RasterizerDrawType const rasterizer_draw_type) override;
     virtual void restore_default_rasterizer_draw_type() override;
 
-    void bind_material_constant_buffer(ConstantBufferMaterial const material_constant_buffer) const;
+    void bind_material_constant_buffer(ConstantBufferMaterial const& material_constant_buffer) const;
 
 protected:
     virtual void update_shader(std::shared_ptr<Shader> const& shader, glm::mat4 const& projection_view,

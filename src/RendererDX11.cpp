@@ -385,7 +385,7 @@ void RendererDX11::restore_default_rasterizer_draw_type()
     g_pd3dDeviceContext->RSSetState(g_rasterizer_state);
 }
 
-void RendererDX11::bind_material_constant_buffer(ConstantBufferMaterial const material_constant_buffer) const
+void RendererDX11::bind_material_constant_buffer(ConstantBufferMaterial const& material_constant_buffer) const
 {
     auto const device_context = get_device_context();
 
@@ -616,7 +616,7 @@ void RendererDX11::bind_material(std::shared_ptr<Material> const& material) cons
         Skybox::get_instance()->bind();
     }
 
-    RendererDX11::get_instance_dx11()->bind_material_constant_buffer({material->color});
+    bind_material_constant_buffer({.color = material->color, .roughness = material->roughness, .metallic = material->metallic});
 
     // TODO: Don't assume 1st texture is always albedo, 2nd is normal, etc.
     for (i32 i = 0; i < material->textures.size(); ++i)

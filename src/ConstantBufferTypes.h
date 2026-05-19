@@ -109,6 +109,8 @@ struct ConstantBufferPerObject
 struct ConstantBufferMaterial
 {
     glm::vec4 color;
+    float roughness;
+    float metallic;
 };
 
 struct ConstantBufferParticle

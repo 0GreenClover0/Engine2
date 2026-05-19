@@ -45,9 +45,11 @@ Texture2D roughness_texture : register(t3);
 Texture2D ambient_occlusion_texture : register(t4);
 SamplerState obj_sampler_state : register(s0);
 
-cbuffer ConstantBufferMesh : register(b5)
+cbuffer ConstantBufferMaterial : register(b5)
 {
-    float4 mesh_color;
+    float4 base_color;
+    float roughness;
+    float metallic;
 };
 
 float3 get_normal_from_texture(VS_Output input)
@@ -82,11 +84,11 @@ VS_Output vs_main(VS_Input input)
 PS_Output ps_main(VS_Output input)
 {
     PS_Output output;
-    output.diffuse = albedo_texture.Sample(obj_sampler_state, input.UV) * mesh_color;
+    output.diffuse = albedo_texture.Sample(obj_sampler_state, input.UV) * base_color;
     // output.normal.xyz = get_normal_from_texture(input);
     output.normal.xyz = normalize(input.normal);
-    output.metallic = metallic_texture.Sample(obj_sampler_state, input.UV).r;
-    output.roughness = roughness_texture.Sample(obj_sampler_state, input.UV).r;
+    output.metallic = metallic_texture.Sample(obj_sampler_state, input.UV).r * metallic;
+    output.roughness = roughness_texture.Sample(obj_sampler_state, input.UV).r * roughness;
     output.ao = ambient_occlusion_texture.Sample(obj_sampler_state, input.UV).r;
 
     output.position.xyz = input.world_pos;

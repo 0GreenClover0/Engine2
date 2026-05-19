@@ -38,6 +38,9 @@ public:
 
     // TODO: Expose properties directly from the shader, somehow.
     glm::vec4 color = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
+    float roughness = 1.0f;
+    float metallic = 0.0f;
+
     float specular = 1.0f;
     float shininess = 128.0f;
 
