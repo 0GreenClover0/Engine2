@@ -37,8 +37,7 @@ public:
                                         std::string const& tessellation_evaluation_path, std::string const& fragment_path);
 
     std::shared_ptr<Mesh> load_mesh(u32 const array_id, std::string const& name, std::vector<Vertex> const& vertices,
-                                    std::vector<u32> const& indices, std::vector<std::shared_ptr<Texture>> const& textures,
-                                    DrawType const draw_type, std::shared_ptr<Material> const& material,
+                                    std::vector<u32> const& indices, DrawType const draw_type, std::shared_ptr<Material> const& material,
                                     DrawFunctionType const draw_function = DrawFunctionType::Indexed);
 
     void reset_state() const;

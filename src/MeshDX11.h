@@ -10,12 +10,11 @@ class MeshFactory;
 class MeshDX11 final : public Mesh
 {
 public:
-    MeshDX11(AK::Badge<MeshFactory>, std::vector<Vertex> const& vertices, std::vector<u32> const& indices,
-             std::vector<std::shared_ptr<Texture>> const& textures, DrawType const draw_type, std::shared_ptr<Material> const& material,
-             DrawFunctionType const draw_function);
+    MeshDX11(AK::Badge<MeshFactory>, std::vector<Vertex> const& vertices, std::vector<u32> const& indices, DrawType const draw_type,
+             std::shared_ptr<Material> const& material, DrawFunctionType const draw_function);
 
     MeshDX11(MeshDX11&& mesh) noexcept;
-    ~MeshDX11() override;
+    virtual ~MeshDX11() override = default;
 
     void virtual draw() const override;
     void virtual draw(u32 const size, void const* offset) const override;

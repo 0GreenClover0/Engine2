@@ -32,15 +32,14 @@ public:
     std::shared_ptr<Material> material;
 
 protected:
-    Mesh(std::vector<Vertex> const& vertices, std::vector<u32> const& indices, std::vector<std::shared_ptr<Texture>> const& textures,
-         DrawType const draw_type, std::shared_ptr<Material> const& material, DrawFunctionType const draw_function);
+    Mesh(std::vector<Vertex> const& vertices, std::vector<u32> const& indices, DrawType const draw_type, std::shared_ptr<Material> const& material,
+        DrawFunctionType const draw_function);
 
     [[nodiscard]] BoundingBox calculate_adjusted_bounding_box(glm::mat4 const& model_matrix) const;
 
     // FIXME: Maybe each Mesh should have its own Material instead?
     std::vector<Vertex> m_vertices = {};
     std::vector<u32> m_indices = {};
-    std::vector<std::shared_ptr<Texture>> m_textures = {};
     glm::vec4 m_color = {1.0f, 1.0f, 1.0f, 1.0f};
 
     DrawType m_draw_type = {};

@@ -73,7 +73,6 @@ std::shared_ptr<Mesh> Sphere::create_sphere() const
 
     std::vector<Vertex> vertices;
     std::vector<u32> indices;
-    std::vector<std::shared_ptr<Texture>> textures;
 
     if (use_geometry_shader)
     {
@@ -90,7 +89,7 @@ std::shared_ptr<Mesh> Sphere::create_sphere() const
         if (!texture_path.empty())
         {
             std::vector diffuse_maps = {ResourceManager::get_instance().load_texture(texture_path, TextureType::Diffuse)};
-            textures.insert(textures.end(), diffuse_maps.begin(), diffuse_maps.end());
+            material->textures.insert(material->textures.end(), diffuse_maps.begin(), diffuse_maps.end());
         }
 
         material->radius_multiplier = radius;
@@ -100,7 +99,7 @@ std::shared_ptr<Mesh> Sphere::create_sphere() const
         std::stringstream stream;
         stream << std::to_string(stack_count) << "|" << std::to_string(sector_count) << "SPHERE";
 
-        return ResourceManager::get_instance().load_mesh(m_meshes.size(), stream.str(), vertices, indices, textures, m_draw_type, material);
+        return ResourceManager::get_instance().load_mesh(m_meshes.size(), stream.str(), vertices, indices, m_draw_type, material);
     }
 
     for (u32 x = 0; x <= stack_count; ++x)
@@ -148,12 +147,12 @@ std::shared_ptr<Mesh> Sphere::create_sphere() const
     if (!texture_path.empty())
     {
         std::vector diffuse_maps = {ResourceManager::get_instance().load_texture(texture_path, TextureType::Diffuse)};
-        textures.insert(textures.end(), diffuse_maps.begin(), diffuse_maps.end());
+        material->textures.insert(material->textures.end(), diffuse_maps.begin(), diffuse_maps.end());
     }
 
     std::stringstream stream;
     stream << std::to_string(stack_count) << "|" << std::to_string(sector_count) << "SPHERE";
-    return ResourceManager::get_instance().load_mesh(m_meshes.size(), stream.str(), vertices, indices, textures, m_draw_type, material);
+    return ResourceManager::get_instance().load_mesh(m_meshes.size(), stream.str(), vertices, indices, m_draw_type, material);
 }
 
 #if EDITOR

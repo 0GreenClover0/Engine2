@@ -10,6 +10,7 @@
 #include "AK/Types.h"
 #include "Bounds.h"
 #include "Shader.h"
+#include "Texture.h"
 
 class Drawable;
 
@@ -23,6 +24,8 @@ public:
     explicit Material(AK::Badge<Material>, std::shared_ptr<Shader> const& shader, i32 const render_order, bool const is_gpu_instanced,
                       bool const is_billboard, bool is_transparent);
 
+    ~Material();
+
     [[nodiscard]] bool has_custom_render_order() const
     {
         return m_render_order != 0;
@@ -31,6 +34,7 @@ public:
     [[nodiscard]] i32 get_render_order() const;
 
     std::shared_ptr<Shader> shader;
+    std::vector<std::shared_ptr<Texture>> textures = {};
 
     // TODO: Expose properties directly from the shader, somehow.
     glm::vec4 color = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);

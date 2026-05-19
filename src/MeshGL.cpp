@@ -6,10 +6,9 @@
 #include "Globals.h"
 #include "Texture.h"
 
-MeshGL::MeshGL(AK::Badge<MeshFactory>, std::vector<Vertex> const& vertices, std::vector<u32> const& indices,
-               std::vector<std::shared_ptr<Texture>> const& textures, DrawType const draw_type, std::shared_ptr<Material> const& material,
-               DrawFunctionType const draw_function)
-    : Mesh(vertices, indices, textures, draw_type, material, draw_function)
+MeshGL::MeshGL(AK::Badge<MeshFactory>, std::vector<Vertex> const& vertices, std::vector<u32> const& indices, DrawType const draw_type,
+               std::shared_ptr<Material> const& material, DrawFunctionType const draw_function)
+    : Mesh(vertices, indices, draw_type, material, draw_function)
 {
     switch (draw_type)
     {
@@ -78,7 +77,7 @@ MeshGL::MeshGL(AK::Badge<MeshFactory>, std::vector<Vertex> const& vertices, std:
 }
 
 MeshGL::MeshGL(MeshGL&& mesh) noexcept
-    : Mesh(mesh.m_vertices, mesh.m_indices, mesh.m_textures, mesh.m_draw_type, mesh.material, mesh.m_draw_function)
+    : Mesh(mesh.m_vertices, mesh.m_indices, mesh.m_draw_type, mesh.material, mesh.m_draw_function)
 {
     m_VAO = mesh.m_VAO;
     m_VBO = mesh.m_VBO;
@@ -90,20 +89,10 @@ MeshGL::MeshGL(MeshGL&& mesh) noexcept
 
     mesh.m_vertices.clear();
     mesh.m_indices.clear();
-    mesh.m_textures.clear();
 }
 
 MeshGL::~MeshGL()
 {
-    for (auto const& texture : m_textures)
-    {
-        glDeleteTextures(1, &texture->id);
-    }
-
-    m_vertices.clear();
-    m_indices.clear();
-    m_textures.clear();
-
     glDeleteBuffers(1, &m_EBO);
     glDeleteBuffers(1, &m_VBO);
     glDeleteVertexArrays(1, &m_VAO);
@@ -163,34 +152,34 @@ void MeshGL::bind_textures() const
     u32 specular_number = 1;
     u32 height_number = 1;
 
-    for (u32 i = 0; i < m_textures.size(); ++i)
+    for (u32 i = 0; i < material->textures.size(); ++i)
     {
         glActiveTexture(GL_TEXTURE0 + i);
 
         std::string number;
         std::string name = "material.";
 
-        if (m_textures[i]->type == TextureType::Diffuse)
+        if (material->textures[i]->type == TextureType::Diffuse)
         {
             name += "texture_diffuse";
             number = std::to_string(diffuse_number++);
         }
-        else if (m_textures[i]->type == TextureType::Specular)
+        else if (material->textures[i]->type == TextureType::Specular)
         {
             name += "texture_specular";
             number = std::to_string(specular_number++);
         }
-        else if (m_textures[i]->type == TextureType::Heightmap)
+        else if (material->textures[i]->type == TextureType::Heightmap)
         {
             name += "texture_height";
             number = std::to_string(height_number++);
         }
 
         material->shader->set_int(name + number, i);
-        glBindTexture(GL_TEXTURE_2D, m_textures[i]->id);
+        glBindTexture(GL_TEXTURE_2D, material->textures[i]->id);
     }
 
-    if (m_textures.empty())
+    if (material->textures.empty())
     {
         glActiveTexture(GL_TEXTURE0);
 

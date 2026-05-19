@@ -28,6 +28,30 @@ Material::Material(AK::Badge<Material>, std::shared_ptr<Shader> const& shader, i
 {
 }
 
+// NOTE: We currently never unload materials and other resources.
+Material::~Material()
+{
+    for (auto const& texture : textures)
+    {
+        //glDeleteTextures(1, &texture->id);
+
+        if (texture->image_sampler_state)
+        {
+            texture->image_sampler_state->Release();
+        }
+
+        if (texture->shader_resource_view)
+        {
+            texture->shader_resource_view->Release();
+        }
+
+        if (texture->texture_2d)
+        {
+            texture->texture_2d->Release();
+        }
+    }
+}
+
 i32 Material::get_render_order() const
 {
     return m_render_order;

@@ -213,7 +213,6 @@ std::shared_ptr<Mesh> Model::proccess_mesh(aiMesh const* mesh, aiScene const* sc
 {
     std::vector<Vertex> vertices;
     std::vector<u32> indices;
-    std::vector<std::shared_ptr<Texture>> textures;
 
     for (u32 i = 0; i < mesh->mNumVertices; ++i)
     {

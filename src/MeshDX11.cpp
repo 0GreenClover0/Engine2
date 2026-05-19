@@ -9,10 +9,9 @@
 #include <TextureLoader.h>
 #include <TextureLoaderDX11.h>
 
-MeshDX11::MeshDX11(AK::Badge<MeshFactory>, std::vector<Vertex> const& vertices, std::vector<u32> const& indices,
-                   std::vector<std::shared_ptr<Texture>> const& textures, DrawType const draw_type,
+MeshDX11::MeshDX11(AK::Badge<MeshFactory>, std::vector<Vertex> const& vertices, std::vector<u32> const& indices, DrawType const draw_type,
                    std::shared_ptr<Material> const& material, DrawFunctionType const draw_function)
-    : Mesh(vertices, indices, textures, draw_type, material, draw_function)
+    : Mesh(vertices, indices, draw_type, material, draw_function)
 {
     switch (draw_type)
     {
@@ -52,7 +51,7 @@ MeshDX11::MeshDX11(AK::Badge<MeshFactory>, std::vector<Vertex> const& vertices, 
 }
 
 MeshDX11::MeshDX11(MeshDX11&& mesh) noexcept
-    : Mesh(mesh.m_vertices, mesh.m_indices, mesh.m_textures, mesh.m_draw_type, mesh.material, mesh.m_draw_function)
+    : Mesh(mesh.m_vertices, mesh.m_indices, mesh.m_draw_type, mesh.material, mesh.m_draw_function)
 {
     m_vertex_buffer = mesh.m_vertex_buffer;
     mesh.m_vertex_buffer = nullptr;
@@ -62,34 +61,6 @@ MeshDX11::MeshDX11(MeshDX11&& mesh) noexcept
 
     mesh.m_vertices.clear();
     mesh.m_indices.clear();
-    mesh.m_textures.clear();
-}
-
-MeshDX11::~MeshDX11()
-{
-    m_vertices.clear();
-    m_indices.clear();
-
-    // FIXME: Managing lifetime of models and textures should be handled in ResourceManager
-    for (auto const& texture : m_textures)
-    {
-        if (texture->image_sampler_state)
-        {
-            texture->image_sampler_state->Release();
-        }
-
-        if (texture->shader_resource_view)
-        {
-            texture->shader_resource_view->Release();
-        }
-
-        if (texture->texture_2d)
-        {
-            texture->texture_2d->Release();
-        }
-    }
-
-    m_textures.clear();
 }
 
 void MeshDX11::draw() const
@@ -122,15 +93,15 @@ void MeshDX11::bind_textures() const
     RendererDX11::get_instance_dx11()->bind_mesh_constant_buffer({m_color});
 
     // TODO: Don't assume 1st texture is always albedo, 2nd is normal, etc.
-    for (i32 i = 0; i < m_textures.size(); ++i)
+    for (i32 i = 0; i < material->textures.size(); ++i)
     {
-        device_context->PSSetShaderResources(i, 1, &m_textures[i]->shader_resource_view);
-        device_context->PSSetSamplers(i, 1, &m_textures[i]->image_sampler_state);
+        device_context->PSSetShaderResources(i, 1, &material->textures[i]->shader_resource_view);
+        device_context->PSSetSamplers(i, 1, &material->textures[i]->image_sampler_state);
     }
 
     // NOTE: We always pass all 5 PBR textures. If the texture is not present in the model,
     //       we pass a 1x1 white texture instead.
-    for (i32 i = m_textures.size(); i < PBR_texture_count; ++i)
+    for (i32 i = material->textures.size(); i < PBR_texture_count; ++i)
     {
         switch (static_cast<TextureTypePBR>(i))
         {

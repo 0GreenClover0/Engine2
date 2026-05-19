@@ -161,17 +161,11 @@ std::shared_ptr<Shader> ResourceManager::load_shader(std::string const& vertex_p
 }
 
 std::shared_ptr<Mesh> ResourceManager::load_mesh(u32 const array_id, std::string const& name, std::vector<Vertex> const& vertices,
-                                                 std::vector<u32> const& indices, std::vector<std::shared_ptr<Texture>> const& textures,
-                                                 DrawType const draw_type, std::shared_ptr<Material> const& material,
-                                                 DrawFunctionType const draw_function)
+                                                 std::vector<u32> const& indices, DrawType const draw_type,
+                                                 std::shared_ptr<Material> const& material, DrawFunctionType const draw_function)
 {
     std::stringstream stream;
     stream << name << array_id;
-
-    for (auto const& texture : textures)
-    {
-        stream << texture->path;
-    }
 
     std::string const& key = generate_key(stream);
 
@@ -185,10 +179,11 @@ std::shared_ptr<Mesh> ResourceManager::load_mesh(u32 const array_id, std::string
 
     auto resource_ptr = get_from_vector<Mesh>(key);
 
-    if (resource_ptr != nullptr)
+    // FIXME: The same meshes with different materials could still use the same Vertex and Index buffers.
+    if (resource_ptr != nullptr && resource_ptr->material == material)
         return resource_ptr;
 
-    resource_ptr = MeshFactory::create(vertices, indices, textures, draw_type, material, draw_function);
+    resource_ptr = MeshFactory::create(vertices, indices, draw_type, material, draw_function);
     m_meshes.emplace_back(resource_ptr);
     names_to_meshes.insert(std::make_pair(key, m_meshes.size() - 1));
 

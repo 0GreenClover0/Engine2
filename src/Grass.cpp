@@ -68,8 +68,6 @@ std::shared_ptr<Mesh> Grass::create_blade() const
 
     std::vector<u32> const indices = {0, 1, 2, 0, 2, 3};
 
-    std::vector<std::shared_ptr<Texture>> textures;
-
     std::vector<std::shared_ptr<Texture>> diffuse_maps = {};
     TextureSettings texture_settings = {};
     texture_settings.wrap_mode_x = TextureWrapMode::ClampToEdge;
@@ -79,10 +77,9 @@ std::shared_ptr<Mesh> Grass::create_blade() const
         diffuse_maps.emplace_back(
             ResourceManager::get_instance().load_texture(m_diffuse_texture_path, TextureType::Diffuse, texture_settings));
 
-    textures.insert(textures.end(), diffuse_maps.begin(), diffuse_maps.end());
+    material->textures.insert(material->textures.end(), diffuse_maps.begin(), diffuse_maps.end());
 
-    return ResourceManager::get_instance().load_mesh(m_meshes.size(), m_diffuse_texture_path, vertices, indices, textures, m_draw_type,
-                                                     material);
+    return ResourceManager::get_instance().load_mesh(m_meshes.size(), m_diffuse_texture_path, vertices, indices, m_draw_type, material);
 }
 
 #if EDITOR

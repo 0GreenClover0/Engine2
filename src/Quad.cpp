@@ -127,8 +127,6 @@ std::shared_ptr<Mesh> Quad::create_sprite() const
 
     std::vector<u32> const indices = {0, 1, 2, 0, 2, 3};
 
-    std::vector<std::shared_ptr<Texture>> textures;
-
     std::vector<std::shared_ptr<Texture>> diffuse_maps = {};
     TextureSettings texture_settings = {};
     texture_settings.wrap_mode_x = TextureWrapMode::ClampToEdge;
@@ -137,7 +135,7 @@ std::shared_ptr<Mesh> Quad::create_sprite() const
     if (!path.empty())
         diffuse_maps.emplace_back(ResourceManager::get_instance().load_texture(path, TextureType::Diffuse, texture_settings));
 
-    textures.insert(textures.end(), diffuse_maps.begin(), diffuse_maps.end());
+    material->textures.insert(material->textures.end(), diffuse_maps.begin(), diffuse_maps.end());
 
-    return ResourceManager::get_instance().load_mesh(0, path, vertices, indices, textures, DrawType::Triangles, material);
+    return ResourceManager::get_instance().load_mesh(0, path, vertices, indices, DrawType::Triangles, material);
 }

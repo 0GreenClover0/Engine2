@@ -95,7 +95,6 @@ std::shared_ptr<Mesh> Cube::create_cube() const
 {
     std::vector<Vertex> const vertices = m_big_cube ? InternalMeshData::big_cube.vertices : InternalMeshData::cube.vertices;
     std::vector<u32> const indices = m_big_cube ? InternalMeshData::big_cube.indices : InternalMeshData::cube.indices;
-    std::vector<std::shared_ptr<Texture>> textures;
 
     std::vector<std::shared_ptr<Texture>> diffuse_maps = {};
     if (!diffuse_texture_path.empty())
@@ -105,13 +104,13 @@ std::shared_ptr<Mesh> Cube::create_cube() const
     if (!specular_texture_path.empty())
         specular_maps.emplace_back(ResourceManager::get_instance().load_texture(specular_texture_path, TextureType::Specular));
 
-    textures.insert(textures.end(), diffuse_maps.begin(), diffuse_maps.end());
-    textures.insert(textures.end(), specular_maps.begin(), specular_maps.end());
+    material->textures.insert(material->textures.end(), diffuse_maps.begin(), diffuse_maps.end());
+    material->textures.insert(material->textures.end(), specular_maps.begin(), specular_maps.end());
 
     std::stringstream stream;
     stream << m_big_cube << "CUBE";
 
-    return ResourceManager::get_instance().load_mesh(m_meshes.size(), stream.str(), vertices, indices, textures, m_draw_type, material);
+    return ResourceManager::get_instance().load_mesh(m_meshes.size(), stream.str(), vertices, indices, m_draw_type, material);
 }
 
 #if EDITOR
