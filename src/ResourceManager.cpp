@@ -28,6 +28,12 @@ std::shared_ptr<Texture> ResourceManager::load_texture(std::string const& path, 
            << std::to_underlying<TextureFiltering>(settings.filtering_min) << std::to_underlying<TextureFiltering>(settings.filtering_max)
            << std::to_underlying<TextureFiltering>(settings.filtering_mipmap);
 
+    // TODO: We can still share texture data between different texture types.
+    if (type.has_value())
+    {
+        stream << std::to_underlying<TextureType>(type.value());
+    }
+
     std::string const key = generate_key(stream);
 
     std::shared_ptr<Texture> resource_ptr = get_from_vector<Texture>(key);
