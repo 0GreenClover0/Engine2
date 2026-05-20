@@ -618,17 +618,29 @@ void RendererDX11::bind_material(std::shared_ptr<Material> const& material) cons
 
     bind_material_constant_buffer({.color = material->color, .roughness = material->roughness, .metallic = material->metallic});
 
-    // TODO: Don't assume 1st texture is always albedo, 2nd is normal, etc.
-    for (i32 i = 0; i < material->textures.size(); ++i)
+    std::array<bool, PBR_texture_count> texture_bound = {};
+
+    for (const auto& texture : material->textures)
     {
-        device_context->PSSetShaderResources(i, 1, &material->textures[i]->shader_resource_view);
-        device_context->PSSetSamplers(i, 1, &material->textures[i]->image_sampler_state);
+        u32 const slot = static_cast<u32>(texture->type);
+        device_context->PSSetShaderResources(slot, 1, &texture->shader_resource_view);
+        device_context->PSSetSamplers(slot, 1, &texture->image_sampler_state);
+
+        if (slot < PBR_texture_count)
+        {
+            texture_bound[slot] = true;
+        }
     }
 
     // NOTE: We always pass all 5 PBR textures. If the texture is not present in the model,
     //       we pass a 1x1 default texture instead.
-    for (i32 i = material->textures.size(); i < PBR_texture_count; ++i)
+    for (i32 i = 0; i < PBR_texture_count; ++i)
     {
+        if (texture_bound[i])
+        {
+            continue;
+        }
+
         switch (static_cast<TextureTypePBR>(i))
         {
         case TextureTypePBR::Albedo:
@@ -645,8 +657,8 @@ void RendererDX11::bind_material(std::shared_ptr<Material> const& material) cons
         }
         case TextureTypePBR::Metallic:
         {
-            device_context->PSSetShaderResources(i, 1, &InternalMeshData::black_texture->shader_resource_view);
-            device_context->PSSetSamplers(i, 1, &InternalMeshData::black_texture->image_sampler_state);
+            device_context->PSSetShaderResources(i, 1, &InternalMeshData::white_texture->shader_resource_view);
+            device_context->PSSetSamplers(i, 1, &InternalMeshData::white_texture->image_sampler_state);
             break;
         }
         case TextureTypePBR::Roughness:
