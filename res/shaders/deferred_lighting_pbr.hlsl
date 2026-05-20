@@ -38,8 +38,10 @@ float4 ps_main(VS_Output input) : SV_Target
 {
     float4 result = float4(0.0f, 0.0f, 0.0f, 0.0f);
     float4 pos = pos_tex.Sample(obj_sampler_state, input.UV);
-    float4 normal = normalize(normal_tex.Sample(obj_sampler_state, input.UV));
-    //float3 albedo = pow(albedo_tex.Sample(obj_sampler_state, input.UV).rgb, float3(2.2f, 2.2f, 2.2f));
+
+    float4 normal_sample = normal_tex.Sample(obj_sampler_state, input.UV);
+    float3 normal = normalize(normal_sample.xyz * 2.0f - 1.0f);
+
     float3 albedo = albedo_tex.Sample(obj_sampler_state, input.UV).rgb;
     float metallic = metallic_tex.Sample(obj_sampler_state, input.UV).r;
     float roughness = roughness_tex.Sample(obj_sampler_state, input.UV).r;
@@ -79,7 +81,7 @@ float4 ps_main(VS_Output input) : SV_Target
     }
 
     // Normal alpha channel stores info whether glow should be applied
-    if (normal.a > 0.0f)
+    if (normal_sample.a > 0.0f)
     {
         result.xyz = glow(result.xyz, pos.xyz, normal.xyz).xyz;
     }

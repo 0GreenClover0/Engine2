@@ -86,7 +86,7 @@ PS_Output ps_main(VS_Output input)
     PS_Output output;
     output.diffuse = albedo_texture.Sample(obj_sampler_state, input.UV) * base_color;
     // output.normal.xyz = get_normal_from_texture(input);
-    output.normal.xyz = normalize(input.normal);
+    output.normal.xyz = normalize(input.normal) * 0.5f + 0.5f;
     output.metallic = metallic_texture.Sample(obj_sampler_state, input.UV).r * metallic;
     output.roughness = roughness_texture.Sample(obj_sampler_state, input.UV).r * roughness;
     output.ao = ambient_occlusion_texture.Sample(obj_sampler_state, input.UV).r;
