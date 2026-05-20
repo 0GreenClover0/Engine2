@@ -6,10 +6,14 @@
 
 enum class TextureType : u8
 {
-    None = 0,
-    Diffuse = 1,
-    Specular = 2,
-    Heightmap = 3,
+    Diffuse = 0,
+    Normal = 1,
+    Metallic = 2,
+    Roughness = 3,
+    AmbientOcclusion = 4,
+    Specular = 5,
+    Heightmap = 6,
+    None = 255,
 };
 
 enum class TextureWrapMode : u8

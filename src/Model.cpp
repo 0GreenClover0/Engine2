@@ -278,6 +278,14 @@ std::shared_ptr<Mesh> Model::process_mesh(aiMesh const* mesh, aiScene const* sce
             load_material_textures(assimp_material, aiTextureType_SPECULAR, TextureType::Specular);
         material->textures.insert(material->textures.end(), specular_maps.begin(), specular_maps.end());
 
+        std::vector<std::shared_ptr<Texture>> metallic_maps =
+            load_material_textures(assimp_material, aiTextureType_METALNESS, TextureType::Metallic);
+        material->textures.insert(material->textures.end(), metallic_maps.begin(), metallic_maps.end());
+
+        std::vector<std::shared_ptr<Texture>> roughness_maps =
+            load_material_textures(assimp_material, aiTextureType_METALNESS, TextureType::Roughness);
+        material->textures.insert(material->textures.end(), roughness_maps.begin(), roughness_maps.end());
+
         aiColor4D color = {1.0f, 1.0f, 1.0f, 1.0f};
         aiGetMaterialColor(assimp_material, AI_MATKEY_GLTF_PBRMETALLICROUGHNESS_BASE_COLOR_FACTOR, &color);
         material->color = {color.r, color.g, color.b, color.a};
