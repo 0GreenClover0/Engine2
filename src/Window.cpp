@@ -7,6 +7,7 @@
 #include <stdexcept>
 
 #include "Engine.h"
+#include <stb_image.h>
 
 #define GLFW_EXPOSE_NATIVE_WIN32
 #include <GLFW/glfw3native.h>
@@ -35,6 +36,11 @@ Window::Window(Renderer::RendererApi const renderer_api, i32 const screen_width,
 
     if (m_window == nullptr)
         throw std::runtime_error("Could not create a window.");
+
+    GLFWimage images[1];
+    images[0].pixels = stbi_load("./res/icons/engineIcon.png", &images[0].width, &images[0].height, 0, 4);
+    glfwSetWindowIcon(m_window, 1, images);
+    stbi_image_free(images[0].pixels);
 
     switch (renderer_api)
     {
